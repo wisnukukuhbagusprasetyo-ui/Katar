@@ -3,47 +3,231 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Karang Taruna Cilosari Barat</title>
+<title>Karang Taruna Cilosari Barat RT01/RW08</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --primary:#0e4c92;--accent:#f6c445;--bg:#f9fafb;--text:#1e293b;--card:#fff;
+  --primary:#0e4c92;
+  --accent:#f6c445;
+  --bg:#f9fafb;
+  --text:#1e293b;
+  --card:#ffffff;
+  --shadow:rgba(0,0,0,0.1);
 }
 body.dark{
-  --primary:#082c55;--accent:#ffd84d;--bg:#0f172a;--text:#e2e8f0;--card:#1e293b;
+  --primary:#082c55;
+  --accent:#ffd84d;
+  --bg:#0f172a;
+  --text:#e2e8f0;
+  --card:#1e293b;
+  --shadow:rgba(255,255,255,0.1);
 }
-body{font-family:'Poppins',sans-serif;margin:0;background:var(--bg);color:var(--text);}
-nav{position:fixed;top:0;left:0;right:0;background:rgba(14,76,146,0.95);
-  color:#fff;display:flex;justify-content:space-between;align-items:center;
-  padding:.8rem 1.5rem;backdrop-filter:blur(10px);z-index:100;}
-nav ul{list-style:none;margin:0;padding:0;display:flex;gap:1rem;}
-nav ul li a{color:#fff;text-decoration:none;font-weight:600;}
-nav ul li a:hover{color:var(--accent);}
-nav button{background:var(--accent);border:none;padding:.5rem .9rem;border-radius:6px;
-  color:var(--primary);font-weight:600;cursor:pointer;}
-nav button:hover{background:#fff;}
-#modeToggle{background:none;border:2px solid var(--accent);border-radius:50%;
-  width:36px;height:36px;color:var(--accent);cursor:pointer;}
-.hero{background:linear-gradient(135deg,var(--primary),#1a6ac2);
-  color:#fff;text-align:center;padding:6rem 1rem 4rem;margin-top:60px;}
-main{max-width:1100px;margin:auto;padding:2rem 1rem;}
-h2{color:var(--primary);border-left:5px solid var(--accent);padding-left:.5rem;}
-.grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
-.card{background:var(--card);padding:1rem;border-radius:10px;
-  box-shadow:0 2px 10px rgba(0,0,0,.08);}
-.card img{width:100%;border-radius:8px;margin-bottom:.6rem;}
-footer{text-align:center;padding:2rem;background:var(--primary);color:#fff;margin-top:3rem;}
-.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;
-  background:rgba(0,0,0,.6);justify-content:center;align-items:center;z-index:999;}
+body{
+  font-family:'Poppins',sans-serif;
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  scroll-behavior:smooth;
+  transition:background .3s,color .3s;
+}
+nav{
+  position:fixed;
+  top:0;left:0;right:0;
+  background:linear-gradient(90deg,var(--primary),#1a6ac2);
+  color:#fff;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:.8rem 1.5rem;
+  z-index:1000;
+  box-shadow:0 2px 8px var(--shadow);
+}
+nav h1{
+  font-size:1.2rem;
+  letter-spacing:.5px;
+  font-weight:700;
+}
+nav ul{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:flex;
+  gap:1.2rem;
+}
+nav ul li a{
+  color:#fff;
+  text-decoration:none;
+  font-weight:600;
+  position:relative;
+}
+nav ul li a::after{
+  content:"";
+  position:absolute;
+  bottom:-3px;left:0;
+  width:0;height:2px;
+  background:var(--accent);
+  transition:.3s;
+}
+nav ul li a:hover::after{
+  width:100%;
+}
+nav button{
+  background:var(--accent);
+  border:none;
+  padding:.5rem .9rem;
+  border-radius:8px;
+  color:var(--primary);
+  font-weight:600;
+  cursor:pointer;
+  box-shadow:0 3px 6px rgba(0,0,0,0.15);
+  transition:.2s;
+}
+nav button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 5px 10px rgba(0,0,0,0.25);
+}
+#modeToggle{
+  background:none;
+  border:2px solid var(--accent);
+  border-radius:50%;
+  width:38px;
+  height:38px;
+  color:var(--accent);
+  font-size:1rem;
+  cursor:pointer;
+  transition:.2s;
+}
+#modeToggle:hover{
+  transform:rotate(15deg);
+  background:var(--accent);
+  color:var(--primary);
+}
+.hero{
+  background:linear-gradient(135deg,var(--primary),#1a6ac2);
+  color:#fff;
+  text-align:center;
+  padding:8rem 1rem 6rem;
+  margin-top:60px;
+  background-attachment:fixed;
+  box-shadow:inset 0 -3px 10px rgba(0,0,0,0.15);
+}
+.hero h2{
+  font-size:1.5rem;
+  margin-bottom:.5rem;
+  letter-spacing:.5px;
+}
+.hero p{
+  font-size:1rem;
+  opacity:.9;
+  margin-bottom:1rem;
+}
+main{
+  max-width:1100px;
+  margin:auto;
+  padding:2rem 1rem;
+}
+h2{
+  color:var(--primary);
+  border-left:5px solid var(--accent);
+  padding-left:.6rem;
+  margin-top:3rem;
+  letter-spacing:.5px;
+}
+.grid{
+  display:grid;
+  gap:1.5rem;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  margin-top:1rem;
+}
+.card{
+  background:var(--card);
+  padding:1rem;
+  border-radius:12px;
+  box-shadow:0 3px 10px var(--shadow);
+  transition:.3s;
+  overflow:hidden;
+}
+.card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 6px 16px var(--shadow);
+}
+.card img{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+  border-radius:8px;
+  margin-bottom:.6rem;
+}
+footer{
+  text-align:center;
+  padding:2rem;
+  background:linear-gradient(90deg,var(--primary),#1a6ac2);
+  color:#fff;
+  margin-top:3rem;
+  font-weight:500;
+  letter-spacing:.5px;
+}
+/* modal login/register */
+.modal{
+  display:none;
+  position:fixed;
+  top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,.6);
+  justify-content:center;align-items:center;
+  z-index:999;
+  backdrop-filter:blur(3px);
+}
 .modal.active{display:flex;}
-.modal-content{background:#fff;padding:2rem;border-radius:10px;width:100%;
-  max-width:360px;box-shadow:0 3px 10px rgba(0,0,0,.2);}
-.modal-content h3{text-align:center;color:#0e4c92;margin-top:0;}
-.modal-content input{width:100%;padding:.7rem;margin-bottom:.8rem;border:1px solid #ccc;border-radius:6px;}
-.modal-content button{width:100%;padding:.8rem;background:#0e4c92;color:#fff;border:none;border-radius:6px;font-weight:600;cursor:pointer;}
-.modal-content button:hover{background:#f6c445;color:#0e4c92;}
-.modal-content p{text-align:center;font-size:.9rem;}
-.modal-content a{color:#0e4c92;font-weight:600;text-decoration:none;}
+.modal-content{
+  background:var(--card);
+  padding:2rem;
+  border-radius:12px;
+  width:90%;
+  max-width:380px;
+  box-shadow:0 4px 10px var(--shadow);
+  text-align:center;
+  animation:fadeIn .3s ease;
+}
+@keyframes fadeIn{
+  from{opacity:0;transform:scale(.95);}
+  to{opacity:1;transform:scale(1);}
+}
+.modal-content h3{
+  color:var(--primary);
+  margin-bottom:1rem;
+}
+.modal-content input{
+  width:100%;
+  padding:.7rem;
+  margin-bottom:.9rem;
+  border:1px solid #ccc;
+  border-radius:6px;
+  font-family:inherit;
+}
+.modal-content button{
+  width:100%;
+  padding:.8rem;
+  background:var(--primary);
+  color:#fff;
+  border:none;
+  border-radius:8px;
+  font-weight:600;
+  cursor:pointer;
+  margin-bottom:.5rem;
+  transition:.3s;
+}
+.modal-content button:hover{
+  background:var(--accent);
+  color:var(--primary);
+}
+.modal-content p{
+  font-size:.9rem;
+}
+.modal-content a{
+  color:var(--primary);
+  font-weight:600;
+  text-decoration:none;
+}
 </style>
 </head>
 <body>
@@ -61,8 +245,9 @@ footer{text-align:center;padding:2rem;background:var(--primary);color:#fff;margi
 </nav>
 
 <section class="hero">
-  <h2>RT01/RW08 Kelurahan Kemijen, Semarang Timur</h2>
-  <p>Bersatu, Berdaya, dan Kreatif bersama Karang Taruna Cilosari Barat</p>
+  <h2>RT01 / RW08 Kelurahan Kemijen, Semarang Timur</h2>
+  <p>Portal Pemuda – Informasi, Kegiatan, dan UMKM Cilosari Barat</p>
+  <button style="background:var(--accent);color:var(--primary);padding:.8rem 1.2rem;border:none;border-radius:8px;font-weight:600;cursor:pointer;">Gabung Karang Taruna</button>
 </section>
 
 <main>
@@ -78,9 +263,9 @@ footer{text-align:center;padding:2rem;background:var(--primary);color:#fff;margi
 
 <section id="kontak">
   <h2>📞 Kontak Kami</h2>
-  <p>Alamat: Cilosari Barat RT01/RW08, Kelurahan Kemijen, Semarang Timur</p>
-  <p>Instagram: <a href="https://instagram.com/karangtaruna_cilosari" target="_blank">@karangtaruna_cilosari</a></p>
-  <p>TikTok: <a href="https://tiktok.com/@karangtaruna_cilosari" target="_blank">@karangtaruna_cilosari</a></p>
+  <p>📍 Alamat: Cilosari Barat RT01/RW08, Kelurahan Kemijen, Semarang Timur</p>
+  <p>📸 Instagram: <a href="https://instagram.com/karangtaruna_cilosari" target="_blank">@karangtaruna_cilosari</a></p>
+  <p>🎵 TikTok: <a href="https://tiktok.com/@karangtaruna_cilosari" target="_blank">@karangtaruna_cilosari</a></p>
 </section>
 </main>
 
@@ -98,7 +283,7 @@ footer{text-align:center;padding:2rem;background:var(--primary);color:#fff;margi
   </div>
 </div>
 
-<!-- MODAL PROFIL AKUN -->
+<!-- MODAL PROFIL -->
 <div id="profileModal" class="modal">
   <div class="modal-content">
     <h3>Profil Akun</h3>
@@ -115,14 +300,14 @@ import { loginUser, registerUser, logoutUser } from './js/auth.js';
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 import { collection, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-/* Mode */
+/* ========== Mode ========= */
 const toggleBtn=document.getElementById('modeToggle');
 let darkMode=localStorage.getItem('darkMode')==='true';
 function applyMode(){document.body.classList.toggle('dark',darkMode);toggleBtn.textContent=darkMode?'🌙':'☀️';}
 toggleBtn.onclick=()=>{darkMode=!darkMode;localStorage.setItem('darkMode',darkMode);applyMode();};
 applyMode();
 
-/* Auth Modal */
+/* ========== Modal Auth ========== */
 const modal=document.getElementById('authModal');
 const profile=document.getElementById('profileModal');
 const openBtn=document.getElementById('authBtn');
@@ -137,7 +322,6 @@ const userEmail=document.getElementById('userEmail');
 const toDashboard=document.getElementById('toDashboard');
 let isLogin=true;
 
-/* Auth Logic */
 openBtn.onclick=()=>{if(auth.currentUser){profile.classList.add('active');}else{modal.classList.add('active');}};
 closeBtn.onclick=()=>modal.classList.remove('active');
 closeProfile.onclick=()=>profile.classList.remove('active');
@@ -157,7 +341,6 @@ action.onclick=async()=>{
   }catch(err){alert("Gagal: "+err.message);}
 };
 
-/* Auth State */
 onAuthStateChanged(auth,(user)=>{
   if(user){
     document.getElementById('authBtn').textContent="Profil Akun";
@@ -167,7 +350,7 @@ onAuthStateChanged(auth,(user)=>{
   }
 });
 
-/* Data */
+/* ========== Load Data ========= */
 async function loadBerita(){
   const c=document.getElementById('beritaList');
   const snap=await getDocs(query(collection(db,'berita'),orderBy('createdAt','desc')));
@@ -176,7 +359,9 @@ async function loadBerita(){
     const b=d.data();
     const div=document.createElement('div');
     div.className='card';
-    div.innerHTML=`${b.foto?`<img src="${b.foto}">`:''}<h3>${b.judul}</h3><p>${b.isi?.substring(0,120)||''}...</p>`;
+    div.innerHTML=`${b.foto?`<img src="${b.foto}" alt="${b.judul}">`:''}
+      <h3>${b.judul}</h3>
+      <p>${b.isi?.substring(0,120)||''}...</p>`;
     c.appendChild(div);
   });
 }
@@ -188,7 +373,9 @@ async function loadUmkm(){
     const u=d.data();
     const div=document.createElement('div');
     div.className='card';
-    div.innerHTML=`${u.foto?`<img src="${u.foto}">`:''}<h3>${u.nama}</h3><p>${u.deskripsi||''}</p>`;
+    div.innerHTML=`${u.foto?`<img src="${u.foto}" alt="${u.nama}">`:''}
+      <h3>${u.nama}</h3>
+      <p>${u.deskripsi||''}</p>`;
     c.appendChild(div);
   });
 }
