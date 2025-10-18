@@ -7,327 +7,259 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --biru: #0e4c92;
-  --emas: #f6c445;
-  --gelap: #1e293b;
-  --abu: #f5f7fa;
-  --putih: #ffffff;
+  --biru:#0e4c92;
+  --emas:#f6c445;
+  --gelap:#1e293b;
+  --abu:#f5f7fa;
+  --putih:#ffffff;
 }
 [data-theme='dark'] {
-  --biru: #1a73e8;
-  --emas: #f6c445;
-  --gelap: #e2e8f0;
-  --abu: #0f172a;
-  --putih: #1e293b;
+  --biru:#1a73e8;
+  --gelap:#e2e8f0;
+  --abu:#0f172a;
+  --putih:#1e293b;
 }
-* { box-sizing: border-box; transition: background .3s,color .3s; }
-body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background: var(--abu);
-  color: var(--gelap);
+*{box-sizing:border-box;transition:background .3s,color .3s;}
+body{margin:0;font-family:'Poppins',sans-serif;background:var(--abu);color:var(--gelap);}
+header{
+  background:linear-gradient(90deg,var(--biru),#1a6ac2);
+  color:#fff;padding:.8rem 1.2rem;
+  display:flex;justify-content:space-between;align-items:center;
+  position:sticky;top:0;z-index:999;
 }
-header {
-  background: linear-gradient(90deg, var(--biru), #1a6ac2);
-  color: #fff;
-  padding: .8rem 1.2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  position: sticky;
-  top: 0;
-  z-index: 99;
+header h1{margin:0;font-size:1rem;font-weight:700;letter-spacing:.5px;}
+nav{display:flex;gap:1rem;align-items:center;}
+nav a,nav button{
+  color:#fff;text-decoration:none;font-weight:600;background:none;border:none;
+  cursor:pointer;font-family:'Poppins',sans-serif;
 }
-header h1 {
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: .5px;
-}
-nav {
-  display: flex;
-  gap: .8rem;
-  align-items: center;
-  flex-wrap: wrap;
-}
-nav a, nav button {
-  color: #fff;
-  text-decoration: none;
-  font-weight: 600;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-family: 'Poppins', sans-serif;
-}
-nav a:hover, nav button:hover { color: var(--emas); }
-#themeToggle {
-  background: var(--emas);
-  color: var(--biru);
-  border: none;
-  border-radius: 20px;
-  padding: .3rem .8rem;
-  cursor: pointer;
-  font-weight: 600;
-}
-.hero {
-  background: linear-gradient(180deg, var(--biru), #155fa3);
-  color: #fff;
-  text-align: center;
-  padding: 3.5rem 1rem;
-  border-bottom: 4px solid var(--emas);
-}
-.hero h2 { font-size: 1.8rem; margin: 0 0 .5rem; }
-.hero p { max-width: 680px; margin: auto; line-height: 1.6; font-size: .95rem; }
-.container { max-width: 1100px; margin: auto; padding: 1rem; }
-
-.section-title {
-  font-size: 1.3rem;
-  color: var(--biru);
-  border-left: 5px solid var(--emas);
-  padding-left: .6rem;
-  margin-bottom: 1.2rem;
+nav a:hover,nav button:hover{color:var(--emas);}
+#themeToggle{
+  background:var(--emas);color:var(--biru);
+  border:none;border-radius:20px;padding:.3rem .8rem;cursor:pointer;font-weight:600;
 }
 
-.grid {
-  display: grid;
-  gap: 1.2rem;
-}
-@media (min-width: 600px) { .grid-2 { grid-template-columns: repeat(2,1fr); } }
-@media (min-width: 900px) { .grid-3 { grid-template-columns: repeat(3,1fr); } }
+/* === HAMBURGER === */
+.hamburger{display:none;flex-direction:column;cursor:pointer;gap:5px;}
+.hamburger div{width:25px;height:3px;background:#fff;border-radius:2px;transition:.3s;}
+nav.mobile{display:none;flex-direction:column;background:var(--biru);width:100%;text-align:center;padding:1rem 0;}
+nav.mobile a{padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,.2);}
+.show{display:flex !important;}
 
-.card {
-  background: var(--putih);
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-  overflow: hidden;
-  transition: transform .2s ease, box-shadow .3s ease;
-}
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-.card img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-}
-.card-content {
-  padding: 1rem;
-}
-.card h3, .card h4 {
-  color: var(--biru);
-  margin: .4rem 0;
-}
-.card p {
-  font-size: .9rem;
-  line-height: 1.5;
-  color: #334155;
-}
-.btn {
-  background: var(--biru);
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: .5rem .8rem;
-  cursor: pointer;
-  font-weight: 600;
-  display: inline-block;
-  text-decoration: none;
-  margin-top: .4rem;
-  font-size: .9rem;
-}
-.btn:hover {
-  background: var(--emas);
-  color: var(--biru);
-}
-.search-box {
-  text-align: right;
-  margin-bottom: 1rem;
-}
-.search-box input {
-  padding: .5rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  width: 100%;
-  max-width: 300px;
-}
-footer {
-  background: var(--biru);
-  color: #fff;
-  text-align: center;
-  padding: 1rem;
-  margin-top: 2rem;
-  font-size: .9rem;
-}
-.profile-nav {
-  display: flex;
-  gap: .5rem;
-  align-items: center;
-}
-.profile-name { font-weight: 600; }
-@media (max-width: 500px) {
-  header { flex-direction: column; align-items: flex-start; gap: .5rem; }
-  nav { width: 100%; justify-content: space-between; }
-  .hero h2 { font-size: 1.4rem; }
-  .card img { height: 160px; }
+.hero{background:linear-gradient(180deg,var(--biru),#155fa3);color:#fff;text-align:center;padding:3.5rem 1rem;border-bottom:4px solid var(--emas);}
+.hero h2{font-size:1.8rem;margin:0 0 .5rem;}
+.hero p{max-width:680px;margin:auto;line-height:1.6;font-size:.95rem;}
+.container{max-width:1100px;margin:auto;padding:1rem;}
+.section-title{font-size:1.3rem;color:var(--biru);border-left:5px solid var(--emas);padding-left:.6rem;margin-bottom:1.2rem;}
+.grid{display:grid;gap:1.2rem;}
+@media(min-width:600px){.grid-2{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:900px){.grid-3{grid-template-columns:repeat(3,1fr)}}
+.card{background:var(--putih);border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.08);overflow:hidden;transition:transform .2s ease,box-shadow .3s ease;}
+.card:hover{transform:translateY(-5px);box-shadow:0 4px 12px rgba(0,0,0,0.15);}
+.card img{width:100%;height:180px;object-fit:cover;}
+.card-content{padding:1rem;}
+.card h3,.card h4{color:var(--biru);margin:.4rem 0;}
+.card p{font-size:.9rem;line-height:1.5;color:#334155;}
+.btn{background:var(--biru);color:#fff;border:none;border-radius:6px;padding:.5rem .8rem;cursor:pointer;font-weight:600;display:inline-block;text-decoration:none;margin-top:.4rem;font-size:.9rem;}
+.btn:hover{background:var(--emas);color:var(--biru);}
+.search-box{text-align:right;margin-bottom:1rem;}
+.search-box input{padding:.5rem;border-radius:6px;border:1px solid #ccc;width:100%;max-width:300px;}
+footer{background:var(--biru);color:#fff;text-align:center;padding:1rem;margin-top:2rem;font-size:.9rem;}
+.profile-nav{display:flex;gap:.5rem;align-items:center;}
+.profile-name{font-weight:600;}
+.auth-box{background:var(--putih);color:var(--gelap);border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,0.1);max-width:400px;margin:1.5rem auto;padding:1.2rem;text-align:center;}
+.auth-box input{width:100%;padding:.6rem;margin-bottom:.7rem;border:1px solid #ccc;border-radius:6px;}
+.auth-box button{width:100%;padding:.6rem;font-weight:600;border:none;border-radius:6px;background:var(--biru);color:#fff;cursor:pointer;}
+.auth-box button:hover{background:var(--emas);color:var(--biru);}
+.auth-box small{display:block;margin-top:.5rem;}
+#kasSection h1{font-size:2rem;color:var(--biru);}
+@media(max-width:700px){
+  .hamburger{display:flex;}
+  nav.desktop{display:none;}
 }
 </style>
 </head>
 <body>
 <header>
-  <h1>Karang Taruna Cilosari Barat RT01/RW08</h1>
-  <nav>
+  <h1>Karang Taruna Cilosari Barat</h1>
+  <div class="hamburger" id="hamburger">
+    <div></div><div></div><div></div>
+  </div>
+  <nav class="desktop">
     <a href="#berita">Berita</a>
     <a href="#umkm">UMKM</a>
+    <a href="#kasSection">Kas</a>
     <a id="navAdmin" href="./admin.html" style="display:none;">Admin</a>
     <div id="navAuth" class="profile-nav"></div>
     <button id="themeToggle">🌙</button>
   </nav>
 </header>
+<nav class="mobile" id="mobileNav">
+  <a href="#berita">Berita</a>
+  <a href="#umkm">UMKM</a>
+  <a href="#kasSection">Kas</a>
+  <a id="navAdminMobile" href="./admin.html" style="display:none;">Admin</a>
+  <div id="navAuthMobile" class="profile-nav" style="justify-content:center;margin-top:.5rem;"></div>
+</nav>
 
 <section class="hero">
   <h2>Selamat Datang di Portal Karang Taruna</h2>
-  <p>Informasi resmi kegiatan, berita warga, dan pengembangan UMKM dari Karang Taruna RT01/RW08, Kelurahan Kemijen, Kecamatan Semarang Timur.</p>
+  <p>Informasi kegiatan, berita warga, dan UMKM RT01/RW08 Kelurahan Kemijen, Semarang Timur.</p>
+</section>
+
+<section id="authSection">
+  <div class="auth-box" id="authBox">
+    <h3 id="authTitle">Masuk ke Portal</h3>
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Kata Sandi" />
+    <button id="loginBtn">Masuk</button>
+    <button id="registerBtn" style="background:var(--emas);color:var(--biru);margin-top:.5rem;">Daftar</button>
+    <small id="authMessage"></small>
+  </div>
 </section>
 
 <main class="container">
-  <!-- BERITA -->
   <section id="berita">
     <h2 class="section-title">📰 Berita Terkini</h2>
     <div id="beritaList" class="grid grid-2"></div>
   </section>
 
-  <!-- UMKM -->
   <section id="umkm">
     <h2 class="section-title">🏪 UMKM Warga</h2>
-    <div class="search-box">
-      <input type="text" id="searchUmkm" placeholder="Cari UMKM...">
-    </div>
+    <div class="search-box"><input type="text" id="searchUmkm" placeholder="Cari UMKM..."></div>
     <div id="umkmList" class="grid grid-3"></div>
+  </section>
+
+  <section id="kasSection" style="display:none;">
+    <h2 class="section-title">💰 Informasi Kas Karang Taruna</h2>
+    <div id="kasBox" class="card" style="max-width:600px;margin:auto;text-align:center;">
+      <h3>Total Kas Saat Ini</h3>
+      <h1 id="kasTotal">Rp 0</h1>
+      <div id="kasList" style="text-align:left;margin-top:1rem;"></div>
+    </div>
   </section>
 </main>
 
-<footer>
-  <p>&copy; 2025 Karang Taruna Cilosari Barat RT01/RW08 - Semarang Timur</p>
-</footer>
+<footer><p>&copy; 2025 Karang Taruna Cilosari Barat RT01/RW08 - Semarang Timur</p></footer>
 
 <script type="module">
 import { db, auth } from "./js/firebase.js";
-import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+import {
+  onAuthStateChanged, signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import { collection, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+// === HAMBURGER ===
+const hamburger=document.getElementById("hamburger");
+const mobileNav=document.getElementById("mobileNav");
+hamburger.onclick=()=>{mobileNav.classList.toggle("show");};
 
 // === DARK MODE ===
-const themeToggle = document.getElementById("themeToggle");
-if (localStorage.getItem("theme") === "dark") {
-  document.documentElement.setAttribute("data-theme", "dark");
-  themeToggle.textContent = "☀️";
-}
-themeToggle.onclick = () => {
-  if (document.documentElement.getAttribute("data-theme") === "dark") {
-    document.documentElement.removeAttribute("data-theme");
-    localStorage.setItem("theme", "light");
-    themeToggle.textContent = "🌙";
-  } else {
-    document.documentElement.setAttribute("data-theme", "dark");
-    localStorage.setItem("theme", "dark");
-    themeToggle.textContent = "☀️";
-  }
-};
+const themeToggle=document.getElementById("themeToggle");
+if(localStorage.getItem("theme")==="dark"){document.documentElement.setAttribute("data-theme","dark");themeToggle.textContent="☀️";}
+themeToggle.onclick=()=>{if(document.documentElement.getAttribute("data-theme")==="dark"){document.documentElement.removeAttribute("data-theme");localStorage.setItem("theme","light");themeToggle.textContent="🌙";}else{document.documentElement.setAttribute("data-theme","dark");localStorage.setItem("theme","dark");themeToggle.textContent="☀️";}};
 
-// === AUTH DISPLAY ===
-const navAdmin = document.getElementById("navAdmin");
-const navAuth = document.getElementById("navAuth");
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    navAuth.innerHTML = `
-      <span class="profile-name">👤 ${user.email.split('@')[0]}</span>
-      <button id="logoutBtn">Keluar</button>`;
-    navAdmin.style.display = "inline-block";
-    document.getElementById("logoutBtn").onclick = async () => {
-      await signOut(auth);
-      alert("Anda telah keluar.");
-    };
-  } else {
-    navAuth.innerHTML = `<a href="./login.html">Masuk / Daftar</a>`;
-    navAdmin.style.display = "none";
+// === AUTH ===
+const navAuth=document.getElementById("navAuth");
+const navAdmin=document.getElementById("navAdmin");
+const navAuthMobile=document.getElementById("navAuthMobile");
+const navAdminMobile=document.getElementById("navAdminMobile");
+const authBox=document.getElementById("authBox");
+const kasSection=document.getElementById("kasSection");
+
+onAuthStateChanged(auth,(user)=>{
+  if(user){
+    const profileHTML=`<span class="profile-name">👤 ${user.email.split('@')[0]}</span>
+    <button id="logoutBtn">Keluar</button>`;
+    navAuth.innerHTML=profileHTML;
+    navAuthMobile.innerHTML=profileHTML;
+    document.querySelectorAll("#logoutBtn").forEach(btn=>btn.onclick=async()=>{await signOut(auth);});
+    navAdmin.style.display="inline-block";
+    navAdminMobile.style.display="block";
+    authBox.style.display="none";
+    kasSection.style.display="block";
+    loadKas();
+  }else{
+    navAuth.innerHTML=`<a href="#authSection">Masuk / Daftar</a>`;
+    navAuthMobile.innerHTML=`<a href="#authSection">Masuk / Daftar</a>`;
+    navAdmin.style.display="none";
+    navAdminMobile.style.display="none";
+    authBox.style.display="block";
+    kasSection.style.display="none";
   }
 });
 
-// === BERITA (fix: tidak hilang, urut manual) ===
-const beritaList = document.getElementById("beritaList");
-async function loadBerita() {
-  try {
-    const snap = await getDocs(collection(db, "berita"));
-    beritaList.innerHTML = "";
-    if (snap.empty) {
-      beritaList.innerHTML = "<p>Belum ada berita.</p>";
-      return;
-    }
-    const beritaArray = [];
-    snap.forEach((d) => {
-      const b = d.data();
-      b.id = d.id;
-      beritaArray.push(b);
-    });
-    beritaArray.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
-    beritaArray.forEach((b) => {
-      const isiPendek = (b.isi || "").length > 180 ? b.isi.substring(0, 180) + "..." : b.isi;
-      const card = document.createElement("div");
-      card.className = "card";
-      card.innerHTML = `
-        ${b.foto ? `<img src="${b.foto}" alt="${b.judul}">` : ""}
-        <div class="card-content">
-          <h3>${b.judul}</h3>
-          <p>${isiPendek}</p>
-          <a class="btn" href="berita.html?id=${b.id}">Selengkapnya</a>
-        </div>`;
-      beritaList.appendChild(card);
-    });
-  } catch (e) {
-    console.error("Gagal memuat berita:", e);
-    beritaList.innerHTML = "<p style='color:red'>Terjadi kesalahan memuat berita.</p>";
-  }
+document.getElementById("loginBtn").onclick=async()=>{
+  const email=document.getElementById("email").value.trim();
+  const password=document.getElementById("password").value;
+  try{await signInWithEmailAndPassword(auth,email,password);}catch(e){alert("Login gagal: "+e.message);}
+};
+document.getElementById("registerBtn").onclick=async()=>{
+  const email=document.getElementById("email").value.trim();
+  const password=document.getElementById("password").value;
+  try{await createUserWithEmailAndPassword(auth,email,password);}catch(e){alert("Daftar gagal: "+e.message);}
+};
+
+// === BERITA ===
+const beritaList=document.getElementById("beritaList");
+async function loadBerita(){
+  const snap=await getDocs(collection(db,"berita"));
+  beritaList.innerHTML="";
+  const arr=[];snap.forEach((d)=>arr.push({...d.data(),id:d.id}));
+  arr.sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
+  arr.forEach((b)=>{
+    const isi=(b.isi||"").slice(0,180)+"...";
+    const el=document.createElement("div");
+    el.className="card";
+    el.innerHTML=`${b.foto?`<img src="${b.foto}" alt="${b.judul}">`:""}
+    <div class="card-content"><h3>${b.judul}</h3><p>${isi}</p>
+    <a class="btn" href="berita.html?id=${b.id}">Selengkapnya</a></div>`;
+    beritaList.appendChild(el);
+  });
 }
 loadBerita();
 
-// === UMKM + SEARCH ===
-const umkmList = document.getElementById("umkmList");
-let allUmkm = [];
-async function loadUmkm() {
-  const snap = await getDocs(collection(db, "umkm"));
-  allUmkm = [];
-  snap.forEach((d) => {
-    const u = d.data();
-    u.id = d.id;
-    allUmkm.push(u);
-  });
+// === UMKM ===
+const umkmList=document.getElementById("umkmList");
+let allUmkm=[];
+async function loadUmkm(){
+  const snap=await getDocs(collection(db,"umkm"));
+  allUmkm=[];snap.forEach((d)=>allUmkm.push({...d.data(),id:d.id}));
   renderUmkm(allUmkm);
 }
-function renderUmkm(data) {
-  umkmList.innerHTML = "";
-  data.forEach((u) => {
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML = `
-      ${u.foto ? `<img src="${u.foto}" alt="${u.nama}">` : ""}
-      <div class="card-content">
-        <h4>${u.nama}</h4>
-        <p>💰 Rp${(u.harga || 0).toLocaleString()}</p>
-        <p>${u.deskripsi || ""}</p>
-        ${u.wa ? `<a href="https://wa.me/${u.wa}" class="btn" target="_blank">Hubungi</a>` : ""}
-      </div>`;
-    umkmList.appendChild(card);
+function renderUmkm(data){
+  umkmList.innerHTML="";
+  data.forEach((u)=>{
+    const el=document.createElement("div");
+    el.className="card";
+    el.innerHTML=`${u.foto?`<img src="${u.foto}" alt="${u.nama}">`:""}
+    <div class="card-content"><h4>${u.nama}</h4><p>💰 Rp${(u.harga||0).toLocaleString()}</p>
+    <p>${u.deskripsi||""}</p>${u.wa?`<a href="https://wa.me/${u.wa}" class="btn" target="_blank">Hubungi</a>`:""}</div>`;
+    umkmList.appendChild(el);
   });
 }
-document.getElementById("searchUmkm").oninput = (e) => {
-  const key = e.target.value.toLowerCase();
-  const filtered = allUmkm.filter((u) =>
-    u.nama.toLowerCase().includes(key) || (u.deskripsi || "").toLowerCase().includes(key)
-  );
-  renderUmkm(filtered);
+document.getElementById("searchUmkm").oninput=(e)=>{
+  const key=e.target.value.toLowerCase();
+  renderUmkm(allUmkm.filter(u=>u.nama.toLowerCase().includes(key)||(u.deskripsi||"").toLowerCase().includes(key)));
 };
 loadUmkm();
+
+// === KAS ===
+const kasTotal=document.getElementById("kasTotal");
+const kasList=document.getElementById("kasList");
+async function loadKas(){
+  const snap=await getDocs(query(collection(db,"kas"),orderBy("tanggal","desc")));
+  let total=0;let html="";
+  snap.forEach((d)=>{
+    const k=d.data();
+    const val=k.jenis==="masuk"?k.nominal:-k.nominal;
+    total+=val;
+    html+=`<p>${k.tanggal} - ${k.keterangan} <br>
+      <strong style="color:${k.jenis==="masuk"?"green":"red"};">${k.jenis==="masuk"?"+":"-"} Rp${k.nominal.toLocaleString()}</strong></p>`;
+  });
+  kasTotal.textContent="Rp "+total.toLocaleString();
+  kasList.innerHTML=html||"<p>Belum ada transaksi kas.</p>";
+}
 </script>
 </body>
 </html>
