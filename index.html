@@ -1,238 +1,236 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
 <title>Karang Taruna Cilosari Barat RT01/RW08</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
 <style>
-:root{
-  --primary:#0e4c92; --accent:#f6c445; --bg:#f9fafb; --text:#1e293b; --card:#fff; --shadow:rgba(0,0,0,.1);
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #f5f7fa;
+  color: #1e293b;
 }
-body.dark{
-  --primary:#082c55; --accent:#ffd84d; --bg:#0f172a; --text:#e2e8f0; --card:#1f2937; --shadow:rgba(255,255,255,.12);
+header {
+  background: linear-gradient(90deg, #0e4c92, #1a6ac2);
+  color: #fff;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;line-height:1.6;}
-
-/* NAVBAR */
-.nav{
-  position:sticky;top:0;z-index:1000;
-  background:linear-gradient(90deg,var(--primary),#1a6ac2);
-  color:#fff;display:flex;align-items:center;justify-content:space-between;
-  padding:.75rem 1rem;box-shadow:0 2px 10px var(--shadow);
+header h1 {
+  margin: 0;
+  font-size: 1.1rem;
 }
-.brand{font-weight:700;letter-spacing:.3px;font-size:1rem;margin-right:.5rem}
-.nav-right{display:flex;gap:.5rem;align-items:center}
-.btn{border:none;border-radius:8px;padding:.5rem .8rem;font-weight:600;cursor:pointer}
-.btn-accent{background:var(--accent);color:var(--primary)}
-.btn-ghost{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.5)}
-#modeToggle{width:38px;height:38px;border-radius:50%;border:2px solid var(--accent);background:transparent;color:var(--accent)}
-/* Hamburger */
-.burger{display:flex;flex-direction:column;gap:4px;width:28px;cursor:pointer;}
-.burger span{display:block;height:3px;background:#fff;border-radius:2px;transition:.3s}
-.menu{display:flex;gap:1rem;align-items:center}
-@media(max-width:840px){
-  .menu{position:fixed;inset:56px 0 auto 0;background:linear-gradient(180deg,var(--primary),#195eaf);
-        display:none;flex-direction:column;align-items:flex-start;padding:1rem 1.25rem;gap:.75rem;box-shadow:0 6px 16px var(--shadow)}
-  .menu.show{display:flex}
-  .menu a{width:100%}
+header nav a {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 1rem;
+  font-weight: 600;
 }
-.menu a{color:#fff;text-decoration:none;font-weight:600;position:relative}
-.menu a::after{content:"";position:absolute;left:0;bottom:-3px;width:0;height:2px;background:var(--accent);transition:.2s}
-.menu a:hover::after{width:100%}
-
-/* HERO */
-.hero{
-  background:linear-gradient(135deg,var(--primary),#1a6ac2);
-  color:#fff;text-align:center;padding:3.5rem 1rem 2.5rem;
+section {
+  padding: 2rem 1rem;
 }
-.hero h1{font-size:1.35rem;margin:.2rem 0}
-.hero p{opacity:.95;margin:.25rem 0 1rem}
-.cta{background:var(--accent);color:var(--primary);border:none;border-radius:10px;padding:.7rem 1.1rem;font-weight:700;cursor:pointer}
+.container {
+  max-width: 1000px;
+  margin: auto;
+}
+h2 {
+  color: #0e4c92;
+  border-left: 5px solid #f6c445;
+  padding-left: 0.5rem;
+}
+.grid-2 {
+  display: grid;
+  gap: 1rem;
+}
+@media (min-width: 768px) {
+  .grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+}
+.card img {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+.btn {
+  background: #0e4c92;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+  font-weight: 600;
+}
+.btn:hover {
+  background: #f6c445;
+  color: #0e4c92;
+}
 
-/* MAIN LAYOUT */
-.container{max-width:1100px;margin:auto;padding:1.2rem}
-.section{margin-top:1.2rem}
-.section h2{color:var(--primary);border-left:5px solid var(--accent);padding-left:.6rem;margin:.2rem 0 1rem;font-size:1.05rem}
-.grid{display:grid;gap:1rem;grid-template-columns:repeat(12,1fr)}
-.card{grid-column:span 12;background:var(--card);padding:.9rem;border-radius:12px;box-shadow:0 2px 10px var(--shadow)}
-.card img{width:100%;height:180px;object-fit:cover;border-radius:8px;margin-bottom:.6rem}
-.card h3{margin:.2rem 0 .3rem}
-.card p{margin:.2rem 0 .4rem}
-
-/* Responsive cards */
-@media(min-width:520px){ .card{grid-column:span 6} }
-@media(min-width:900px){ .card{grid-column:span 4} }
-
-/* FOOTER */
-footer{margin-top:1.2rem;background:linear-gradient(90deg,var(--primary),#1a6ac2);color:#fff;text-align:center;padding:1.1rem}
-
-/* MODALS */
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;justify-content:center;align-items:center;z-index:1200}
-.modal.show{display:flex}
-.modal .box{background:var(--card);width:92%;max-width:380px;border-radius:12px;padding:1rem 1.1rem;box-shadow:0 10px 30px var(--shadow)}
-.modal .box h3{margin:.2rem 0 1rem;color:var(--primary);text-align:center}
-.modal .box input{width:100%;padding:.7rem;border:1px solid #cbd5e1;background:transparent;border-radius:8px;margin-bottom:.8rem;color:var(--text)}
-.modal .box .btn{width:100%}
-.modal .link{text-align:center;margin-top:.4rem}
-.modal .link a{color:var(--primary);font-weight:700;text-decoration:none}
+/* === MODAL === */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background: rgba(0, 0, 0, 0.5);
+}
+.modal-content {
+  background: #fff;
+  margin: 10% auto;
+  padding: 1rem;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 600px;
+  position: relative;
+  animation: fadeIn 0.3s ease;
+}
+.close {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #0e4c92;
+}
+.modal img {
+  max-width: 100%;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+footer {
+  background: #0e4c92;
+  color: #fff;
+  text-align: center;
+  padding: 1rem;
+}
 </style>
 </head>
 <body>
-  <header class="nav">
-    <div style="display:flex;gap:.8rem;align-items:center">
-      <div class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></div>
-      <div class="brand">Karang Taruna Cilosari Barat</div>
-    </div>
-    <nav class="menu" id="menu">
-      <a href="#berita" onclick="closeMenu()">Berita</a>
-      <a href="#umkm" onclick="closeMenu()">UMKM</a>
-      <a href="#kontak" onclick="closeMenu()">Kontak</a>
-    </nav>
-    <div class="nav-right">
-      <button class="btn btn-accent" id="authBtn">Masuk / Daftar</button>
-      <button class="btn" id="modeToggle">☀️</button>
-    </div>
-  </header>
+<header>
+  <h1>Karang Taruna Cilosari Barat RT01/RW08</h1>
+  <nav>
+    <a href="#berita">Berita</a>
+    <a href="./admin.html">Admin</a>
+  </nav>
+</header>
 
-  <section class="hero">
-    <h1>RT01/RW08 • Kelurahan Kemijen, Semarang Timur</h1>
-    <p>Portal pemuda — Informasi, kegiatan, dan UMKM Cilosari Barat</p>
-    <button class="cta" onclick="document.getElementById('berita').scrollIntoView({behavior:'smooth'});">Lihat Kegiatan</button>
+<main>
+  <section class="hero" style="background:#0e4c92;color:#fff;text-align:center;padding:3rem 1rem;">
+    <h2>Selamat Datang di Portal Karang Taruna</h2>
+    <p>Media informasi, kegiatan, dan UMKM warga Cilosari Barat RT01/RW08, Kelurahan Kemijen, Semarang Timur</p>
   </section>
 
-  <main class="container">
-    <section id="berita" class="section">
-      <h2>📰 Berita Terbaru</h2>
-      <div id="beritaList" class="grid"></div>
-    </section>
+  <!-- === BERITA === -->
+  <section id="berita" class="section">
+    <div class="container">
+      <h2>📰 Berita Terkini</h2>
+      <div id="beritaList" class="grid-2"></div>
+    </div>
+  </section>
 
-    <section id="umkm" class="section">
-      <h2>🏪 UMKM Binaan</h2>
-      <div id="umkmList" class="grid"></div>
-    </section>
-
-    <section id="kontak" class="section">
-      <h2>📞 Kontak</h2>
-      <div class="card">
-        <p>📍 Cilosari Barat RT01/RW08, Kelurahan Kemijen, Semarang Timur</p>
-        <p>📸 Instagram: <a target="_blank" href="https://instagram.com/karangtaruna_cilosari">@karangtaruna_cilosari</a></p>
-        <p>🎵 TikTok: <a target="_blank" href="https://tiktok.com/@karangtaruna_cilosari">@karangtaruna_cilosari</a></p>
-      </div>
-    </section>
-  </main>
-
-  <footer>© 2025 Karang Taruna Cilosari Barat RT01/RW08 – Semarang Timur</footer>
-
-  <!-- AUTH MODAL -->
-  <div class="modal" id="authModal">
-    <div class="box">
-      <h3 id="authTitle">Masuk ke Akun</h3>
-      <input type="email" id="email" placeholder="Email" autocomplete="username" required>
-      <input type="password" id="password" placeholder="Password (≥6 karakter)" autocomplete="current-password" required>
-      <button class="btn btn-accent" id="authAction">Login</button>
-      <div class="link" id="switchText">Belum punya akun? <a href="#" id="switchMode">Daftar</a></div>
-      <div class="link"><a href="#" id="closeModal">Tutup</a></div>
+  <!-- === Modal Detail Berita === -->
+  <div id="modalBerita" class="modal">
+    <div class="modal-content">
+      <span id="closeModal" class="close">&times;</span>
+      <h3 id="mJudul"></h3>
+      <img id="mFoto" alt="" />
+      <p id="mIsi"></p>
+      <p><small id="mPenulis"></small></p>
     </div>
   </div>
+</main>
 
-  <!-- PROFILE MODAL -->
-  <div class="modal" id="profileModal">
-    <div class="box">
-      <h3>Profil Akun</h3>
-      <p id="userEmail">Memuat...</p>
-      <button class="btn btn-accent" id="toDashboard">Buka Dashboard</button>
-      <button class="btn btn-ghost" id="logout">Keluar</button>
-      <div class="link"><a href="#" id="closeProfile">Tutup</a></div>
-    </div>
-  </div>
+<footer>
+  <p>&copy; 2025 Karang Taruna Cilosari Barat RT01/RW08 - Semarang Timur</p>
+</footer>
 
+<!-- === JS Firebase + Berita === -->
 <script type="module">
-import { db, auth } from './js/firebase.js';
-import { loginUser, registerUser, logoutUser } from './js/auth.js';
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-import { collection, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+import { db } from "./js/firebase.js";
+import {
+  collection,
+  query,
+  getDocs,
+  orderBy,
+  getDoc,
+  doc
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-/* ====== NAV mobile ====== */
-const burger=document.getElementById('burger');
-const menu=document.getElementById('menu');
-window.closeMenu=()=>menu.classList.remove('show');
-burger.onclick=()=>menu.classList.toggle('show');
+// Elemen
+const beritaList = document.getElementById("beritaList");
+const modal = document.getElementById("modalBerita");
+const closeModal = document.getElementById("closeModal");
+const mJudul = document.getElementById("mJudul");
+const mFoto = document.getElementById("mFoto");
+const mIsi = document.getElementById("mIsi");
+const mPenulis = document.getElementById("mPenulis");
 
-/* ====== Mode ====== */
-const toggle=document.getElementById('modeToggle');
-let dark=localStorage.getItem('darkMode')==='true';
-const apply=()=>{document.body.classList.toggle('dark',dark);toggle.textContent=dark?'🌙':'☀️';};
-toggle.onclick=()=>{dark=!dark;localStorage.setItem('darkMode',dark);apply();}; apply();
-
-/* ====== Auth Modals ====== */
-const authBtn=document.getElementById('authBtn');
-const authModal=document.getElementById('authModal');
-const profileModal=document.getElementById('profileModal');
-const closeModal=document.getElementById('closeModal');
-const closeProfile=document.getElementById('closeProfile');
-const authTitle=document.getElementById('authTitle');
-const authAction=document.getElementById('authAction');
-const switchText=document.getElementById('switchText');
-const switchMode=document.getElementById('switchMode');
-const userEmail=document.getElementById('userEmail');
-const toDashboard=document.getElementById('toDashboard');
-const logout=document.getElementById('logout');
-
-let isLogin=true;
-authBtn.onclick=()=>{ if(auth.currentUser){profileModal.classList.add('show');} else {authModal.classList.add('show');} }
-closeModal.onclick=(e)=>{e.preventDefault();authModal.classList.remove('show');}
-closeProfile.onclick=(e)=>{e.preventDefault();profileModal.classList.remove('show');}
-toDashboard.onclick=()=>location.href="./admin.html";
-logout.onclick=async()=>{await logoutUser();profileModal.classList.remove('show');}
-
-switchMode.onclick=(e)=>{e.preventDefault();isLogin=!isLogin;
-  if(isLogin){authTitle.textContent='Masuk ke Akun';authAction.textContent='Login';switchText.innerHTML='Belum punya akun? <a href="#" id="switchMode">Daftar</a>';}
-  else{authTitle.textContent='Daftar Akun Baru';authAction.textContent='Daftar';switchText.innerHTML='Sudah punya akun? <a href="#" id="switchMode">Login</a>';}
-  // re-bind link
-  document.getElementById('switchMode').onclick=switchMode.onclick;
+// Tutup modal
+closeModal.onclick = () => (modal.style.display = "none");
+window.onclick = (e) => {
+  if (e.target === modal) modal.style.display = "none";
 };
-authAction.onclick=async()=>{
-  const email=document.getElementById('email').value.trim();
-  const pass=document.getElementById('password').value;
-  try{
-    if(isLogin) await loginUser(email,pass);
-    else await registerUser(email,pass);
-    authModal.classList.remove('show');
-  }catch(err){alert("Gagal: "+err.message);}
-};
-onAuthStateChanged(auth,(user)=>{authBtn.textContent=user?'Profil':'Masuk / Daftar';userEmail.textContent=user?user.email:'Memuat...';});
 
-/* ====== Load data ====== */
-async function loadBerita(){
-  const c=document.getElementById('beritaList');
-  const snap=await getDocs(query(collection(db,'berita'),orderBy('createdAt','desc')));
-  c.innerHTML="";
-  snap.forEach(d=>{
-    const b=d.data();
-    const el=document.createElement('div'); el.className='card';
-    el.innerHTML=`${b.foto?`<img src="${b.foto}" alt="${b.judul}">`:''}
-      <h3>${b.judul}</h3><p>${(b.isi||'').slice(0,120)}...</p>`;
-    c.appendChild(el);
+// Load berita ringkas
+async function loadBerita() {
+  const snap = await getDocs(query(collection(db, "berita"), orderBy("createdAt", "desc")));
+  beritaList.innerHTML = "";
+  snap.forEach((d) => {
+    const b = d.data();
+    const isiPendek =
+      (b.isi || "").length > 180 ? b.isi.substring(0, 180) + "..." : b.isi;
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      ${b.foto ? `<img src="${b.foto}" alt="${b.judul}">` : ""}
+      <h3>${b.judul}</h3>
+      <p>${isiPendek}</p>
+      <button class="btn" onclick="openBerita('${d.id}')">Selengkapnya</button>
+    `;
+    beritaList.appendChild(card);
   });
 }
-async function loadUmkm(){
-  const c=document.getElementById('umkmList');
-  const snap=await getDocs(query(collection(db,'umkm'),orderBy('createdAt','desc')));
-  c.innerHTML="";
-  snap.forEach(d=>{
-    const u=d.data();
-    const el=document.createElement('div'); el.className='card';
-    el.innerHTML=`${u.foto?`<img src="${u.foto}" alt="${u.nama}">`:''}
-      <h3>${u.nama}</h3>
-      <p>💰 Rp${(u.harga||0).toLocaleString()}</p>
-      <p>${u.deskripsi||''}</p>
-      ${u.wa?`<p>📱 <a target="_blank" href="https://wa.me/${u.wa}">${u.wa}</a></p>`:''}`;
-    c.appendChild(el);
-  });
-}
-loadBerita(); loadUmkm();
+loadBerita();
+
+// Tampilkan modal detail
+window.openBerita = async (id) => {
+  const docRef = doc(db, "berita", id);
+  const docSnap = await getDoc(docRef);
+  if (!docSnap.exists()) {
+    alert("Berita tidak ditemukan!");
+    return;
+  }
+  const b = docSnap.data();
+  mJudul.textContent = b.judul;
+  mIsi.textContent = b.isi;
+  mFoto.src = b.foto || "";
+  mPenulis.textContent = "Ditulis oleh: " + (b.penulis || "Admin Karang Taruna");
+  modal.style.display = "block";
+};
 </script>
 </body>
 </html>
