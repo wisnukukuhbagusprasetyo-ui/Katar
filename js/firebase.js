@@ -1,13 +1,17 @@
 // =======================================================
-//  Firebase + ImgBB Configuration for Karang Taruna v4.2
+//  Firebase + ImgBB Configuration for Karang Taruna v4.3
 // =======================================================
 
-// Import Firebase SDK modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import { 
+  getAuth, 
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut 
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-// ========== KONFIGURASI FIREBASE ==========
+// --- KONFIGURASI FIREBASE ---
 const firebaseConfig = {
   apiKey: "AIzaSyCgJC8OQBG_wQt57tZHfNuVKPb2VVlAalI",
   authDomain: "karang-taruna-aadaf.firebaseapp.com",
@@ -17,30 +21,16 @@ const firebaseConfig = {
   appId: "1:367208001887:web:bce5982d99edefb7e746ea"
 };
 
-// Inisialisasi Firebase
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 
-console.log("[Firebase Connected ✅]", firebaseConfig.projectId);
-
-// =======================================================
-//                KONFIGURASI IMGBB (Gratis)
-// =======================================================
-
-// API Key ImgBB kamu
+// --- KONFIGURASI IMGBB ---
 const imgbbApiKey = "d0a0d866377c1d4daa8cd9d937303b76";
 
-// Fungsi upload gambar ke ImgBB
+// Upload ke ImgBB
 export async function uploadToImgBB(file) {
-  if (!file) throw new Error("File tidak ditemukan untuk diupload.");
-
-  const allowed = ["image/jpeg", "image/png", "image/webp", "image/jpg"];
-  if (!allowed.includes(file.type)) {
-    alert("Format file tidak didukung. Gunakan JPG, PNG, atau WEBP.");
-    return "";
-  }
-
+  if (!file) throw new Error("File tidak ditemukan.");
   const formData = new FormData();
   formData.append("image", file);
 
@@ -49,22 +39,28 @@ export async function uploadToImgBB(file) {
       method: "POST",
       body: formData
     });
-
     const data = await res.json();
-
-    if (!data.success) {
-      console.error("ImgBB Error:", data);
-      alert("Upload gagal: " + (data.error?.message || "Tidak diketahui"));
-      return "";
-    }
-
-    const imageUrl = data.data.url;
-    console.log("[ImgBB] Upload sukses:", imageUrl);
-    return imageUrl;
-
+    if (!data.success) throw new Error(data.error?.message || "Upload gagal");
+    console.log("[ImgBB] Upload sukses:", data.data.url);
+    return data.data.url;
   } catch (err) {
     console.error("Upload Error:", err);
-    alert("Gagal mengunggah gambar: " + err.message);
+    alert("Gagal upload: " + err.message);
     return "";
   }
 }
+
+// --- AUTH HELPER ---
+export async function login(email, password) {
+  return await signInWithEmailAndPassword(auth, email, password);
+}
+
+export async function register(email, password) {
+  return await createUserWithEmailAndPassword(auth, email, password);
+}
+
+export async function logout() {
+  return await signOut(auth);
+}
+
+console.log("[Firebase Connected ✅]");
