@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1.0" />
-<title>Portal Karang Taruna Cilosari Barat RT01/RW08</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Karang Taruna Cilosari Barat RT01/RW08</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
   --biru: #0e4c92;
   --emas: #f6c445;
   --gelap: #1e293b;
-  --abu: #f7f9fb;
-  --putih: #fff;
+  --abu: #f5f7fa;
+  --putih: #ffffff;
 }
 [data-theme='dark'] {
   --biru: #1a73e8;
+  --emas: #f6c445;
   --gelap: #e2e8f0;
   --abu: #0f172a;
   --putih: #1e293b;
 }
-*{box-sizing:border-box;transition:background .3s,color .3s;}
+* { box-sizing: border-box; transition: background .3s,color .3s; }
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
@@ -29,17 +30,35 @@ body {
 header {
   background: linear-gradient(90deg, var(--biru), #1a6ac2);
   color: #fff;
-  padding: 1rem 1.5rem;
+  padding: .8rem 1.2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+  position: sticky;
+  top: 0;
+  z-index: 99;
 }
-header h1 { font-size: 1.1rem; margin: 0; font-weight: 700; }
-nav { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
+header h1 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: .5px;
+}
+nav {
+  display: flex;
+  gap: .8rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
 nav a, nav button {
-  color: #fff; text-decoration: none; font-weight: 600; background:none;
-  border:none; cursor:pointer; font-family:'Poppins',sans-serif;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
 }
 nav a:hover, nav button:hover { color: var(--emas); }
 #themeToggle {
@@ -47,7 +66,7 @@ nav a:hover, nav button:hover { color: var(--emas); }
   color: var(--biru);
   border: none;
   border-radius: 20px;
-  padding: 0.3rem 0.7rem;
+  padding: .3rem .8rem;
   cursor: pointer;
   font-weight: 600;
 }
@@ -55,70 +74,103 @@ nav a:hover, nav button:hover { color: var(--emas); }
   background: linear-gradient(180deg, var(--biru), #155fa3);
   color: #fff;
   text-align: center;
-  padding: 3rem 1rem;
+  padding: 3.5rem 1rem;
+  border-bottom: 4px solid var(--emas);
 }
-.hero h2 { margin-bottom: 0.5rem; font-size: 1.8rem; }
-.hero p { max-width: 650px; margin: auto; line-height: 1.6; font-size: 0.95rem; }
+.hero h2 { font-size: 1.8rem; margin: 0 0 .5rem; }
+.hero p { max-width: 680px; margin: auto; line-height: 1.6; font-size: .95rem; }
+.container { max-width: 1100px; margin: auto; padding: 1rem; }
 
-section { padding: 2rem 1rem; }
-.container { max-width: 1100px; margin: auto; }
-h2.section-title {
+.section-title {
+  font-size: 1.3rem;
   color: var(--biru);
   border-left: 5px solid var(--emas);
-  padding-left: 0.6rem;
-  margin-bottom: 1.5rem;
-  font-size: 1.3rem;
+  padding-left: .6rem;
+  margin-bottom: 1.2rem;
 }
-.grid { display: grid; gap: 1.2rem; }
-@media(min-width:768px){.grid-2{grid-template-columns:repeat(2,1fr)}.grid-3{grid-template-columns:repeat(3,1fr)}}
+
+.grid {
+  display: grid;
+  gap: 1.2rem;
+}
+@media (min-width: 600px) { .grid-2 { grid-template-columns: repeat(2,1fr); } }
+@media (min-width: 900px) { .grid-3 { grid-template-columns: repeat(3,1fr); } }
+
 .card {
   background: var(--putih);
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  padding: 1rem;
-  transition: transform .2s ease;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  overflow: hidden;
+  transition: transform .2s ease, box-shadow .3s ease;
 }
-.card:hover { transform: translateY(-4px); }
-.card img { width: 100%; border-radius: 8px; margin-bottom: 0.6rem; object-fit: cover; max-height: 200px; }
-.card h3, .card h4 { color: var(--biru); margin: 0.4rem 0; font-size: 1rem; }
-.card p { font-size: 0.9rem; line-height: 1.5; color: #334155; }
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+.card-content {
+  padding: 1rem;
+}
+.card h3, .card h4 {
+  color: var(--biru);
+  margin: .4rem 0;
+}
+.card p {
+  font-size: .9rem;
+  line-height: 1.5;
+  color: #334155;
+}
 .btn {
   background: var(--biru);
   color: #fff;
   border: none;
   border-radius: 6px;
-  padding: 0.4rem 0.8rem;
+  padding: .5rem .8rem;
   cursor: pointer;
   font-weight: 600;
   display: inline-block;
   text-decoration: none;
-  margin-top: 0.4rem;
+  margin-top: .4rem;
+  font-size: .9rem;
 }
-.btn:hover { background: var(--emas); color: var(--biru); }
+.btn:hover {
+  background: var(--emas);
+  color: var(--biru);
+}
+.search-box {
+  text-align: right;
+  margin-bottom: 1rem;
+}
+.search-box input {
+  padding: .5rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  width: 100%;
+  max-width: 300px;
+}
 footer {
   background: var(--biru);
   color: #fff;
   text-align: center;
   padding: 1rem;
   margin-top: 2rem;
-  font-size: 0.9rem;
-}
-footer a { color: var(--emas); text-decoration: none; margin: 0 0.5rem; font-weight: 600; }
-footer a:hover { color: #fff; }
-
-.search-box { margin-bottom: 1.2rem; text-align: right; }
-.search-box input {
-  width: 100%; max-width: 300px;
-  padding: 0.5rem; border-radius: 6px; border: 1px solid #ccc;
+  font-size: .9rem;
 }
 .profile-nav {
-  display: flex; gap: .5rem; align-items: center;
+  display: flex;
+  gap: .5rem;
+  align-items: center;
 }
-.profile-name { font-weight:600; }
-@media(max-width:600px){
-  header{flex-direction:column;align-items:flex-start;gap:.5rem}
-  nav{gap:.5rem}
-  .hero h2{font-size:1.4rem}
+.profile-name { font-weight: 600; }
+@media (max-width: 500px) {
+  header { flex-direction: column; align-items: flex-start; gap: .5rem; }
+  nav { width: 100%; justify-content: space-between; }
+  .hero h2 { font-size: 1.4rem; }
+  .card img { height: 160px; }
 }
 </style>
 </head>
@@ -134,29 +186,25 @@ footer a:hover { color: #fff; }
   </nav>
 </header>
 
-<main>
-  <section class="hero">
-    <h2>Selamat Datang di Portal Karang Taruna</h2>
-    <p>Media informasi kegiatan, pengumuman, dan pengembangan UMKM warga Cilosari Barat RT01/RW08, Kelurahan Kemijen, Kecamatan Semarang Timur.</p>
-  </section>
+<section class="hero">
+  <h2>Selamat Datang di Portal Karang Taruna</h2>
+  <p>Informasi resmi kegiatan, berita warga, dan pengembangan UMKM dari Karang Taruna RT01/RW08, Kelurahan Kemijen, Kecamatan Semarang Timur.</p>
+</section>
 
-  <!-- === BERITA === -->
+<main class="container">
+  <!-- BERITA -->
   <section id="berita">
-    <div class="container">
-      <h2 class="section-title">📰 Berita Terkini</h2>
-      <div id="beritaList" class="grid grid-2"></div>
-    </div>
+    <h2 class="section-title">📰 Berita Terkini</h2>
+    <div id="beritaList" class="grid grid-2"></div>
   </section>
 
-  <!-- === UMKM === -->
+  <!-- UMKM -->
   <section id="umkm">
-    <div class="container">
-      <h2 class="section-title">🏪 UMKM Warga</h2>
-      <div class="search-box">
-        <input type="text" id="searchUmkm" placeholder="Cari UMKM..." />
-      </div>
-      <div id="umkmList" class="grid grid-3"></div>
+    <h2 class="section-title">🏪 UMKM Warga</h2>
+    <div class="search-box">
+      <input type="text" id="searchUmkm" placeholder="Cari UMKM...">
     </div>
+    <div id="umkmList" class="grid grid-3"></div>
   </section>
 </main>
 
@@ -164,46 +212,39 @@ footer a:hover { color: #fff; }
   <p>&copy; 2025 Karang Taruna Cilosari Barat RT01/RW08 - Semarang Timur</p>
 </footer>
 
-<!-- === JS FIREBASE + AUTH + DARKMODE === -->
 <script type="module">
 import { db, auth } from "./js/firebase.js";
-import {
-  onAuthStateChanged, signOut
-} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-import {
-  collection, getDocs
-} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
 // === DARK MODE ===
 const themeToggle = document.getElementById("themeToggle");
-if(localStorage.getItem("theme")==="dark"){
-  document.documentElement.setAttribute("data-theme","dark");
-  themeToggle.textContent="☀️";
+if (localStorage.getItem("theme") === "dark") {
+  document.documentElement.setAttribute("data-theme", "dark");
+  themeToggle.textContent = "☀️";
 }
-themeToggle.onclick = ()=>{
-  if(document.documentElement.getAttribute("data-theme")==="dark"){
+themeToggle.onclick = () => {
+  if (document.documentElement.getAttribute("data-theme") === "dark") {
     document.documentElement.removeAttribute("data-theme");
-    localStorage.setItem("theme","light");
-    themeToggle.textContent="🌙";
-  }else{
-    document.documentElement.setAttribute("data-theme","dark");
-    localStorage.setItem("theme","dark");
-    themeToggle.textContent="☀️";
+    localStorage.setItem("theme", "light");
+    themeToggle.textContent = "🌙";
+  } else {
+    document.documentElement.setAttribute("data-theme", "dark");
+    localStorage.setItem("theme", "dark");
+    themeToggle.textContent = "☀️";
   }
 };
 
-// === LOGIN STATE ===
+// === AUTH DISPLAY ===
 const navAdmin = document.getElementById("navAdmin");
 const navAuth = document.getElementById("navAuth");
-
-onAuthStateChanged(auth, (user)=>{
-  if(user){
+onAuthStateChanged(auth, (user) => {
+  if (user) {
     navAuth.innerHTML = `
       <span class="profile-name">👤 ${user.email.split('@')[0]}</span>
-      <button id="logoutBtn">Keluar</button>
-    `;
+      <button id="logoutBtn">Keluar</button>`;
     navAdmin.style.display = "inline-block";
-    document.getElementById("logoutBtn").onclick = async ()=>{
+    document.getElementById("logoutBtn").onclick = async () => {
       await signOut(auth);
       alert("Anda telah keluar.");
     };
@@ -213,58 +254,76 @@ onAuthStateChanged(auth, (user)=>{
   }
 });
 
-// === LOAD BERITA ===
-const beritaList=document.getElementById("beritaList");
-async function loadBerita(){
-  const snap=await getDocs(collection(db,"berita"));
-  beritaList.innerHTML="";
-  snap.forEach((d)=>{
-    const b=d.data();
-    const isiPendek=(b.isi||"").length>180?b.isi.substring(0,180)+"...":b.isi;
-    const card=document.createElement("div");
-    card.className="card";
-    card.innerHTML=`
-      ${b.foto?`<img src="${b.foto}" alt="${b.judul}">`:""}
-      <h3>${b.judul}</h3>
-      <p>${isiPendek}</p>
-      <a class="btn" href="berita.html?id=${d.id}">Selengkapnya</a>`;
-    beritaList.appendChild(card);
-  });
+// === BERITA (fix: tidak hilang, urut manual) ===
+const beritaList = document.getElementById("beritaList");
+async function loadBerita() {
+  try {
+    const snap = await getDocs(collection(db, "berita"));
+    beritaList.innerHTML = "";
+    if (snap.empty) {
+      beritaList.innerHTML = "<p>Belum ada berita.</p>";
+      return;
+    }
+    const beritaArray = [];
+    snap.forEach((d) => {
+      const b = d.data();
+      b.id = d.id;
+      beritaArray.push(b);
+    });
+    beritaArray.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+    beritaArray.forEach((b) => {
+      const isiPendek = (b.isi || "").length > 180 ? b.isi.substring(0, 180) + "..." : b.isi;
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `
+        ${b.foto ? `<img src="${b.foto}" alt="${b.judul}">` : ""}
+        <div class="card-content">
+          <h3>${b.judul}</h3>
+          <p>${isiPendek}</p>
+          <a class="btn" href="berita.html?id=${b.id}">Selengkapnya</a>
+        </div>`;
+      beritaList.appendChild(card);
+    });
+  } catch (e) {
+    console.error("Gagal memuat berita:", e);
+    beritaList.innerHTML = "<p style='color:red'>Terjadi kesalahan memuat berita.</p>";
+  }
 }
 loadBerita();
 
-// === LOAD UMKM + SEARCH ===
-const umkmList=document.getElementById("umkmList");
-let allUmkm=[];
-async function loadUmkm(){
-  const snap=await getDocs(collection(db,"umkm"));
-  umkmList.innerHTML="";
-  allUmkm=[];
-  snap.forEach((d)=>{
-    const u=d.data(); u.id=d.id; allUmkm.push(u);
+// === UMKM + SEARCH ===
+const umkmList = document.getElementById("umkmList");
+let allUmkm = [];
+async function loadUmkm() {
+  const snap = await getDocs(collection(db, "umkm"));
+  allUmkm = [];
+  snap.forEach((d) => {
+    const u = d.data();
+    u.id = d.id;
+    allUmkm.push(u);
   });
   renderUmkm(allUmkm);
 }
-function renderUmkm(data){
-  umkmList.innerHTML="";
-  data.forEach((u)=>{
-    const card=document.createElement("div");
-    card.className="card";
-    card.innerHTML=`
-      ${u.foto?`<img src="${u.foto}" alt="${u.nama}">`:""}
-      <h4>${u.nama}</h4>
-      <p>💰 Rp${(u.harga||0).toLocaleString()}</p>
-      <p>${u.deskripsi||""}</p>
-      ${u.wa?`<a href="https://wa.me/${u.wa}" class="btn" target="_blank">WhatsApp</a>`:""}
-    `;
+function renderUmkm(data) {
+  umkmList.innerHTML = "";
+  data.forEach((u) => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      ${u.foto ? `<img src="${u.foto}" alt="${u.nama}">` : ""}
+      <div class="card-content">
+        <h4>${u.nama}</h4>
+        <p>💰 Rp${(u.harga || 0).toLocaleString()}</p>
+        <p>${u.deskripsi || ""}</p>
+        ${u.wa ? `<a href="https://wa.me/${u.wa}" class="btn" target="_blank">Hubungi</a>` : ""}
+      </div>`;
     umkmList.appendChild(card);
   });
 }
-document.getElementById("searchUmkm").oninput=(e)=>{
-  const keyword=e.target.value.toLowerCase();
-  const filtered=allUmkm.filter(u=>
-    u.nama.toLowerCase().includes(keyword) ||
-    (u.deskripsi||"").toLowerCase().includes(keyword)
+document.getElementById("searchUmkm").oninput = (e) => {
+  const key = e.target.value.toLowerCase();
+  const filtered = allUmkm.filter((u) =>
+    u.nama.toLowerCase().includes(key) || (u.deskripsi || "").toLowerCase().includes(key)
   );
   renderUmkm(filtered);
 };
