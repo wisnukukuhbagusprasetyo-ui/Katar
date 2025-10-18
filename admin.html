@@ -7,34 +7,40 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
-  body{margin:0;font-family:'Poppins',sans-serif;background:#f5f7fa;color:#1e293b}
-  header{background:linear-gradient(90deg,#0e4c92,#1a6ac2);color:#fff;padding:1rem;display:flex;justify-content:space-between;align-items:center}
-  header h1{font-size:1.1rem;margin:0}
-  header button{background:#f6c445;color:#0e4c92;border:none;border-radius:8px;padding:.5rem .9rem;font-weight:600;cursor:pointer}
-  .wrapper{display:grid;grid-template-columns:220px 1fr;gap:1rem;padding:1rem}
-  @media(max-width:850px){.wrapper{grid-template-columns:1fr}}
-  .sidebar{background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.08);padding:.6rem}
-  .side-item{display:block;width:100%;padding:.55rem .7rem;margin-bottom:.3rem;border:none;background:transparent;font-weight:600;color:#0e4c92;text-align:left;border-radius:6px;cursor:pointer}
-  .side-item.active{background:#f6c445;color:#0e4c92}
-  .panel{display:none}
-  .panel.active{display:block}
-  .card{background:#fff;padding:1rem;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.1);margin-bottom:1rem}
-  input,textarea,select{width:100%;padding:.6rem;margin-bottom:.7rem;border:1px solid #ccc;border-radius:6px;font-family:'Poppins',sans-serif}
-  .btn{border:none;border-radius:8px;padding:.6rem 1rem;font-weight:600;cursor:pointer}
-  .btn-primary{background:#0e4c92;color:#fff}
-  .btn-primary:hover{background:#f6c445;color:#0e4c92}
+  :root{ --biru:#0e4c92; --emas:#f6c445; --bg:#f5f7fa; --text:#1e293b; --card:#fff; }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text)}
+  header{background:linear-gradient(90deg,var(--biru),#1a6ac2);color:#fff;padding:1rem;display:flex;justify-content:space-between;align-items:center}
+  header h1{font-size:1.05rem;margin:0}
+  header button{background:var(--emas);color:var(--biru);border:none;border-radius:8px;padding:.5rem .9rem;font-weight:700;cursor:pointer}
+  .wrapper{display:grid;grid-template-columns:240px 1fr;gap:1rem;padding:1rem}
+  @media(max-width:900px){.wrapper{grid-template-columns:1fr}}
+  .sidebar{background:var(--card);border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.08);padding:.7rem;position:sticky;top:.7rem;height:max-content}
+  .side-item{display:block;width:100%;padding:.55rem .7rem;margin-bottom:.35rem;border:none;background:transparent;font-weight:700;color:var(--biru);text-align:left;border-radius:8px;cursor:pointer}
+  .side-item.active{background:var(--emas);color:var(--biru)}
+  .content .panel{display:none}
+  .content .panel.active{display:block}
+  .card{background:var(--card);padding:1rem;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.08);margin-bottom:1rem}
   .grid{display:grid;gap:1rem}
-  @media(min-width:700px){.grid-2{grid-template-columns:repeat(2,1fr)}}
-  .mini{display:flex;gap:.6rem;align-items:center}
-  .mini img{width:44px;height:44px;border-radius:50%;object-fit:cover;background:#e5e7eb}
-  .badge{display:inline-block;background:#eef2ff;color:#3730a3;padding:.15rem .5rem;border-radius:999px;font-size:.8rem;font-weight:700}
-  .row{display:flex;gap:.5rem;flex-wrap:wrap}
+  @media(min-width:720px){.grid-2{grid-template-columns:repeat(2,1fr)}}
+  input,textarea,select{width:100%;padding:.6rem;margin-bottom:.7rem;border:1px solid #cbd5e1;border-radius:8px;font-family:'Poppins',sans-serif}
+  .row{display:flex;gap:.6rem;flex-wrap:wrap}
+  .btn{border:none;border-radius:8px;padding:.55rem .9rem;font-weight:700;cursor:pointer}
+  .btn-primary{background:var(--biru);color:#fff}
+  .btn-primary:hover{background:var(--emas);color:var(--biru)}
+  .btn-ghost{background:#e2e8f0;color:#0f172a}
+  .mini{display:flex;gap:.7rem;align-items:center}
+  .mini img{width:46px;height:46px;border-radius:50%;object-fit:cover;background:#e5e7eb}
+  .badge{display:inline-block;background:#eef2ff;color:#3730a3;padding:.18rem .55rem;border-radius:999px;font-size:.8rem;font-weight:800}
+  .muted{color:#64748b;font-size:.9rem}
+  img.thumb{width:100%;height:180px;object-fit:cover;border-radius:8px;margin-bottom:.5rem}
+  .note{font-size:.85rem;color:#475569}
 </style>
 </head>
 <body>
 <header>
-  <h1>Dashboard Karang Taruna</h1>
-  <button id="logout">Keluar</button>
+  <h1>Dashboard Karang Taruna Cilosari Barat</h1>
+  <div class="row"><span id="whoami" class="muted"></span><button id="logout">Keluar</button></div>
 </header>
 
 <main class="wrapper">
@@ -45,11 +51,12 @@
     <div id="panel-profil" class="panel active">
       <div class="card">
         <h2>👤 Profil Saya</h2>
-        <p>Email: <span id="emailSaya">-</span></p>
+        <p>Email: <b id="emailSaya">-</b></p>
         <p>Role: <span id="roleSaya" class="badge">-</span></p>
-        <input id="namaProfil" placeholder="Nama Lengkap" />
-        <input type="file" id="fotoProfil" accept="image/*" />
+        <input id="namaProfil" placeholder="Nama Lengkap">
+        <input type="file" id="fotoProfil" accept="image/*">
         <button class="btn btn-primary" id="saveProfil">Simpan Profil</button>
+        <p class="note">Foto disimpan via ImgBB. Pastikan /js/imgbb.js terkonfigurasi.</p>
       </div>
     </div>
 
@@ -58,6 +65,7 @@
       <div class="card">
         <h2>👥 Manajemen Anggota</h2>
         <div id="anggotaList" class="grid"></div>
+        <p class="note">Hanya <b>super_admin</b> yang dapat mengubah role. Admin lain hanya baca.</p>
       </div>
     </div>
 
@@ -65,11 +73,13 @@
     <div id="panel-pengumuman" class="panel">
       <div class="card">
         <h2>📢 Pengumuman</h2>
-        <input id="pJudul" placeholder="Judul Pengumuman" />
-        <textarea id="pIsi" rows="4" placeholder="Isi Pengumuman"></textarea>
-        <input id="pTanggal" type="date" />
-        <button class="btn btn-primary" id="pSimpan">Simpan</button>
-        <button class="btn" id="pBatal" style="display:none">Batal Edit</button>
+        <input id="pJudul" placeholder="Judul Pengumuman">
+        <textarea id="pIsi" rows="4" placeholder="Isi pengumuman"></textarea>
+        <input id="pTanggal" type="date">
+        <div class="row">
+          <button class="btn btn-primary" id="pSimpan">Simpan</button>
+          <button class="btn btn-ghost" id="pBatal" style="display:none">Batal Edit</button>
+        </div>
       </div>
       <div id="pengumumanList" class="grid grid-2"></div>
     </div>
@@ -78,26 +88,31 @@
     <div id="panel-berita" class="panel">
       <div class="card">
         <h2>📰 Berita</h2>
-        <input id="bJudul" placeholder="Judul Berita" />
+        <input id="bJudul" placeholder="Judul Berita">
         <textarea id="bIsi" rows="4" placeholder="Isi Berita"></textarea>
-        <input type="file" id="bFoto" accept="image/*" />
-        <button class="btn btn-primary" id="bSimpan">Simpan</button>
-        <button class="btn" id="bBatal" style="display:none">Batal Edit</button>
+        <input type="file" id="bFoto" accept="image/*">
+        <div class="row">
+          <button class="btn btn-primary" id="bSimpan">Simpan</button>
+          <button class="btn btn-ghost" id="bBatal" style="display:none">Batal Edit</button>
+        </div>
       </div>
       <div id="beritaList" class="grid grid-2"></div>
     </div>
 
-    <!-- UMKM -->
+    <!-- UMKM (Produk) -->
     <div id="panel-umkm" class="panel">
       <div class="card">
-        <h2>🏪 UMKM</h2>
-        <input id="uNama" placeholder="Nama UMKM" />
-        <input id="uHarga" type="number" placeholder="Harga" />
-        <input id="uWa" placeholder="Nomor WhatsApp (628xxxx)" />
-        <textarea id="uDes" rows="3" placeholder="Deskripsi"></textarea>
-        <input type="file" id="uFoto" accept="image/*" />
-        <button class="btn btn-primary" id="uSimpan">Simpan</button>
-        <button class="btn" id="uBatal" style="display:none">Batal Edit</button>
+        <h2>🏪 Produk Warga (UMKM)</h2>
+        <input id="uProduk" placeholder="Nama Produk">
+        <input id="uPenjual" placeholder="Nama Penjual">
+        <input id="uHarga" type="number" placeholder="Harga (Rp)">
+        <input id="uWa" placeholder="Nomor WhatsApp (628xxxx)">
+        <textarea id="uDes" rows="3" placeholder="Deskripsi produk"></textarea>
+        <input type="file" id="uFoto" accept="image/*">
+        <div class="row">
+          <button class="btn btn-primary" id="uSimpan">Simpan</button>
+          <button class="btn btn-ghost" id="uBatal" style="display:none">Batal Edit</button>
+        </div>
       </div>
       <div id="umkmList" class="grid grid-2"></div>
     </div>
@@ -106,22 +121,23 @@
     <div id="panel-kas" class="panel">
       <div class="card">
         <h2>💰 Kas</h2>
-        <input id="kJumlah" type="number" placeholder="Jumlah" />
-        <select id="kTipe">
-          <option value="masuk">Pemasukan</option>
-          <option value="keluar">Pengeluaran</option>
-        </select>
-        <input id="kKet" placeholder="Keterangan" />
-        <button class="btn btn-primary" id="kSimpan">Simpan Kas</button>
+        <input id="kNama" placeholder="Nama Pembayar">
+        <input id="kTanggal" type="date">
+        <input id="kJumlah" type="number" placeholder="Jumlah (Rp)">
+        <select id="kTipe"><option value="masuk">Pemasukan</option><option value="keluar">Pengeluaran</option></select>
+        <input id="kKet" placeholder="Keterangan">
+        <div class="row">
+          <button class="btn btn-primary" id="kSimpan">Simpan Kas</button>
+        </div>
       </div>
-      <div class="card"><canvas id="kasChart" height="110"></canvas></div>
+      <div class="card"><canvas id="kasChart" height="120"></canvas></div>
       <div id="kasList"></div>
     </div>
   </section>
 </main>
 
 <script type="module">
-/* ---------------- Imports ---------------- */
+/* ================== IMPORTS ================== */
 import { auth, db } from './js/firebase.js';
 import { uploadToImgBB } from './js/imgbb.js';
 import { logoutUser, onAuth } from './js/auth.js';
@@ -130,40 +146,52 @@ import {
   query, orderBy, serverTimestamp, setDoc
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-/* ---------------- State & helpers ---------------- */
-let UID = null, CURRENT_ROLE = 'anggota';
-const $ = (sel) => document.querySelector(sel);
+/* ================== STATE & UTILS ================== */
+let UID=null, ROLE='anggota';
+const $ = (s)=>document.querySelector(s);
+const can = {
+  pengumuman: ()=> ['super_admin','admin','admin_pengumuman'].includes(ROLE),
+  berita:     ()=> ['super_admin','admin','admin_berita'].includes(ROLE),
+  umkm:       ()=> ['super_admin','admin','admin_umkm'].includes(ROLE),
+  kas:        ()=> ['super_admin','admin','admin_keuangan'].includes(ROLE),
+  anggotaRW:  ()=> ['super_admin','admin'].includes(ROLE),
+  superOnly:  ()=> ROLE==='super_admin'
+};
+function ensureValue(val, fallback=''){ return (val===undefined||val===null)?fallback:val; }
 
-/* ---------------- Logout ---------------- */
-$('#logout').onclick = async () => { await logoutUser(); location.href = './index.html'; };
+/* ================== LOGOUT ================== */
+$('#logout').onclick = async()=>{ await logoutUser(); location.href='./index.html'; };
 
-/* ---------------- Auth bootstrap ---------------- */
-onAuth(async (user) => {
-  if (!user) { alert('Silakan login.'); location.href = './index.html'; return; }
-  UID = user.uid;
-  const uref = doc(db, 'users', UID);
-  const usnap = await getDoc(uref);
-  const udata = usnap.exists() ? usnap.data() : {};
-  CURRENT_ROLE = udata.role || 'anggota';
+/* ================== AUTH BOOTSTRAP ================== */
+onAuth(async (user)=>{
+  if(!user){ alert('Silakan login dulu.'); location.href='./index.html'; return; }
+  UID=user.uid;
+  const uref=doc(db,'users',UID);
+  const usnap=await getDoc(uref);
+  const udata=usnap.exists()?usnap.data():{};
+  ROLE=udata.role||'anggota';
+
+  $('#whoami').textContent = user.email;
   $('#emailSaya').textContent = user.email;
-  $('#roleSaya').textContent  = CURRENT_ROLE;
-  renderMenu(CURRENT_ROLE);
+  $('#roleSaya').textContent  = ROLE;
+
+  renderMenuByRole();
 });
 
-/* ---------------- Sidebar by role ---------------- */
-function renderMenu(role){
-  const sidebar = $('#sidebar');
-  const map = {
-    super_admin:      ['profil','anggota','pengumuman','berita','umkm','kas'],
-    admin:            ['profil','anggota','pengumuman','berita','umkm','kas'],
-    admin_pengumuman: ['profil','pengumuman'],
-    admin_berita:     ['profil','berita'],
-    admin_umkm:       ['profil','umkm'],
-    admin_keuangan:   ['profil','kas'],
-    anggota:          ['profil']
+/* ================== SIDEBAR BY ROLE ================== */
+function renderMenuByRole(){
+  const sidebar=$('#sidebar');
+  const map={
+    super_admin:['profil','anggota','pengumuman','berita','umkm','kas'],
+    admin:['profil','anggota','pengumuman','berita','umkm','kas'],
+    admin_pengumuman:['profil','pengumuman'],
+    admin_berita:['profil','berita'],
+    admin_umkm:['profil','umkm'],
+    admin_keuangan:['profil','kas'],
+    anggota:['profil']
   };
-  const list = map[role] || ['profil'];
-  sidebar.innerHTML = '';
+  const list = map[ROLE] || ['profil'];
+  sidebar.innerHTML='';
   list.forEach((id,i)=>{
     const b=document.createElement('button');
     b.className='side-item'+(i===0?' active':'');
@@ -173,52 +201,71 @@ function renderMenu(role){
   });
   showPanel(list[0]);
 
-  // pastikan semua data panel yang tersedia ke role langsung dimuat
-  if (list.includes('pengumuman')) loadPengumuman();
-  if (list.includes('berita'))     loadBerita();
-  if (list.includes('umkm'))       loadUmkm();
-  if (list.includes('kas'))        loadKas();
-  if (list.includes('anggota'))    loadAnggota();
+  // preload sesuai role
+  if(list.includes('pengumuman')) loadPengumuman();
+  if(list.includes('berita'))     loadBerita();
+  if(list.includes('umkm'))       loadUmkm();
+  if(list.includes('kas'))        loadKas();
+  if(list.includes('anggota'))    loadAnggota();
+
+  // lock form sesuai role
+  lockFormsByRole();
 }
 
-/* ---------------- Switch panel ---------------- */
 function showPanel(id){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.getElementById('panel-'+id).classList.add('active');
   document.querySelectorAll('.side-item').forEach(b=>b.classList.remove('active'));
-  [...document.querySelectorAll('.side-item')]
-    .find(b=>b.textContent===id.toUpperCase())
-    ?.classList.add('active');
+  [...document.querySelectorAll('.side-item')].find(b=>b.textContent===id.toUpperCase())?.classList.add('active');
 }
 
-/* ---------------- Profil ---------------- */
+function lockFormsByRole(){
+  // Pengumuman
+  ['pJudul','pIsi','pTanggal','pSimpan'].forEach(id=>{
+    const el=$('#'+id); if(el) el.disabled=!can.pengumuman();
+  });
+  // Berita
+  ['bJudul','bIsi','bFoto','bSimpan'].forEach(id=>{
+    const el=$('#'+id); if(el) el.disabled=!can.berita();
+  });
+  // UMKM
+  ['uProduk','uPenjual','uHarga','uWa','uDes','uFoto','uSimpan'].forEach(id=>{
+    const el=$('#'+id); if(el) el.disabled=!can.umkm();
+  });
+  // Kas
+  ['kNama','kTanggal','kJumlah','kTipe','kKet','kSimpan'].forEach(id=>{
+    const el=$('#'+id); if(el) el.disabled=!can.kas();
+  });
+}
+
+/* ================== PROFIL ================== */
 $('#saveProfil').onclick = async ()=>{
-  const nama = $('#namaProfil').value.trim();
-  const file = $('#fotoProfil').files[0];
-  let foto = "";
-  if (file) foto = await uploadToImgBB(file);
+  const nama=$('#namaProfil').value.trim();
+  const file=$('#fotoProfil').files[0];
+  let foto="";
+  if(file) foto = await uploadToImgBB(file);
   await setDoc(doc(db,'users',UID), { ...(nama&&{nama}), ...(foto&&{foto}) }, { merge:true });
-  alert('Profil diperbarui!');
+  alert('Profil diperbarui.');
 };
 
-/* ---------------- Anggota ---------------- */
+/* ================== ANGGOTA ================== */
 async function loadAnggota(){
-  const wrap = $('#anggotaList');
-  wrap.innerHTML = 'Memuat...';
-  const snap = await getDocs(query(collection(db,'users'), orderBy('email')));
-  wrap.innerHTML = '';
+  const wrap=$('#anggotaList');
+  wrap.innerHTML='Memuat...';
+  const snap=await getDocs(query(collection(db,'users'), orderBy('email')));
+  wrap.innerHTML='';
   snap.forEach(u=>{
     const d=u.data(), id=u.id;
     const card=document.createElement('div'); card.className='card';
-    card.innerHTML = `
+    card.innerHTML=`
       <div class="mini">
         <img src="${d.foto||'https://i.ibb.co/4Jf2V2R/placeholder-user.png'}" alt="">
         <div>
           <div><b>${d.nama||'(Tanpa nama)'}</b> <span class="badge">${d.role||'anggota'}</span></div>
-          <small>${d.email||''}</small>
+          <small class="muted">${d.email||''}</small>
         </div>
       </div>
-      ${CURRENT_ROLE==='super_admin'?`
+      ${can.superOnly()?`
       <div class="row" style="margin-top:.6rem">
         <select id="role-${id}">
           <option value="anggota" ${d.role==='anggota'?'selected':''}>anggota</option>
@@ -230,8 +277,7 @@ async function loadAnggota(){
           <option value="super_admin" ${d.role==='super_admin'?'selected':''}>super_admin</option>
         </select>
         <button class="btn btn-primary" onclick="updateRole('${id}')">Simpan</button>
-      </div>
-      `:''}
+      </div>`:''}
     `;
     wrap.appendChild(card);
   });
@@ -243,245 +289,226 @@ window.updateRole = async (id)=>{
   loadAnggota();
 };
 
-/* ---------------- Pengumuman (CRUD) ---------------- */
-let editPengId = null;
-
-document.getElementById('pSimpan').onclick = async ()=>{
-  const judul = $('#pJudul').value.trim();
-  const isi   = $('#pIsi').value.trim();
-  const tanggal = $('#pTanggal').value;
-  if (!judul || !isi) return alert('Lengkapi pengumuman!');
-  if (editPengId){
+/* ================== PENGUMUMAN (CRUD) ================== */
+let editPengId=null;
+$('#pSimpan').onclick = async ()=>{
+  if(!can.pengumuman()) return alert('Akses ditolak.');
+  const judul=$('#pJudul').value.trim();
+  const isi=$('#pIsi').value.trim();
+  const tanggal=$('#pTanggal').value || new Date().toISOString().split('T')[0];
+  if(!judul||!isi) return alert('Lengkapi judul & isi.');
+  if(editPengId){
     await updateDoc(doc(db,'pengumuman',editPengId), { judul, isi, tanggal });
-    alert('Pengumuman diperbarui!');
-    editPengId = null; $('#pBatal').style.display='none';
-  } else {
-    await addDoc(collection(db,'pengumuman'), { judul, isi, tanggal, createdAt: serverTimestamp() });
-    alert('Pengumuman disimpan!');
+    editPengId=null; $('#pBatal').style.display='none'; alert('Pengumuman diperbarui.');
+  }else{
+    await addDoc(collection(db,'pengumuman'), { judul, isi, tanggal, createdAt:serverTimestamp() });
+    alert('Pengumuman disimpan.');
   }
   $('#pJudul').value=''; $('#pIsi').value=''; $('#pTanggal').value='';
   loadPengumuman();
 };
-document.getElementById('pBatal').onclick = ()=>{
-  editPengId=null; $('#pJudul').value=''; $('#pIsi').value=''; $('#pTanggal').value=''; $('#pBatal').style.display='none';
-};
-
+$('#pBatal').onclick=()=>{editPengId=null; $('#pJudul').value=''; $('#pIsi').value=''; $('#pTanggal').value=''; $('#pBatal').style.display='none';};
 async function loadPengumuman(){
-  const c = $('#pengumumanList');
-  const snap = await getDocs(query(collection(db,'pengumuman'), orderBy('createdAt','desc')));
-  c.innerHTML = '';
+  const c=$('#pengumumanList');
+  const snap=await getDocs(query(collection(db,'pengumuman'), orderBy('createdAt','desc')));
+  c.innerHTML='';
   snap.forEach(d=>{
     const p=d.data();
     const el=document.createElement('div'); el.className='card';
-    el.innerHTML = `
-      <h3>${p.judul||'(Tanpa judul)'}</h3>
-      <p>${p.isi||''}</p>
-      <small>${p.tanggal||''}</small>
-      <div class="row" style="margin-top:.5rem">
-        <button class="btn btn-primary" onclick="editPeng('${d.id}')">✏️ Edit</button>
-        <button class="btn" onclick="hapusPeng('${d.id}')">🗑️ Hapus</button>
+    el.innerHTML=`
+      <h3>${ensureValue(p.judul,'(Tanpa judul)')}</h3>
+      <p>${ensureValue(p.isi,'')}</p>
+      <small class="muted">📅 ${p.tanggal||'-'}</small>
+      <div class="row" style="margin-top:.6rem">
+        ${can.pengumuman()?`<button class="btn btn-primary" onclick="editPeng('${d.id}')">✏️ Edit</button>
+        <button class="btn btn-ghost" onclick="hapusPeng('${d.id}')">🗑️ Hapus</button>`:''}
       </div>`;
     c.appendChild(el);
   });
 }
-window.editPeng = async (id)=>{
-  const ds = await getDoc(doc(db,'pengumuman',id));
-  const v = ds.data();
-  $('#pJudul').value = v.judul||'';
-  $('#pIsi').value   = v.isi||'';
-  $('#pTanggal').value = v.tanggal||'';
-  editPengId = id;
-  $('#pBatal').style.display='inline-block';
-  window.scrollTo({top:0,behavior:'smooth'});
+window.editPeng=async(id)=>{
+  if(!can.pengumuman()) return;
+  const v=(await getDoc(doc(db,'pengumuman',id))).data();
+  $('#pJudul').value=v.judul||'';
+  $('#pIsi').value=v.isi||'';
+  $('#pTanggal').value=v.tanggal||'';
+  editPengId=id; $('#pBatal').style.display='inline-block'; window.scrollTo({top:0,behavior:'smooth'});
 };
-window.hapusPeng = async (id)=>{
-  if (!confirm('Hapus pengumuman ini?')) return;
-  await deleteDoc(doc(db,'pengumuman',id));
-  loadPengumuman();
+window.hapusPeng=async(id)=>{
+  if(!can.pengumuman()) return;
+  if(!confirm('Hapus pengumuman ini?'))return;
+  await deleteDoc(doc(db,'pengumuman',id)); loadPengumuman();
 };
 
-/* ---------------- Berita (CRUD) ---------------- */
-let editBeritaId = null;
-
-document.getElementById('bSimpan').onclick = async ()=>{
-  const judul = $('#bJudul').value.trim();
-  const isi   = $('#bIsi').value.trim();
-  const file  = $('#bFoto').files[0];
-  let foto = "";
-  if (editBeritaId){
-    if (file) foto = await uploadToImgBB(file);
+/* ================== BERITA (CRUD) ================== */
+let editBeritaId=null;
+$('#bSimpan').onclick = async ()=>{
+  if(!can.berita()) return alert('Akses ditolak.');
+  const judul=$('#bJudul').value.trim();
+  const isi=$('#bIsi').value.trim();
+  const file=$('#bFoto').files[0];
+  let foto="";
+  if(editBeritaId){
+    if(file) foto=await uploadToImgBB(file);
     await updateDoc(doc(db,'berita',editBeritaId), { judul, isi, ...(foto&&{foto}) });
-    alert('Berita diperbarui!');
-    editBeritaId=null; $('#bBatal').style.display='none';
-  } else {
-    if (file) foto = await uploadToImgBB(file);
-    await addDoc(collection(db,'berita'), { judul, isi, foto, penulis: auth.currentUser?.email||'anonim', createdAt: serverTimestamp() });
-    alert('Berita disimpan!');
+    alert('Berita diperbarui.'); editBeritaId=null; $('#bBatal').style.display='none';
+  }else{
+    if(file) foto=await uploadToImgBB(file);
+    await addDoc(collection(db,'berita'), { judul, isi, foto, penulis: auth.currentUser?.email||'anonim', createdAt:serverTimestamp() });
+    alert('Berita disimpan.');
   }
   $('#bJudul').value=''; $('#bIsi').value=''; $('#bFoto').value='';
   loadBerita();
 };
-document.getElementById('bBatal').onclick = ()=>{
-  editBeritaId=null; $('#bJudul').value=''; $('#bIsi').value=''; $('#bFoto').value=''; $('#bBatal').style.display='none';
-};
-
+$('#bBatal').onclick=()=>{editBeritaId=null; $('#bJudul').value=''; $('#bIsi').value=''; $('#bFoto').value=''; $('#bBatal').style.display='none';};
 async function loadBerita(){
-  const c = $('#beritaList');
-  const snap = await getDocs(query(collection(db,'berita'), orderBy('createdAt','desc')));
+  const c=$('#beritaList');
+  const snap=await getDocs(query(collection(db,'berita'), orderBy('createdAt','desc')));
   c.innerHTML='';
   snap.forEach(d=>{
     const b=d.data();
     const el=document.createElement('div'); el.className='card';
-    el.innerHTML = `
-      ${b.foto?`<img src="${b.foto}" alt="">`:''}
-      <h3>${b.judul||'(Tanpa judul)'}</h3>
-      <p>${b.isi||''}</p>
-      <div class="row" style="margin-top:.5rem">
-        <button class="btn btn-primary" onclick="editBerita('${d.id}')">✏️ Edit</button>
-        <button class="btn" onclick="hapusBerita('${d.id}')">🗑️ Hapus</button>
+    el.innerHTML=`
+      ${b.foto?`<img class="thumb" src="${b.foto}" alt="">`:''}
+      <h3>${ensureValue(b.judul,'(Tanpa judul)')}</h3>
+      <p>${ensureValue(b.isi,'')}</p>
+      <div class="row" style="margin-top:.6rem">
+        ${can.berita()?`<button class="btn btn-primary" onclick="editBerita('${d.id}')">✏️ Edit</button>
+        <button class="btn btn-ghost" onclick="hapusBerita('${d.id}')">🗑️ Hapus</button>`:''}
       </div>`;
     c.appendChild(el);
   });
 }
-window.editBerita = async (id)=>{
-  const ds = await getDoc(doc(db,'berita',id));
-  const v  = ds.data();
-  $('#bJudul').value = v.judul||'';
-  $('#bIsi').value   = v.isi||'';
-  editBeritaId = id;
-  $('#bBatal').style.display='inline-block';
-  window.scrollTo({top:0,behavior:'smooth'});
+window.editBerita=async(id)=>{
+  if(!can.berita()) return;
+  const v=(await getDoc(doc(db,'berita',id))).data();
+  $('#bJudul').value=v.judul||''; $('#bIsi').value=v.isi||''; editBeritaId=id; $('#bBatal').style.display='inline-block'; window.scrollTo({top:0,behavior:'smooth'});
 };
-window.hapusBerita = async (id)=>{
-  if(!confirm('Hapus berita ini?')) return;
-  await deleteDoc(doc(db,'berita',id));
-  loadBerita();
+window.hapusBerita=async(id)=>{
+  if(!can.berita()) return;
+  if(!confirm('Hapus berita ini?'))return;
+  await deleteDoc(doc(db,'berita',id)); loadBerita();
 };
 
-/* ---------------- UMKM (CRUD) ---------------- */
-let editUmkmId = null;
-
-document.getElementById('uSimpan').onclick = async ()=>{
-  const nama  = $('#uNama').value.trim();
-  const harga = Number($('#uHarga').value||0);
-  const wa    = $('#uWa').value.trim();
-  const des   = $('#uDes').value.trim();
-  const file  = $('#uFoto').files[0];
-  let foto = "";
-  if (editUmkmId){
-    if (file) foto = await uploadToImgBB(file);
-    await updateDoc(doc(db,'umkm',editUmkmId), { nama, harga, wa, deskripsi:des, ...(foto&&{foto}) });
-    alert('UMKM diperbarui!');
-    editUmkmId=null; $('#uBatal').style.display='none';
-  } else {
-    if (file) foto = await uploadToImgBB(file);
-    await addDoc(collection(db,'umkm'), { nama, harga, wa, deskripsi:des, foto, createdAt: serverTimestamp() });
-    alert('UMKM disimpan!');
+/* ================== UMKM (Produk) (CRUD) ================== */
+let editUmkmId=null;
+$('#uSimpan').onclick = async ()=>{
+  if(!can.umkm()) return alert('Akses ditolak.');
+  const produk=$('#uProduk').value.trim();
+  const penjual=$('#uPenjual').value.trim();
+  const harga=Number($('#uHarga').value||0);
+  const wa=$('#uWa').value.trim();
+  const des=$('#uDes').value.trim();
+  const file=$('#uFoto').files[0];
+  let foto="";
+  if(editUmkmId){
+    if(file) foto=await uploadToImgBB(file);
+    await updateDoc(doc(db,'umkm',editUmkmId), { produk, penjual, harga, wa, deskripsi:des, ...(foto&&{foto}) });
+    alert('Produk diperbarui.'); editUmkmId=null; $('#uBatal').style.display='none';
+  }else{
+    if(file) foto=await uploadToImgBB(file);
+    await addDoc(collection(db,'umkm'), { produk, penjual, harga, wa, deskripsi:des, foto, createdAt:serverTimestamp() });
+    alert('Produk disimpan.');
   }
-  $('#uNama').value=''; $('#uHarga').value=''; $('#uWa').value=''; $('#uDes').value=''; $('#uFoto').value='';
+  $('#uProduk').value=''; $('#uPenjual').value=''; $('#uHarga').value=''; $('#uWa').value=''; $('#uDes').value=''; $('#uFoto').value='';
   loadUmkm();
 };
-document.getElementById('uBatal').onclick = ()=>{
-  editUmkmId=null; $('#uNama').value=''; $('#uHarga').value=''; $('#uWa').value=''; $('#uDes').value=''; $('#uFoto').value=''; $('#uBatal').style.display='none';
-};
-
+$('#uBatal').onclick=()=>{editUmkmId=null; $('#uProduk').value=''; $('#uPenjual').value=''; $('#uHarga').value=''; $('#uWa').value=''; $('#uDes').value=''; $('#uFoto').value=''; $('#uBatal').style.display='none';};
 async function loadUmkm(){
-  const c = $('#umkmList');
-  const snap = await getDocs(query(collection(db,'umkm'), orderBy('createdAt','desc')));
-  c.innerHTML = '';
+  const c=$('#umkmList');
+  const snap=await getDocs(query(collection(db,'umkm'), orderBy('createdAt','desc')));
+  c.innerHTML='';
   snap.forEach(d=>{
-    const u = d.data();
+    const u=d.data();
     const el=document.createElement('div'); el.className='card';
-    el.innerHTML = `
-      ${u.foto?`<img src="${u.foto}" alt="">`:''}
-      <h3>${u.nama||'(Tanpa nama)'}</h3>
+    el.innerHTML=`
+      ${u.foto?`<img class="thumb" src="${u.foto}" alt="">`:''}
+      <h3>${ensureValue(u.produk,'(Tanpa nama produk)')}</h3>
+      <p>👤 ${ensureValue(u.penjual,'-')}</p>
       <p>💰 Rp${(u.harga||0).toLocaleString()}</p>
-      <p>${u.deskripsi||''}</p>
-      <p>📱 <a href="https://wa.me/${u.wa}" target="_blank" rel="noopener">${u.wa||''}</a></p>
-      <div class="row" style="margin-top:.5rem">
-        <button class="btn btn-primary" onclick="editUmkm('${d.id}')">✏️ Edit</button>
-        <button class="btn" onclick="hapusUmkm('${d.id}')">🗑️ Hapus</button>
+      <p>${ensureValue(u.deskripsi,'')}</p>
+      ${u.wa?`<p>📱 <a href="https://wa.me/${u.wa}" target="_blank" rel="noopener">${u.wa}</a></p>`:''}
+      <div class="row" style="margin-top:.6rem">
+        ${can.umkm()?`<button class="btn btn-primary" onclick="editUmkm('${d.id}')">✏️ Edit</button>
+        <button class="btn btn-ghost" onclick="hapusUmkm('${d.id}')">🗑️ Hapus</button>`:''}
       </div>`;
     c.appendChild(el);
   });
 }
-window.editUmkm = async (id)=>{
-  const ds = await getDoc(doc(db,'umkm',id));
-  const v  = ds.data();
-  $('#uNama').value  = v.nama||'';
-  $('#uHarga').value = v.harga||'';
-  $('#uWa').value    = v.wa||'';
-  $('#uDes').value   = v.deskripsi||'';
-  editUmkmId = id;
-  $('#uBatal').style.display='inline-block';
-  window.scrollTo({top:0,behavior:'smooth'});
+window.editUmkm=async(id)=>{
+  if(!can.umkm()) return;
+  const v=(await getDoc(doc(db,'umkm',id))).data();
+  $('#uProduk').value=v.produk||''; $('#uPenjual').value=v.penjual||''; $('#uHarga').value=v.harga||''; $('#uWa').value=v.wa||''; $('#uDes').value=v.deskripsi||'';
+  editUmkmId=id; $('#uBatal').style.display='inline-block'; window.scrollTo({top:0,behavior:'smooth'});
 };
-window.hapusUmkm = async (id)=>{
-  if (!confirm('Hapus UMKM ini?')) return;
-  await deleteDoc(doc(db,'umkm',id));
-  loadUmkm();
+window.hapusUmkm=async(id)=>{
+  if(!can.umkm()) return;
+  if(!confirm('Hapus produk ini?'))return;
+  await deleteDoc(doc(db,'umkm',id)); loadUmkm();
 };
 
-/* ---------------- KAS (CRUD + Chart) ---------------- */
-document.getElementById('kSimpan').onclick = async ()=>{
-  const jumlah = Number($('#kJumlah').value||0);
-  const tipe   = $('#kTipe').value;
-  const ket    = $('#kKet').value.trim();
-  if (!jumlah) return alert('Jumlah harus diisi!');
-  await addDoc(collection(db,'kas'), { jumlah, tipe, keterangan:ket, createdAt: serverTimestamp() });
-  alert('Kas disimpan!');
-  $('#kJumlah').value=''; $('#kKet').value='';
+/* ================== KAS (CRUD + CHART) ================== */
+let kasChart=null;
+$('#kSimpan').onclick = async ()=>{
+  if(!can.kas()) return alert('Akses ditolak.');
+  const nama=$('#kNama').value.trim();
+  const tanggal=$('#kTanggal').value || new Date().toISOString().split('T')[0];
+  const jumlah=Number($('#kJumlah').value||0);
+  const tipe=$('#kTipe').value;
+  const ket=$('#kKet').value.trim();
+  if(!nama) return alert('Isi nama pembayar.');
+  if(!jumlah) return alert('Isi jumlah.');
+  await addDoc(collection(db,'kas'), { nama, tanggal, jumlah, tipe, keterangan:ket, dibuatOleh: auth.currentUser?.email||'anonim', createdAt:serverTimestamp() });
+  alert('Kas disimpan.');
+  $('#kNama').value=''; $('#kJumlah').value=''; $('#kKet').value='';
   loadKas();
 };
-
-window.hapusKas = async (id)=>{
-  if (!confirm('Hapus transaksi kas ini?')) return;
-  await deleteDoc(doc(db,'kas',id));
-  loadKas();
+window.hapusKas=async(id)=>{
+  if(!can.kas()) return;
+  if(!confirm('Hapus transaksi kas ini?')) return;
+  await deleteDoc(doc(db,'kas',id)); loadKas();
 };
 
-let kasChartRef = null;
 async function loadKas(){
-  const c = $('#kasList');
-  const snap = await getDocs(query(collection(db,'kas'), orderBy('createdAt','desc')));
-  c.innerHTML = '';
-  let total=0, sumMasuk=0, sumKeluar=0;
+  const c=$('#kasList');
+  const snap=await getDocs(query(collection(db,'kas'), orderBy('createdAt','desc')));
+  c.innerHTML=''; let total=0, masuk=0, keluar=0;
   snap.forEach(d=>{
     const k=d.data();
-    const val = (k.tipe==='masuk'?1:-1) * (k.jumlah||0);
-    total += val;
-    if (k.tipe==='masuk') sumMasuk += (k.jumlah||0); else sumKeluar += (k.jumlah||0);
+    total += (k.tipe==='masuk'?1:-1) * (k.jumlah||0);
+    if(k.tipe==='masuk') masuk += (k.jumlah||0); else keluar += (k.jumlah||0);
     const row=document.createElement('div'); row.className='card';
-    row.innerHTML = `
+    row.innerHTML=`
       <b>${k.tipe==='masuk'?'🟢 Pemasukan':'🔴 Pengeluaran'} Rp${(k.jumlah||0).toLocaleString()}</b><br>
-      ${k.keterangan||''}
-      <div class="row" style="margin-top:.4rem">
-        <button class="btn" onclick="hapusKas('${d.id}')">🗑️ Hapus</button>
+      👤 ${ensureValue(k.nama,'-')} &nbsp; • &nbsp; 📅 ${ensureValue(k.tanggal,'-')}<br>
+      <small class="muted">${ensureValue(k.keterangan,'')}</small>
+      <div class="row" style="margin-top:.5rem">
+        ${can.kas()?`<button class="btn btn-ghost" onclick="hapusKas('${d.id}')">🗑️ Hapus</button>`:''}
       </div>`;
     c.appendChild(row);
   });
   const sum=document.createElement('div'); sum.className='card';
-  sum.innerHTML = `<h3>Total Kas: Rp${total.toLocaleString()}</h3>`;
+  sum.innerHTML=`<h3>Total Kas: Rp${total.toLocaleString()}</h3>`;
   c.prepend(sum);
 
-  const ctx = document.getElementById('kasChart').getContext('2d');
-  if (kasChartRef) kasChartRef.destroy();
-  kasChartRef = new Chart(ctx, {
+  const ctx=document.getElementById('kasChart').getContext('2d');
+  if(kasChart) kasChart.destroy();
+  kasChart=new Chart(ctx,{
     type:'bar',
-    data:{ labels:['Masuk','Keluar'], datasets:[{ label:'Total (Rp)', data:[sumMasuk,sumKeluar] }] },
-    options:{ responsive:true, plugins:{ legend:{ display:false } } }
+    data:{labels:['Masuk','Keluar'],datasets:[{label:'Total (Rp)',data:[masuk,keluar]}]},
+    options:{responsive:true,plugins:{legend:{display:false}}}
   });
 }
 
-/* -------------- Expose handlers to window -------------- */
-window.updateRole = window.updateRole;
-window.editPeng   = window.editPeng;
-window.hapusPeng  = window.hapusPeng;
-window.editBerita = window.editBerita;
-window.hapusBerita= window.hapusBerita;
-window.editUmkm   = window.editUmkm;
-window.hapusUmkm  = window.hapusUmkm;
-window.hapusKas   = window.hapusKas;
+/* ================== EXPOSE HANDLERS ================== */
+window.updateRole=window.updateRole;
+window.editPeng=window.editPeng;
+window.hapusPeng=window.hapusPeng;
+window.editBerita=window.editBerita;
+window.hapusBerita=window.hapusBerita;
+window.editUmkm=window.editUmkm;
+window.hapusUmkm=window.hapusUmkm;
+window.hapusKas=window.hapusKas;
 
 </script>
 </body>
