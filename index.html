@@ -11,10 +11,15 @@
   --emas: #f6c445;
   --gelap: #1e293b;
   --abu: #f7f9fb;
+  --putih: #fff;
 }
-* {
-  box-sizing: border-box;
+[data-theme='dark'] {
+  --biru: #1a73e8;
+  --gelap: #e2e8f0;
+  --abu: #0f172a;
+  --putih: #1e293b;
 }
+*{box-sizing:border-box;transition:background .3s,color .3s;}
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
@@ -35,43 +40,34 @@ header h1 {
   margin: 0;
   font-weight: 700;
 }
-nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
+nav { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
 nav a {
   color: #fff;
   text-decoration: none;
   font-weight: 600;
   transition: 0.2s;
 }
-nav a:hover {
-  color: var(--emas);
+nav a:hover { color: var(--emas); }
+#themeToggle {
+  background: var(--emas);
+  color: var(--biru);
+  border: none;
+  border-radius: 20px;
+  padding: 0.3rem 0.7rem;
+  cursor: pointer;
+  font-weight: 600;
 }
 .hero {
   background: linear-gradient(180deg, var(--biru), #155fa3);
   color: #fff;
   text-align: center;
-  padding: 3.5rem 1rem;
+  padding: 3rem 1rem;
 }
-.hero h2 {
-  margin-bottom: 0.5rem;
-  font-size: 1.8rem;
-}
-.hero p {
-  max-width: 650px;
-  margin: auto;
-  line-height: 1.6;
-  font-size: 0.95rem;
-}
-section {
-  padding: 2rem 1rem;
-}
-.container {
-  max-width: 1100px;
-  margin: auto;
-}
+.hero h2 { margin-bottom: 0.5rem; font-size: 1.8rem; }
+.hero p { max-width: 650px; margin: auto; line-height: 1.6; font-size: 0.95rem; }
+
+section { padding: 2rem 1rem; }
+.container { max-width: 1100px; margin: auto; }
 h2.section-title {
   color: var(--biru);
   border-left: 5px solid var(--emas);
@@ -79,45 +75,19 @@ h2.section-title {
   margin-bottom: 1.5rem;
   font-size: 1.3rem;
 }
-.grid {
-  display: grid;
-  gap: 1.2rem;
-}
-@media(min-width: 768px) {
-  .grid-2 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .grid-3 {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
+.grid { display: grid; gap: 1.2rem; }
+@media(min-width:768px){.grid-2{grid-template-columns:repeat(2,1fr)}.grid-3{grid-template-columns:repeat(3,1fr)}}
 .card {
-  background: #fff;
+  background: var(--putih);
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   padding: 1rem;
   transition: transform .2s ease;
 }
-.card:hover {
-  transform: translateY(-4px);
-}
-.card img {
-  width: 100%;
-  border-radius: 8px;
-  margin-bottom: 0.6rem;
-  object-fit: cover;
-  max-height: 200px;
-}
-.card h3, .card h4 {
-  color: var(--biru);
-  margin: 0.4rem 0;
-  font-size: 1rem;
-}
-.card p {
-  font-size: 0.9rem;
-  line-height: 1.5;
-  color: #334155;
-}
+.card:hover { transform: translateY(-4px); }
+.card img { width: 100%; border-radius: 8px; margin-bottom: 0.6rem; object-fit: cover; max-height: 200px; }
+.card h3, .card h4 { color: var(--biru); margin: 0.4rem 0; font-size: 1rem; }
+.card p { font-size: 0.9rem; line-height: 1.5; color: #334155; }
 .btn {
   background: var(--biru);
   color: #fff;
@@ -129,12 +99,8 @@ h2.section-title {
   display: inline-block;
   text-decoration: none;
   margin-top: 0.4rem;
-  transition: 0.2s;
 }
-.btn:hover {
-  background: var(--emas);
-  color: var(--biru);
-}
+.btn:hover { background: var(--emas); color: var(--biru); }
 footer {
   background: var(--biru);
   color: #fff;
@@ -143,25 +109,25 @@ footer {
   margin-top: 2rem;
   font-size: 0.9rem;
 }
-footer .nav-footer {
-  margin-bottom: 0.6rem;
-}
-footer a {
-  color: var(--emas);
-  text-decoration: none;
-  margin: 0 0.5rem;
-  font-weight: 600;
-}
-footer a:hover {
-  color: #fff;
-}
+footer .nav-footer { margin-bottom: 0.6rem; }
+footer a { color: var(--emas); text-decoration: none; margin: 0 0.5rem; font-weight: 600; }
+footer a:hover { color: #fff; }
 
-/* RESPONSIVE FIXES */
+.search-box {
+  margin-bottom: 1.2rem;
+  text-align: right;
+}
+.search-box input {
+  width: 100%;
+  max-width: 300px;
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
 @media(max-width:600px){
   header{flex-direction:column;align-items:flex-start;gap:.5rem}
-  .hero h2{font-size:1.4rem}
-  .card img{max-height:180px}
   nav{gap:.5rem}
+  .hero h2{font-size:1.4rem}
 }
 </style>
 </head>
@@ -171,14 +137,15 @@ footer a:hover {
   <nav>
     <a href="#berita">Berita</a>
     <a href="#umkm">UMKM</a>
-    <a href="./admin.html">Admin</a>
+    <a id="navAdmin" href="./admin.html" style="display:none;">Admin</a>
+    <button id="themeToggle">🌙</button>
   </nav>
 </header>
 
 <main>
   <section class="hero">
     <h2>Selamat Datang di Portal Karang Taruna</h2>
-    <p>Media informasi kegiatan dan pengembangan UMKM warga Cilosari Barat RT01/RW08, Kelurahan Kemijen, Kecamatan Semarang Timur</p>
+    <p>Media informasi kegiatan, pengumuman, dan pengembangan UMKM warga Cilosari Barat RT01/RW08, Kelurahan Kemijen, Kecamatan Semarang Timur</p>
   </section>
 
   <!-- === BERITA === -->
@@ -193,6 +160,9 @@ footer a:hover {
   <section id="umkm">
     <div class="container">
       <h2 class="section-title">🏪 UMKM Warga</h2>
+      <div class="search-box">
+        <input type="text" id="searchUmkm" placeholder="Cari UMKM..." />
+      </div>
       <div id="umkmList" class="grid grid-3"></div>
     </div>
   </section>
@@ -201,69 +171,97 @@ footer a:hover {
 <footer>
   <div class="nav-footer">
     <a href="#berita">Berita</a> |
-    <a href="#umkm">UMKM</a> |
-    <a href="./admin.html">Admin</a>
+    <a href="#umkm">UMKM</a>
   </div>
   <p>&copy; 2025 Karang Taruna Cilosari Barat RT01/RW08 - Semarang Timur</p>
 </footer>
 
-<!-- === JS FIREBASE === -->
+<!-- === JS FIREBASE + DARKMODE + SEARCH === -->
 <script type="module">
-import { db } from "./js/firebase.js";
-import { collection, query, getDocs, orderBy } 
-  from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+import { db, auth } from "./js/firebase.js";
+import {
+  collection, query, getDocs, orderBy
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 
-const beritaList = document.getElementById("beritaList");
-const umkmList = document.getElementById("umkmList");
-
-// ==== BERITA ====
-async function loadBerita() {
-  try {
-    const snap = await getDocs(query(collection(db, "berita"), orderBy("createdAt", "desc")));
-    beritaList.innerHTML = "";
-    snap.forEach((d) => {
-      const b = d.data();
-      const isiPendek = (b.isi || "").length > 180 ? b.isi.substring(0, 180) + "..." : b.isi;
-      const card = document.createElement("div");
-      card.className = "card";
-      card.innerHTML = `
-        ${b.foto ? `<img src="${b.foto}" alt="${b.judul}">` : ""}
-        <h3>${b.judul}</h3>
-        <p>${isiPendek}</p>
-        <a class="btn" href="berita.html?id=${d.id}">Selengkapnya</a>
-      `;
-      beritaList.appendChild(card);
-    });
-  } catch (e) {
-    console.error(e);
-    beritaList.innerHTML = "<p>Gagal memuat berita.</p>";
+// === DARK MODE TOGGLE ===
+const themeToggle = document.getElementById("themeToggle");
+if(localStorage.getItem("theme")==="dark"){
+  document.documentElement.setAttribute("data-theme","dark");
+  themeToggle.textContent="☀️";
+}
+themeToggle.onclick = ()=>{
+  if(document.documentElement.getAttribute("data-theme")==="dark"){
+    document.documentElement.removeAttribute("data-theme");
+    localStorage.setItem("theme","light");
+    themeToggle.textContent="🌙";
+  }else{
+    document.documentElement.setAttribute("data-theme","dark");
+    localStorage.setItem("theme","dark");
+    themeToggle.textContent="☀️";
   }
+};
+
+// === ADMIN VISIBILITY ===
+onAuthStateChanged(auth,(user)=>{
+  document.getElementById("navAdmin").style.display = user ? "inline-block" : "none";
+});
+
+// === LOAD BERITA ===
+const beritaList=document.getElementById("beritaList");
+async function loadBerita(){
+  const snap=await getDocs(query(collection(db,"berita"),orderBy("createdAt","desc")));
+  beritaList.innerHTML="";
+  snap.forEach((d)=>{
+    const b=d.data();
+    const isiPendek=(b.isi||"").length>180?b.isi.substring(0,180)+"...":b.isi;
+    const card=document.createElement("div");
+    card.className="card";
+    card.innerHTML=`
+      ${b.foto?`<img src="${b.foto}" alt="${b.judul}">`:""}
+      <h3>${b.judul}</h3>
+      <p>${isiPendek}</p>
+      <a class="btn" href="berita.html?id=${d.id}">Selengkapnya</a>`;
+    beritaList.appendChild(card);
+  });
 }
 loadBerita();
 
-// ==== UMKM ====
-async function loadUmkm() {
-  try {
-    const snap = await getDocs(query(collection(db, "umkm"), orderBy("createdAt", "desc")));
-    umkmList.innerHTML = "";
-    snap.forEach((d) => {
-      const u = d.data();
-      const card = document.createElement("div");
-      card.className = "card";
-      card.innerHTML = `
-        ${u.foto ? `<img src="${u.foto}" alt="${u.nama}">` : ""}
-        <h4>${u.nama}</h4>
-        <p>💰 Rp${(u.harga || 0).toLocaleString()}</p>
-        <p>${u.deskripsi || ""}</p>
-        ${u.wa ? `<a href="https://wa.me/${u.wa}" class="btn" target="_blank">Hubungi via WhatsApp</a>` : ""}
-      `;
-      umkmList.appendChild(card);
-    });
-  } catch (e) {
-    console.error(e);
-    umkmList.innerHTML = "<p>Gagal memuat UMKM.</p>";
-  }
+// === LOAD UMKM + SEARCH ===
+const umkmList=document.getElementById("umkmList");
+let allUmkm=[];
+async function loadUmkm(){
+  const snap=await getDocs(query(collection(db,"umkm"),orderBy("createdAt","desc")));
+  umkmList.innerHTML="";
+  allUmkm=[];
+  snap.forEach((d)=>{
+    const u=d.data(); u.id=d.id; allUmkm.push(u);
+  });
+  renderUmkm(allUmkm);
 }
+function renderUmkm(data){
+  umkmList.innerHTML="";
+  data.forEach((u)=>{
+    const card=document.createElement("div");
+    card.className="card";
+    card.innerHTML=`
+      ${u.foto?`<img src="${u.foto}" alt="${u.nama}">`:""}
+      <h4>${u.nama}</h4>
+      <p>💰 Rp${(u.harga||0).toLocaleString()}</p>
+      <p>${u.deskripsi||""}</p>
+      ${u.wa?`<a href="https://wa.me/${u.wa}" class="btn" target="_blank">WhatsApp</a>`:""}
+    `;
+    umkmList.appendChild(card);
+  });
+}
+document.getElementById("searchUmkm").oninput=(e)=>{
+  const keyword=e.target.value.toLowerCase();
+  const filtered=allUmkm.filter(u=>
+    u.nama.toLowerCase().includes(keyword) ||
+    (u.deskripsi||"").toLowerCase().includes(keyword)
+  );
+  renderUmkm(filtered);
+};
 loadUmkm();
 </script>
 </body>
