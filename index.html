@@ -1,239 +1,180 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Karang Taruna Cilosari Barat RT01/RW08</title>
-  <link rel="icon" href="./assets/logo.svg">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
-  <style>
-    body{font-family:'Poppins',sans-serif;margin:0;color:#1e293b;background:#f9fafb}
-    header{position:fixed;top:0;width:100%;background:rgba(255,255,255,0.9);backdrop-filter:blur(8px);z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.05)}
-    nav{display:flex;justify-content:center;gap:1rem;padding:1rem 0;flex-wrap:wrap}
-    nav a{text-decoration:none;color:#0e4c92;font-weight:600}
-    nav a:hover{color:#f6c445}
-    .hero{display:flex;flex-direction:column;align-items:center;text-align:center;justify-content:center;min-height:100vh;background:linear-gradient(120deg,#0e4c92,#102b56);color:#fff;padding:0 1rem}
-    .hero-logo{width:96px;height:96px;margin-bottom:1rem}
-    .hero h1{font-size:2.3rem;margin:0}
-    .hero p{opacity:.85;margin:.5rem 0 1.2rem}
-    .btn{display:inline-block;background:#f6c445;color:#0e4c92;padding:.7rem 1.4rem;border-radius:999px;font-weight:700;text-decoration:none}
-    .btn.outline{background:#fff;border:1px solid #f6c445;color:#0e4c92}
-    section{padding:4rem 1rem}
-    .container{max-width:1100px;margin:0 auto}
-    .section-header{text-align:center;margin-bottom:2rem}
-    .grid{display:grid;gap:1.2rem}
-    .umkm{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
-    .umkm-card{background:#fff;padding:1rem;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,.06);transition:.3s}
-    .umkm-card:hover{transform:translateY(-5px)}
-    .umkm-card img{width:100%;height:160px;object-fit:cover;border-radius:10px;margin-bottom:.6rem}
-    footer{text-align:center;padding:1.5rem;color:#64748b;background:#fff;margin-top:3rem}
-    .hidden{display:none}
-    /* Modal Login/Register */
-    .modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:999}
-    .modal.active{display:flex}
-    .modal-box{background:#fff;border-radius:12px;padding:1.2rem;width:90%;max-width:380px;box-shadow:0 10px 40px rgba(0,0,0,.2)}
-    .tabs{display:flex;justify-content:center;gap:1rem;margin-bottom:1rem}
-    .tabs button{border:none;background:none;font-weight:600;cursor:pointer;padding:.4rem 0;border-bottom:2px solid transparent}
-    .tabs button.active{border-color:#0e4c92;color:#0e4c92}
-    input{width:100%;padding:.6rem;border-radius:10px;border:1px solid #ddd;margin-bottom:.6rem}
-    label{font-weight:600;font-size:.9rem}
-    #profileCard{position:fixed;top:80px;right:10px;background:#fff;padding:1rem;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,.1);width:220px;text-align:center;display:none;z-index:900}
-    #profileCard img{width:72px;height:72px;border-radius:50%;object-fit:cover;margin-bottom:.5rem}
-    @media(max-width:720px){.hero h1{font-size:1.8rem}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin | Karang Taruna Cilosari Barat</title>
+<link rel="icon" href="./assets/logo.svg">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+body{font-family:'Poppins',sans-serif;background:#f9fafb;margin:0;color:#1e293b}
+header{background:#0e4c92;color:#fff;padding:1rem 1.5rem;display:flex;justify-content:space-between;align-items:center}
+.logout{background:#fff;color:#0e4c92;padding:.4rem .8rem;border:none;border-radius:6px;cursor:pointer;font-weight:600}
+nav{display:flex;justify-content:center;gap:1rem;background:#fff;padding:.8rem 0;box-shadow:0 1px 6px rgba(0,0,0,.1)}
+nav a{color:#0e4c92;text-decoration:none;font-weight:600}
+nav a.active{color:#f6c445}
+section{display:none;padding:1rem 1.5rem}
+section.active{display:block}
+input,textarea,select{width:100%;padding:.6rem;border:1px solid #ccc;border-radius:8px;margin-bottom:.6rem}
+button{background:#0e4c92;color:#fff;border:none;padding:.7rem 1.2rem;border-radius:8px;cursor:pointer;font-weight:600}
+button:hover{background:#f6c445;color:#0e4c92}
+.card{padding:1rem;margin-bottom:1rem;border:1px solid #eee;border-radius:8px;background:#fff;position:relative}
+img{max-width:100%;border-radius:8px;margin-top:.5rem}
+.delBtn{position:absolute;top:10px;right:10px;background:#e63946;color:#fff;border:none;padding:.3rem .6rem;border-radius:4px;cursor:pointer}
+footer{text-align:center;padding:1rem;color:#64748b}
+</style>
 </head>
 
 <body>
-  <header>
-    <nav id="navbar">
-      <a href="#beranda">Beranda</a>
-      <a href="#umkm">UMKM</a>
-      <a href="#berita">Berita</a>
-      <a href="#galeri">Galeri</a>
-      <a href="#kontak">Kontak</a>
-      <a href="#" id="btnLogin">Masuk / Daftar</a>
-      <a href="#" id="btnProfile" class="hidden">Profil</a>
-      <a href="./admin.html" id="linkAdmin" class="hidden">Dashboard Admin</a>
-    </nav>
-  </header>
+<header>
+  <h1>Dashboard Admin – Karang Taruna</h1>
+  <button id="logoutBtn" class="logout">Keluar</button>
+</header>
 
-  <!-- Hero -->
-  <section class="hero" id="beranda">
-    <img src="./assets/logo.svg" alt="Logo" class="hero-logo">
-    <h1>Karang Taruna<br><span style="color:#f6c445">Cilosari Barat RT01/RW08</span></h1>
-    <p>Kelurahan Kemijen, Kecamatan Semarang Timur</p>
-    <a href="#umkm" class="btn">Lihat UMKM Binaan</a>
-  </section>
+<nav>
+  <a href="#" class="active" data-tab="berita">📰 Berita</a>
+  <a href="#" data-tab="umkm">🏪 UMKM</a>
+  <a href="#" data-tab="kas">💰 Kas</a>
+</nav>
 
-  <!-- UMKM -->
-  <section id="umkm">
-    <div class="container">
-      <div class="section-header"><h2>UMKM Binaan</h2></div>
-      <div id="umkmList" class="grid umkm"></div>
-    </div>
-  </section>
+<section id="berita" class="active">
+  <h2>Tambah Berita</h2>
+  <form id="formBerita">
+    <input type="text" name="judul" placeholder="Judul berita" required>
+    <textarea name="isi" placeholder="Isi berita..." required></textarea>
+    <input type="file" id="gambarBerita" accept="image/*">
+    <button type="submit">Simpan</button>
+  </form>
+  <div id="listBerita"></div>
+</section>
 
-  <!-- Berita -->
-  <section id="berita" style="background:#fff">
-    <div class="container">
-      <div class="section-header"><h2>Berita & Kegiatan</h2></div>
-      <div id="beritaList" class="grid umkm"></div>
-    </div>
-  </section>
+<section id="umkm">
+  <h2>Tambah UMKM</h2>
+  <form id="formUmkm">
+    <input type="text" name="nama" placeholder="Nama UMKM" required>
+    <textarea name="deskripsi" placeholder="Deskripsi singkat..."></textarea>
+    <input type="file" id="fotoUmkm" accept="image/*">
+    <button type="submit">Simpan</button>
+  </form>
+  <div id="listUmkm"></div>
+</section>
 
-  <!-- Galeri -->
-  <section id="galeri">
-    <div class="container">
-      <div class="section-header"><h2>Galeri Kegiatan</h2></div>
-      <div id="galeriList" class="grid umkm"></div>
-    </div>
-  </section>
+<section id="kas">
+  <h2>Tambah Kas</h2>
+  <form id="formKas">
+    <input type="number" name="jumlah" placeholder="Jumlah (Rp)" required>
+    <select name="tipe" required>
+      <option value="masuk">Pemasukan</option>
+      <option value="keluar">Pengeluaran</option>
+    </select>
+    <input type="text" name="keterangan" placeholder="Keterangan">
+    <button type="submit">Simpan</button>
+  </form>
+  <div id="listKas"></div>
+</section>
 
-  <!-- Kontak -->
-  <section id="kontak" style="background:#fff">
-    <div class="container" style="text-align:center">
-      <h2>Kontak & Sosial Media</h2>
-      <p><strong>Alamat:</strong> Cilosari Barat RT01/RW08, Kelurahan Kemijen, Kecamatan Semarang Timur</p>
-      <p>
-        <a href="https://instagram.com/karangtaruna_cilosari" target="_blank">Instagram</a> |
-        <a href="https://tiktok.com/@karangtaruna_cilosari" target="_blank">TikTok</a>
-      </p>
-    </div>
-  </section>
+<footer>© 2025 Karang Taruna Cilosari Barat RT01/RW08</footer>
 
-  <footer>© 2025 Karang Taruna Cilosari Barat RT01/RW08</footer>
+<script src="./env.js"></script>
+<script type="module">
+import { auth, db } from './js/firebase.js';
+import { uploadToImgBB } from './js/imgbb.js';
+import { signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import { collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, serverTimestamp } 
+from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-  <!-- Modal Login/Register -->
-  <div class="modal" id="modalAuth">
-    <div class="modal-box">
-      <div class="tabs">
-        <button id="tabLogin" class="active">Masuk</button>
-        <button id="tabRegister">Daftar</button>
-      </div>
-      <div id="loginFormBox">
-        <form id="loginForm">
-          <label>Email</label>
-          <input type="email" name="email" required>
-          <label>Password</label>
-          <input type="password" name="password" required>
-          <button class="btn" type="submit">Masuk</button>
-        </form>
-      </div>
-      <div id="registerFormBox" class="hidden">
-        <form id="registerForm">
-          <label>Nama</label>
-          <input type="text" name="name" required>
-          <label>Email</label>
-          <input type="email" name="email" required>
-          <label>Password</label>
-          <input type="password" name="password" minlength="6" required>
-          <button class="btn" type="submit">Daftar</button>
-        </form>
-      </div>
-    </div>
-  </div>
+onAuthStateChanged(auth,(u)=>{if(!u){alert("Silakan login dahulu.");location.href='./index.html';}});
+document.getElementById('logoutBtn').onclick=()=>signOut(auth).then(()=>location.href='./index.html');
 
-  <!-- Profil -->
-  <div id="profileCard">
-    <img id="profilePhoto" src="./assets/user.svg">
-    <div id="profileName">Nama Anggota</div>
-    <div id="profileEmail" style="font-size:.8rem;color:#64748b"></div>
-    <button class="btn outline" id="logoutBtn">Keluar</button>
-  </div>
+// nav switching
+document.querySelectorAll('nav a').forEach(a=>{
+  a.onclick=e=>{
+    e.preventDefault();
+    document.querySelectorAll('nav a').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('section').forEach(x=>x.classList.remove('active'));
+    a.classList.add('active');
+    document.getElementById(a.dataset.tab).classList.add('active');
+  };
+});
 
-  <!-- Firebase Scripts -->
-  <script src="./env.js"></script>
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, signOut } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-    import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+// === Berita ===
+const fB=document.getElementById('formBerita');
+const listB=document.getElementById('listBerita');
+fB.onsubmit=async(e)=>{
+  e.preventDefault();
+  const file=document.getElementById('gambarBerita').files[0];
+  let foto="";
+  if(file) foto=await uploadToImgBB(file);
+  await addDoc(collection(db,'berita'),{
+    judul:fB.judul.value, isi:fB.isi.value, foto, createdAt:serverTimestamp()
+  });
+  fB.reset(); loadBerita();
+};
+async function loadBerita(){
+  const q=query(collection(db,'berita'),orderBy('createdAt','desc'));
+  const snap=await getDocs(q); listB.innerHTML="";
+  snap.forEach(d=>{
+    const b=d.data();
+    const div=document.createElement('div');
+    div.className="card";
+    div.innerHTML=`<h3>${b.judul}</h3><p>${b.isi}</p>${b.foto?`<img src="${b.foto}">`:''}<button class='delBtn'>Hapus</button>`;
+    div.querySelector('.delBtn').onclick=async()=>{if(confirm("Hapus berita ini?"))await deleteDoc(doc(db,'berita',d.id));loadBerita();};
+    listB.appendChild(div);
+  });
+}
+loadBerita();
 
-    const cfg = window.__ENV;
-    console.log("[Firebase Config Loaded]", cfg);
-    const app = initializeApp(cfg);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
+// === UMKM ===
+const fU=document.getElementById('formUmkm');
+const listU=document.getElementById('listUmkm');
+fU.onsubmit=async(e)=>{
+  e.preventDefault();
+  const file=document.getElementById('fotoUmkm').files[0];
+  let foto="";
+  if(file) foto=await uploadToImgBB(file);
+  await addDoc(collection(db,'umkm'),{nama:fU.nama.value,deskripsi:fU.deskripsi.value,foto,createdAt:serverTimestamp()});
+  fU.reset(); loadUmkm();
+};
+async function loadUmkm(){
+  const q=query(collection(db,'umkm'),orderBy('createdAt','desc'));
+  const snap=await getDocs(q); listU.innerHTML="";
+  snap.forEach(d=>{
+    const u=d.data();
+    const div=document.createElement('div');
+    div.className="card";
+    div.innerHTML=`<h3>${u.nama}</h3><p>${u.deskripsi||''}</p>${u.foto?`<img src="${u.foto}">`:''}<button class='delBtn'>Hapus</button>`;
+    div.querySelector('.delBtn').onclick=async()=>{if(confirm("Hapus UMKM ini?"))await deleteDoc(doc(db,'umkm',d.id));loadUmkm();};
+    listU.appendChild(div);
+  });
+}
+loadUmkm();
 
-    // Elements
-    const modal = document.getElementById('modalAuth');
-    const btnLogin = document.getElementById('btnLogin');
-    const btnProfile = document.getElementById('btnProfile');
-    const linkAdmin = document.getElementById('linkAdmin');
-    const profileCard = document.getElementById('profileCard');
-    const profileName = document.getElementById('profileName');
-    const profileEmail = document.getElementById('profileEmail');
-    const profilePhoto = document.getElementById('profilePhoto');
-    const logoutBtn = document.getElementById('logoutBtn');
-    const tabLogin = document.getElementById('tabLogin');
-    const tabRegister = document.getElementById('tabRegister');
-    const loginBox = document.getElementById('loginFormBox');
-    const regBox = document.getElementById('registerFormBox');
-
-    // Tabs
-    tabLogin.onclick = ()=>{tabLogin.classList.add('active');tabRegister.classList.remove('active');loginBox.classList.remove('hidden');regBox.classList.add('hidden');};
-    tabRegister.onclick = ()=>{tabRegister.classList.add('active');tabLogin.classList.remove('active');regBox.classList.remove('hidden');loginBox.classList.add('hidden');};
-
-    btnLogin.onclick = ()=> modal.classList.add('active');
-    window.onclick = e => {if(e.target===modal) modal.classList.remove('active');};
-    btnProfile.onclick = ()=> profileCard.style.display = (profileCard.style.display==='block'?'none':'block');
-    logoutBtn.onclick = async ()=>{await signOut(auth);profileCard.style.display='none';};
-
-    // LOGIN
-    document.getElementById('loginForm').onsubmit = async(e)=>{
-      e.preventDefault();
-      const email = e.target.email.value, pass = e.target.password.value;
-      try{
-        await signInWithEmailAndPassword(auth,email,pass);
-        modal.classList.remove('active');
-      }catch(err){
-        console.error("Login error", err);
-        alert("Gagal login: "+err.message);
-      }
-    };
-
-    // REGISTER
-    document.getElementById('registerForm').onsubmit = async(e)=>{
-      e.preventDefault();
-      const name = e.target.name.value, email = e.target.email.value, pass = e.target.password.value;
-      try{
-        const cred = await createUserWithEmailAndPassword(auth,email,pass);
-        await updateProfile(cred.user,{displayName:name});
-        await setDoc(doc(db,'users',cred.user.uid),{name,email,role:'anggota',joinedAt:new Date()});
-        alert('Akun berhasil dibuat!');
-        modal.classList.remove('active');
-      }catch(err){
-        console.error("Register error", err);
-        alert("Gagal daftar: "+err.message);
-      }
-    };
-
-    // STATE
-    onAuthStateChanged(auth, async (user)=>{
-      if(user){
-        btnLogin.classList.add('hidden');
-        btnProfile.classList.remove('hidden');
-        profileName.textContent = user.displayName || 'Anggota';
-        profileEmail.textContent = user.email;
-        profilePhoto.src = user.photoURL || './assets/user.svg';
-
-        const snap = await getDoc(doc(db,'users',user.uid));
-        if(snap.exists()){
-          const role = snap.data().role;
-          if(['super_admin','admin_kegiatan','admin_keuangan'].includes(role)){
-            linkAdmin.classList.remove('hidden');
-          }
-        }
-      }else{
-        btnLogin.classList.remove('hidden');
-        btnProfile.classList.add('hidden');
-        linkAdmin.classList.add('hidden');
-      }
-    });
-  </script>
-
-  <!-- Dynamic content -->
-  <script type="module" src="./js/umkm.js"></script>
-  <script type="module" src="./js/berita.js"></script>
-  <script type="module" src="./js/galeri.js"></script>
+// === Kas ===
+const fK=document.getElementById('formKas');
+const listK=document.getElementById('listKas');
+fK.onsubmit=async(e)=>{
+  e.preventDefault();
+  await addDoc(collection(db,'kas'),{
+    jumlah:Number(fK.jumlah.value),tipe:fK.tipe.value,keterangan:fK.keterangan.value,createdAt:serverTimestamp()
+  });
+  fK.reset(); loadKas();
+};
+async function loadKas(){
+  const q=query(collection(db,'kas'),orderBy('createdAt','desc'));
+  const snap=await getDocs(q); listK.innerHTML="";
+  let total=0;
+  snap.forEach(d=>{
+    const k=d.data(); total+=k.tipe==='masuk'?k.jumlah:-k.jumlah;
+    const div=document.createElement('div');
+    div.className="card";
+    div.innerHTML=`<strong>${k.tipe==='masuk'?'🟢':'🔴'} Rp${k.jumlah.toLocaleString()}</strong><br>${k.keterangan||''}`;
+    listK.appendChild(div);
+  });
+  const t=document.createElement('div');
+  t.innerHTML=`<h3>Total Kas: Rp${total.toLocaleString()}</h3>`;
+  listK.prepend(t);
+}
+loadKas();
+</script>
 </body>
 </html>
