@@ -2,260 +2,197 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Karang Taruna Cilosari Barat</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --primary:#0e4c92;
-  --accent:#f6c445;
-  --text:#1e293b;
-  --bg:#f9fafb;
-  --card:#fff;
+:root{
+  --primary:#0e4c92;--accent:#f6c445;--bg:#f9fafb;--text:#1e293b;--card:#fff;
 }
-body.dark {
-  --primary:#082c55;
-  --accent:#ffd84d;
-  --text:#e2e8f0;
-  --bg:#0f172a;
-  --card:#1e293b;
+body.dark{
+  --primary:#082c55;--accent:#ffd84d;--bg:#0f172a;--text:#e2e8f0;--card:#1e293b;
 }
-
-/* === RESET & BASE === */
-*{box-sizing:border-box;transition:background .3s,color .3s;}
-body{
-  font-family:'Poppins',sans-serif;
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  scroll-behavior:smooth;
-}
-
-/* === NAVBAR === */
-nav{
-  position:fixed;
-  top:0;left:0;right:0;
-  background:rgba(14,76,146,0.95);
-  color:#fff;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:.8rem 1.5rem;
-  z-index:100;
-  backdrop-filter:blur(10px);
-}
-nav h1{font-size:1.2rem;margin:0;font-weight:700}
-nav ul{list-style:none;margin:0;padding:0;display:flex;gap:1rem;align-items:center;}
-nav ul li a{color:#fff;text-decoration:none;font-weight:600}
-nav ul li a:hover{color:var(--accent)}
-nav .right{display:flex;align-items:center;gap:1rem;}
-nav button{
-  background:var(--accent);
-  border:none;
-  padding:.5rem .9rem;
-  border-radius:6px;
-  color:var(--primary);
-  font-weight:600;
-  cursor:pointer;
-}
-nav button:hover{background:#fff;color:var(--primary);}
-#modeToggle{
-  background:none;
-  border:2px solid var(--accent);
-  border-radius:50%;
-  width:36px;height:36px;
-  font-size:1.1rem;
-  color:var(--accent);
-  cursor:pointer;
-}
-
-/* === HERO === */
-.hero{
-  background:linear-gradient(135deg,var(--primary),#1a6ac2);
-  color:#fff;
-  text-align:center;
-  padding:6rem 1rem 4rem;
-  margin-top:60px;
-}
-.hero h2{margin:0;font-size:2.2rem;font-weight:700;}
-.hero p{margin-top:.5rem;font-weight:400;opacity:.9;}
-
-/* === MAIN CONTENT === */
+body{font-family:'Poppins',sans-serif;margin:0;background:var(--bg);color:var(--text);}
+nav{position:fixed;top:0;left:0;right:0;background:rgba(14,76,146,0.95);
+  color:#fff;display:flex;justify-content:space-between;align-items:center;
+  padding:.8rem 1.5rem;backdrop-filter:blur(10px);z-index:100;}
+nav ul{list-style:none;margin:0;padding:0;display:flex;gap:1rem;}
+nav ul li a{color:#fff;text-decoration:none;font-weight:600;}
+nav ul li a:hover{color:var(--accent);}
+nav button{background:var(--accent);border:none;padding:.5rem .9rem;border-radius:6px;
+  color:var(--primary);font-weight:600;cursor:pointer;}
+nav button:hover{background:#fff;}
+#modeToggle{background:none;border:2px solid var(--accent);border-radius:50%;
+  width:36px;height:36px;color:var(--accent);cursor:pointer;}
+.hero{background:linear-gradient(135deg,var(--primary),#1a6ac2);
+  color:#fff;text-align:center;padding:6rem 1rem 4rem;margin-top:60px;}
 main{max-width:1100px;margin:auto;padding:2rem 1rem;}
-h2{color:var(--primary);border-left:5px solid var(--accent);padding-left:.5rem;margin-top:2rem;}
-.grid{
-  display:grid;
-  gap:1rem;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-}
-.card{
-  background:var(--card);
-  padding:1rem;
-  border-radius:10px;
-  box-shadow:0 2px 10px rgba(0,0,0,.08);
-  opacity:0;
-  transform:translateY(20px);
-  animation:fadeUp .8s ease forwards;
-}
+h2{color:var(--primary);border-left:5px solid var(--accent);padding-left:.5rem;}
+.grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.card{background:var(--card);padding:1rem;border-radius:10px;
+  box-shadow:0 2px 10px rgba(0,0,0,.08);}
 .card img{width:100%;border-radius:8px;margin-bottom:.6rem;}
-.card h3{margin:.3rem 0;}
-.card a{color:var(--primary);text-decoration:none;font-weight:600;}
-.card:hover{transform:translateY(-4px);box-shadow:0 4px 14px rgba(0,0,0,.15);}
-
-/* === ANIMASI === */
-@keyframes fadeUp{to{opacity:1;transform:translateY(0);}}
-
-/* === FOOTER & BUTTON TO TOP === */
-footer{text-align:center;padding:2rem;color:#fff;background:var(--primary);margin-top:3rem;}
-#toTop{
-  position:fixed;
-  bottom:30px;right:30px;
-  background:var(--accent);
-  color:var(--primary);
-  border:none;
-  padding:.6rem .8rem;
-  border-radius:50%;
-  font-size:1.3rem;
-  cursor:pointer;
-  display:none;
-}
-#toTop.show{display:block;}
-@media(max-width:700px){
-  nav ul{display:none;}
-  nav.active ul{display:flex;flex-direction:column;position:absolute;top:60px;right:15px;background:var(--primary);padding:1rem;border-radius:8px;}
-  .menu-toggle{display:block;cursor:pointer;font-size:1.4rem;}
-}
-.menu-toggle{display:none;color:#fff;}
+footer{text-align:center;padding:2rem;background:var(--primary);color:#fff;margin-top:3rem;}
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,.6);justify-content:center;align-items:center;z-index:999;}
+.modal.active{display:flex;}
+.modal-content{background:#fff;padding:2rem;border-radius:10px;width:100%;
+  max-width:360px;box-shadow:0 3px 10px rgba(0,0,0,.2);}
+.modal-content h3{text-align:center;color:#0e4c92;margin-top:0;}
+.modal-content input{width:100%;padding:.7rem;margin-bottom:.8rem;border:1px solid #ccc;border-radius:6px;}
+.modal-content button{width:100%;padding:.8rem;background:#0e4c92;color:#fff;border:none;border-radius:6px;font-weight:600;cursor:pointer;}
+.modal-content button:hover{background:#f6c445;color:#0e4c92;}
+.modal-content p{text-align:center;font-size:.9rem;}
+.modal-content a{color:#0e4c92;font-weight:600;text-decoration:none;}
 </style>
 </head>
 <body>
-
-<!-- === NAVIGATION === -->
 <nav>
   <h1>Karang Taruna Cilosari Barat</h1>
-  <span class="menu-toggle">☰</span>
   <ul>
     <li><a href="#berita">Berita</a></li>
     <li><a href="#umkm">UMKM</a></li>
     <li><a href="#kontak">Kontak</a></li>
   </ul>
   <div class="right">
-    <button onclick="location.href='login.html'">Login</button>
-    <button id="modeToggle" title="Ganti Mode">☀️</button>
+    <button id="authBtn">Masuk / Daftar</button>
+    <button id="modeToggle">☀️</button>
   </div>
 </nav>
 
-<!-- === HERO === -->
 <section class="hero">
   <h2>RT01/RW08 Kelurahan Kemijen, Semarang Timur</h2>
   <p>Bersatu, Berdaya, dan Kreatif bersama Karang Taruna Cilosari Barat</p>
 </section>
 
-<!-- === MAIN === -->
 <main>
-  <section id="berita">
-    <h2>📰 Berita Terbaru</h2>
-    <div id="beritaList" class="grid"></div>
-  </section>
+<section id="berita">
+  <h2>📰 Berita Terbaru</h2>
+  <div id="beritaList" class="grid"></div>
+</section>
 
-  <section id="umkm">
-    <h2>🏪 UMKM Binaan</h2>
-    <div id="umkmList" class="grid"></div>
-  </section>
+<section id="umkm">
+  <h2>🏪 UMKM Binaan</h2>
+  <div id="umkmList" class="grid"></div>
+</section>
 
-  <section id="kontak">
-    <h2>📞 Kontak Kami</h2>
-    <p>Alamat: Cilosari Barat RT01/RW08, Kelurahan Kemijen, Semarang Timur</p>
-    <p>Instagram: <a href="https://instagram.com/karangtaruna_cilosari" target="_blank">@karangtaruna_cilosari</a></p>
-    <p>TikTok: <a href="https://tiktok.com/@karangtaruna_cilosari" target="_blank">@karangtaruna_cilosari</a></p>
-  </section>
+<section id="kontak">
+  <h2>📞 Kontak Kami</h2>
+  <p>Alamat: Cilosari Barat RT01/RW08, Kelurahan Kemijen, Semarang Timur</p>
+  <p>Instagram: <a href="https://instagram.com/karangtaruna_cilosari" target="_blank">@karangtaruna_cilosari</a></p>
+  <p>TikTok: <a href="https://tiktok.com/@karangtaruna_cilosari" target="_blank">@karangtaruna_cilosari</a></p>
+</section>
 </main>
 
-<footer>
-  © 2025 Karang Taruna Cilosari Barat RT01/RW08 – Semarang Timur
-</footer>
+<footer>© 2025 Karang Taruna Cilosari Barat RT01/RW08 – Semarang Timur</footer>
 
-<button id="toTop">↑</button>
+<!-- MODAL LOGIN/REGISTER -->
+<div id="authModal" class="modal">
+  <div class="modal-content">
+    <h3 id="authTitle">Masuk ke Akun</h3>
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="password" id="password" placeholder="Password (≥6 karakter)" required>
+    <button id="authAction">Login</button>
+    <p id="switchText">Belum punya akun? <a href="#" id="switchMode">Daftar</a></p>
+    <p><a href="#" id="closeModal">Tutup</a></p>
+  </div>
+</div>
 
-<!-- === SCRIPT === -->
+<!-- MODAL PROFIL AKUN -->
+<div id="profileModal" class="modal">
+  <div class="modal-content">
+    <h3>Profil Akun</h3>
+    <p id="userEmail">Memuat...</p>
+    <button id="toDashboard">Buka Dashboard</button>
+    <button id="logout">Keluar</button>
+    <p><a href="#" id="closeProfile">Tutup</a></p>
+  </div>
+</div>
+
 <script type="module">
-import { db } from './js/firebase.js';
-import { collection, getDocs, orderBy, query } 
-  from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+import { db, auth } from './js/firebase.js';
+import { loginUser, registerUser, logoutUser } from './js/auth.js';
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import { collection, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-// --- Responsive Navbar ---
-const nav=document.querySelector('nav');
-const toggle=document.querySelector('.menu-toggle');
-toggle.addEventListener('click',()=>nav.classList.toggle('active'));
-
-// --- Mode Gelap / Terang ---
+/* Mode */
 const toggleBtn=document.getElementById('modeToggle');
-const body=document.body;
 let darkMode=localStorage.getItem('darkMode')==='true';
+function applyMode(){document.body.classList.toggle('dark',darkMode);toggleBtn.textContent=darkMode?'🌙':'☀️';}
+toggleBtn.onclick=()=>{darkMode=!darkMode;localStorage.setItem('darkMode',darkMode);applyMode();};
 applyMode();
 
-toggleBtn.onclick=()=>{
-  darkMode=!darkMode;
-  localStorage.setItem('darkMode',darkMode);
-  applyMode();
+/* Auth Modal */
+const modal=document.getElementById('authModal');
+const profile=document.getElementById('profileModal');
+const openBtn=document.getElementById('authBtn');
+const closeBtn=document.getElementById('closeModal');
+const closeProfile=document.getElementById('closeProfile');
+const switchMode=document.getElementById('switchMode');
+const switchText=document.getElementById('switchText');
+const title=document.getElementById('authTitle');
+const action=document.getElementById('authAction');
+const logout=document.getElementById('logout');
+const userEmail=document.getElementById('userEmail');
+const toDashboard=document.getElementById('toDashboard');
+let isLogin=true;
+
+/* Auth Logic */
+openBtn.onclick=()=>{if(auth.currentUser){profile.classList.add('active');}else{modal.classList.add('active');}};
+closeBtn.onclick=()=>modal.classList.remove('active');
+closeProfile.onclick=()=>profile.classList.remove('active');
+logout.onclick=async()=>{await logoutUser();profile.classList.remove('active');alert("Berhasil keluar.");};
+toDashboard.onclick=()=>location.href="./admin.html";
+switchMode.onclick=(e)=>{e.preventDefault();isLogin=!isLogin;
+  if(isLogin){title.textContent="Masuk ke Akun";action.textContent="Login";switchText.innerHTML='Belum punya akun? <a href="#" id="switchMode">Daftar</a>';}
+  else{title.textContent="Daftar Akun Baru";action.textContent="Daftar";switchText.innerHTML='Sudah punya akun? <a href="#" id="switchMode">Login</a>';}
 };
-function applyMode(){
-  if(darkMode){
-    body.classList.add('dark');
-    toggleBtn.textContent='🌙';
+action.onclick=async()=>{
+  const email=document.getElementById('email').value.trim();
+  const pass=document.getElementById('password').value;
+  try{
+    if(isLogin) await loginUser(email,pass);
+    else await registerUser(email,pass);
+    modal.classList.remove('active');
+  }catch(err){alert("Gagal: "+err.message);}
+};
+
+/* Auth State */
+onAuthStateChanged(auth,(user)=>{
+  if(user){
+    document.getElementById('authBtn').textContent="Profil Akun";
+    userEmail.textContent=user.email;
   }else{
-    body.classList.remove('dark');
-    toggleBtn.textContent='☀️';
+    document.getElementById('authBtn').textContent="Masuk / Daftar";
   }
-}
-
-// --- Tombol ke atas ---
-const toTop=document.getElementById('toTop');
-window.addEventListener('scroll',()=>{
-  if(window.scrollY>400){toTop.classList.add('show');}
-  else{toTop.classList.remove('show');}
 });
-toTop.onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
 
-// === LOAD BERITA ===
+/* Data */
 async function loadBerita(){
-  const container=document.getElementById('beritaList');
+  const c=document.getElementById('beritaList');
   const snap=await getDocs(query(collection(db,'berita'),orderBy('createdAt','desc')));
-  container.innerHTML="";
-  snap.forEach(docu=>{
-    const b=docu.data();
-    const id=docu.id;
+  c.innerHTML="";
+  snap.forEach(d=>{
+    const b=d.data();
     const div=document.createElement('div');
     div.className='card';
-    div.innerHTML=`
-      ${b.foto?`<img src="${b.foto}" alt="${b.judul}">`:''}
-      <h3><a href="berita.html?id=${id}">${b.judul}</a></h3>
-      <p>${b.isi.substring(0,120)}...</p>
-      <a href="berita.html?id=${id}">Baca selengkapnya →</a>
-    `;
-    container.appendChild(div);
+    div.innerHTML=`${b.foto?`<img src="${b.foto}">`:''}<h3>${b.judul}</h3><p>${b.isi?.substring(0,120)||''}...</p>`;
+    c.appendChild(div);
   });
 }
-
-// === LOAD UMKM ===
 async function loadUmkm(){
-  const container=document.getElementById('umkmList');
+  const c=document.getElementById('umkmList');
   const snap=await getDocs(query(collection(db,'umkm'),orderBy('createdAt','desc')));
-  container.innerHTML="";
-  snap.forEach(docu=>{
-    const u=docu.data();
+  c.innerHTML="";
+  snap.forEach(d=>{
+    const u=d.data();
     const div=document.createElement('div');
     div.className='card';
-    div.innerHTML=`
-      ${u.foto?`<img src="${u.foto}" alt="${u.nama}">`:''}
-      <h3>${u.nama}</h3>
-      <p>${u.deskripsi||''}</p>
-    `;
-    container.appendChild(div);
+    div.innerHTML=`${u.foto?`<img src="${u.foto}">`:''}<h3>${u.nama}</h3><p>${u.deskripsi||''}</p>`;
+    c.appendChild(div);
   });
 }
-loadBerita();
-loadUmkm();
+loadBerita();loadUmkm();
 </script>
 </body>
 </html>
