@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Karang Taruna Cilosari Barat RT01/RW08</title>
+  <link rel="icon" href="./assets/logo.svg">
+  <link rel="stylesheet" href="./css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <header>
+    <div class="container brand">
+      <img src="./assets/logo.svg" alt="Logo">
+      <div>
+        <strong>Karang Taruna Cilosari Barat RT01/RW08</strong><br>
+        <small class="muted">Kelurahan Kemijen, Kecamatan Semarang Timur</small>
+      </div>
+    </div>
+    <div class="container">
+      <nav>
+        <a href="#beranda">Beranda</a>
+        <a href="#berita">Berita</a>
+        <a href="#galeri">Galeri</a>
+        <a href="#umkm">UMKM</a>
+        <a href="#struktur">Struktur</a>
+        <a href="#kas" id="kasMenu" class="hidden">Kas</a>
+        <a href="#kontak">Kontak</a>
+        <a href="./admin.html">Admin</a>
+        <a href="#" id="btnLogin">Masuk</a>
+        <a href="#" id="btnProfile" class="hidden">Profil</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="beranda" class="section alt">
+      <div class="container">
+        <div class="card">
+          <h2>Selamat datang di Karang Taruna Cilosari Barat RT01/RW08</h2>
+          <p>Portal khusus kegiatan pemuda: berita, dokumentasi, UMKM binaan, kas dan arsip digital.</p>
+          <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+            <a class="btn primary" href="#umkm">Lihat UMKM</a>
+            <a class="btn outline" href="#berita">Lihat Berita</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="berita" class="section">
+      <div class="container">
+        <div class="section-header"><h2>Berita & Kegiatan</h2></div>
+        <div id="beritaList" class="grid news"></div>
+      </div>
+    </section>
+
+    <section id="galeri" class="section alt">
+      <div class="container">
+        <div class="section-header"><h2>Galeri Kegiatan</h2></div>
+        <div id="galeriList" class="masonry"></div>
+      </div>
+    </section>
+
+    <section id="umkm" class="section">
+      <div class="container">
+        <div class="section-header"><h2>UMKM Binaan Karang Taruna</h2><p>Dukung produk & jasa karya pemuda</p></div>
+        <div id="umkmList" class="grid umkm"></div>
+      </div>
+    </section>
+
+    <section id="struktur" class="section alt">
+      <div class="container">
+        <div class="section-header"><h2>Struktur Organisasi</h2></div>
+        <div id="strukturList" class="grid news"></div>
+      </div>
+    </section>
+
+    <section id="kas" class="section hidden">
+      <div class="container">
+        <div class="section-header"><h2>Kas Karang Taruna (khusus anggota login)</h2></div>
+        <div id="kasList"></div>
+        <div class="total-box">Total Kas: <span id="totalKas">Rp 0</span></div>
+      </div>
+    </section>
+
+    <section id="kontak" class="section alt">
+      <div class="container">
+        <div class="card">
+          <h2>Kontak Kami</h2>
+          <p>Alamat: Cilosari Barat RT01/RW08, Kelurahan Kemijen, Kecamatan Semarang Timur</p>
+          <p>Instagram: <a target="_blank" href="https://instagram.com/karangtaruna_cilosari">@karangtaruna_cilosari</a></p>
+          <p>TikTok: <a target="_blank" href="https://tiktok.com/@karangtaruna_cilosari">@karangtaruna_cilosari</a></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 Karang Taruna Cilosari Barat RT01/RW08
+  </footer>
+
+  <!-- Modals -->
+  <div class="modal" id="modalAuth">
+    <div class="modal-box">
+      <button class="close-modal" id="closeAuth">&times;</button>
+      <div id="loginBox">
+        <h3>Masuk Anggota</h3>
+        <form id="loginForm">
+          <label>Email</label><input type="email" name="email" required>
+          <label>Password</label><input type="password" name="password" required>
+          <button class="btn primary" type="submit">Masuk</button>
+        </form>
+        <p class="muted">Belum punya akun? <a id="showRegister" href="#">Daftar</a></p>
+      </div>
+      <div id="registerBox" class="hidden">
+        <h3>Daftar Anggota</h3>
+        <form id="registerForm">
+          <label>Nama</label><input type="text" name="name" required>
+          <label>Email</label><input type="email" name="email" required>
+          <label>Password</label><input type="password" name="password" minlength="6" required>
+          <button class="btn primary" type="submit">Daftar</button>
+        </form>
+        <p class="muted">Sudah punya akun? <a id="showLogin" href="#">Masuk</a></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="modalProfile">
+    <div class="modal-box">
+      <button class="close-modal" id="closeProfile">&times;</button>
+      <img id="profilePhoto" src="./assets/user.svg" class="avatar" alt="Foto Profil">
+      <input type="file" id="uploadPhoto" accept="image/*">
+      <label>Nama</label><input type="text" id="profileName">
+      <label>Email</label><input type="email" id="profileEmail" disabled>
+      <div style="display:flex;gap:.6rem;margin-top:.6rem">
+        <button class="btn primary" id="saveProfile">Simpan</button>
+        <button class="btn outline" id="logoutBtn">Keluar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="./env.js"></script>
+  <script type="module" src="./js/firebase.js"></script>
+  <script type="module" src="./js/auth.js"></script>
+  <script type="module" src="./js/profile.js"></script>
+  <script type="module" src="./js/berita.js"></script>
+  <script type="module" src="./js/galeri.js"></script>
+  <script type="module" src="./js/umkm.js"></script>
+  <script type="module" src="./js/struktur.js"></script>
+  <script type="module" src="./js/kas.js"></script>
+
+  <!-- PWA (optional) -->
+  <script>
+    if('serviceWorker' in navigator){ navigator.serviceWorker.register('./service-worker.js'); }
+  </script>
+</body>
+</html>

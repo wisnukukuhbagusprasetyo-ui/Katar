@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Admin - Karang Taruna Cilosari Barat</title>
+  <link rel="icon" href="./assets/logo.svg">
+  <link rel="stylesheet" href="./css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <header>
+    <div class="container" style="display:flex;justify-content:space-between;align-items:center;padding:.6rem 0">
+      <strong>Dashboard Admin</strong>
+      <div><span id="adminHello"></span> • <span class="badge" id="adminRole">memuat…</span> • <button id="adminLogout" class="btn">Keluar</button></div>
+    </div>
+  </header>
+
+  <main>
+    <!-- UMKM -->
+    <section class="card">
+      <h3>🛍️ Tambah UMKM</h3>
+      <div class="form-grid">
+        <input type="text" id="umkmNama" placeholder="Nama Usaha">
+        <input type="text" id="umkmKategori" placeholder="Kategori (Minuman, Makanan, Jasa, dll)">
+        <textarea id="umkmDesk" placeholder="Deskripsi usaha…"></textarea>
+        <input type="text" id="umkmHarga" placeholder="Harga / kisaran (opsional)">
+        <input type="text" id="umkmWA" placeholder="Nomor WhatsApp (format 628xxxxxxxxxx)">
+        <input type="url" id="umkmToko" placeholder="Link Toko (IG / Shopee / Tokopedia)">
+        <label>Status
+          <select id="umkmStatus">
+            <option value="aktif">Aktif (ditampilkan)</option>
+            <option value="nonaktif">Nonaktif (disembunyikan)</option>
+          </select>
+        </label>
+        <input type="file" id="umkmFoto" accept="image/*">
+        <button class="btn primary" id="umkmUpload">Simpan UMKM</button>
+      </div>
+    </section>
+
+    <!-- Kas -->
+    <section class="card">
+      <h3>💰 Manajemen Kas</h3>
+      <div class="form-grid">
+        <input type="date" id="kasTanggal">
+        <input type="text" id="kasKet" placeholder="Keterangan">
+        <select id="kasJenis"><option value="masuk">Pemasukan</option><option value="keluar">Pengeluaran</option></select>
+        <input type="number" id="kasNominal" placeholder="Nominal (Rp)">
+        <button class="btn primary" id="kasSimpan">Simpan Kas</button>
+      </div>
+    </section>
+
+    <!-- Arsip -->
+    <section class="card">
+      <h3>📂 Arsip Digital</h3>
+      <div class="form-grid">
+        <input type="text" id="judulSurat" placeholder="Judul Surat"><input type="file" id="fileSurat">
+        <button class="btn" id="uploadSurat">Upload Surat</button>
+        <input type="text" id="judulProposal" placeholder="Judul Proposal"><input type="file" id="fileProposal">
+        <button class="btn" id="uploadProposal">Upload Proposal</button>
+        <input type="text" id="judulLaporan" placeholder="Judul Laporan"><input type="file" id="fileLaporan">
+        <button class="btn" id="uploadLaporan">Upload Laporan</button>
+      </div>
+    </section>
+  </main>
+
+  <footer><p style="text-align:center;color:#6b7280">© 2025 Karang Taruna Cilosari Barat</p></footer>
+
+  <script src="./env.js"></script>
+  <script src="https://apis.google.com/js/api.js"></script>
+  <script type="module" src="./js/firebase.js"></script>
+  <script type="module" src="./js/admin.js"></script>
+  <script type="module" src="./js/gdrive.js"></script>
+  <script type="module" src="./js/admin-umkm.js"></script>
+  <script type="module" src="./js/admin-kas.js"></script>
+  <script type="module" src="./js/admin-arsip.js"></script>
+</body>
+</html>
