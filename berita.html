@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Detail Berita | Karang Taruna</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+body{font-family:'Poppins',sans-serif;margin:0;background:#f9fafb;color:#1e293b}
+header{background:#0e4c92;color:#fff;padding:1rem;text-align:center}
+main{max-width:800px;margin:auto;padding:1rem;background:#fff;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.05);margin-top:1.5rem}
+img{width:100%;border-radius:8px;margin:1rem 0}
+h1{color:#0e4c92}
+.back{display:inline-block;margin-top:1rem;text-decoration:none;color:#0e4c92;font-weight:600}
+footer{text-align:center;padding:1rem;color:#64748b;margin-top:2rem}
+</style>
+</head>
+<body>
+<header>
+  <h1>Karang Taruna Cilosari Barat RT01/RW08</h1>
+</header>
+
+<main>
+  <article id="beritaDetail">
+    <p>Memuat berita...</p>
+  </article>
+  <a href="index.html" class="back">← Kembali ke Beranda</a>
+</main>
+
+<footer>© 2025 Karang Taruna Cilosari Barat RT01/RW08</footer>
+
+<script type="module">
+import { db } from './js/firebase.js';
+import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+// Ambil parameter ID dari URL
+const params = new URLSearchParams(location.search);
+const id = params.get("id");
+
+const container = document.getElementById("beritaDetail");
+
+async function loadDetail(){
+  if(!id){
+    container.innerHTML = "<p>ID berita tidak ditemukan.</p>";
+    return;
+  }
+  try {
+    const ref = doc(db, "berita", id);
+    const snap = await getDoc(ref);
+    if(!snap.exists()){
+      container.innerHTML = "<p>Berita tidak ditemukan.</p>";
+      return;
+    }
+    const b = snap.data();
+    const tgl = b.createdAt?.toDate ? b.createdAt.toDate().toLocaleDateString('id-ID',{day:'2-digit',month:'long',year:'numeric'}) : '';
+    container.innerHTML = `
+      <h1>${b.judul}</h1>
+      <p><em>${tgl}</em></p>
+      ${b.foto?`<img src="${b.foto}" alt="${b.judul}">`:''}
+      <p>${b.isi.replace(/\n/g,'<br>')}</p>
+    `;
+  } catch(err){
+    container.innerHTML = "<p>Terjadi kesalahan saat memuat berita.</p>";
+    console.error(err);
+  }
+}
+
+loadDetail();
+</script>
+</body>
+</html>
