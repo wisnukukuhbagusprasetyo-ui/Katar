@@ -1,71 +1,136 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Detail Berita | Karang Taruna</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>Berita | Karang Taruna Cilosari Barat</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
 <style>
-body{font-family:'Poppins',sans-serif;margin:0;background:#f9fafb;color:#1e293b}
-header{background:#0e4c92;color:#fff;padding:1rem;text-align:center}
-main{max-width:800px;margin:auto;padding:1rem;background:#fff;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.05);margin-top:1.5rem}
-img{width:100%;border-radius:8px;margin:1rem 0}
-h1{color:#0e4c92}
-.back{display:inline-block;margin-top:1rem;text-decoration:none;color:#0e4c92;font-weight:600}
-footer{text-align:center;padding:1rem;color:#64748b;margin-top:2rem}
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #f5f7fa;
+  color: #1e293b;
+}
+header {
+  background: linear-gradient(90deg, #0e4c92, #1a6ac2);
+  color: #fff;
+  padding: 1rem;
+  text-align: center;
+}
+main {
+  max-width: 900px;
+  margin: 2rem auto;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 2rem;
+}
+h1 {
+  color: #0e4c92;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+p {
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+small {
+  color: #475569;
+}
+button {
+  background: #0e4c92;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+button:hover {
+  background: #f6c445;
+  color: #0e4c92;
+}
+footer {
+  text-align: center;
+  padding: 1rem;
+  background: #0e4c92;
+  color: #fff;
+  margin-top: 2rem;
+}
+.loader {
+  text-align: center;
+  color: #0e4c92;
+  font-weight: 600;
+  margin-top: 2rem;
+}
 </style>
 </head>
 <body>
+
 <header>
-  <h1>Karang Taruna Cilosari Barat RT01/RW08</h1>
+  <h2>📰 Berita Karang Taruna Cilosari Barat</h2>
 </header>
 
-<main>
-  <article id="beritaDetail">
-    <p>Memuat berita...</p>
-  </article>
-  <a href="index.html" class="back">← Kembali ke Beranda</a>
+<main id="beritaContainer">
+  <div class="loader">Memuat berita...</div>
 </main>
 
-<footer>© 2025 Karang Taruna Cilosari Barat RT01/RW08</footer>
+<div style="text-align:center;margin-top:1rem;">
+  <button onclick="window.location.href='index.html'">⬅️ Kembali ke Beranda</button>
+</div>
+
+<footer>
+  <p>&copy; 2025 Karang Taruna Cilosari Barat RT01/RW08 - Semarang Timur</p>
+</footer>
 
 <script type="module">
-import { db } from './js/firebase.js';
+import { db } from "./js/firebase.js";
 import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-// Ambil parameter ID dari URL
-const params = new URLSearchParams(location.search);
+// Ambil parameter id dari URL
+const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 
-const container = document.getElementById("beritaDetail");
+const container = document.getElementById("beritaContainer");
 
-async function loadDetail(){
-  if(!id){
-    container.innerHTML = "<p>ID berita tidak ditemukan.</p>";
-    return;
-  }
+if (!id) {
+  container.innerHTML = "<p>❌ ID berita tidak ditemukan.</p>";
+} else {
+  loadBeritaDetail(id);
+}
+
+async function loadBeritaDetail(id) {
   try {
     const ref = doc(db, "berita", id);
     const snap = await getDoc(ref);
-    if(!snap.exists()){
-      container.innerHTML = "<p>Berita tidak ditemukan.</p>";
+    if (!snap.exists()) {
+      container.innerHTML = "<p>⚠️ Berita tidak ditemukan atau telah dihapus.</p>";
       return;
     }
+
     const b = snap.data();
-    const tgl = b.createdAt?.toDate ? b.createdAt.toDate().toLocaleDateString('id-ID',{day:'2-digit',month:'long',year:'numeric'}) : '';
+    const tanggal = b.createdAt?.toDate
+      ? b.createdAt.toDate().toLocaleString("id-ID", { dateStyle: "long", timeStyle: "short" })
+      : "(tanggal tidak tersedia)";
+
     container.innerHTML = `
       <h1>${b.judul}</h1>
-      <p><em>${tgl}</em></p>
-      ${b.foto?`<img src="${b.foto}" alt="${b.judul}">`:''}
-      <p>${b.isi.replace(/\n/g,'<br>')}</p>
+      ${b.foto ? `<img src="${b.foto}" alt="${b.judul}">` : ""}
+      <p>${b.isi}</p>
+      <small>🕓 ${tanggal} | ✍️ ${b.penulis || "Admin Karang Taruna"}</small>
     `;
-  } catch(err){
+  } catch (e) {
+    console.error(e);
     container.innerHTML = "<p>Terjadi kesalahan saat memuat berita.</p>";
-    console.error(err);
   }
 }
-
-loadDetail();
 </script>
+
 </body>
 </html>
