@@ -2,325 +2,229 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard Admin | Karang Taruna Cilosari Barat</title>
-<link rel="icon" href="./assets/logo.svg">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Dashboard | Karang Taruna Cilosari Barat</title>
 <style>
-/* ======== STYLE UMUM ======== */
-body{
-  font-family:'Poppins',sans-serif;
-  background:#f9fafb;
-  color:#1e293b;
-  margin:0;
-}
-header{
-  background:#0e4c92;
-  color:#fff;
-  padding:1rem 1.5rem;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.logout{
-  background:#fff;
-  color:#0e4c92;
-  padding:.4rem .8rem;
-  border:none;
-  border-radius:6px;
-  cursor:pointer;
-  font-weight:600;
-}
-nav{
-  display:flex;
-  justify-content:center;
-  gap:1rem;
-  background:#fff;
-  padding:.8rem 0;
-  box-shadow:0 1px 6px rgba(0,0,0,.1);
-  position:sticky;
-  top:0;
-  z-index:99;
-}
-nav a{
-  color:#0e4c92;
-  text-decoration:none;
-  font-weight:600;
-}
-nav a.active{color:#f6c445}
-section{display:none;padding:1rem 1.5rem}
-section.active{display:block}
-input,textarea,select{
-  width:100%;
-  padding:.6rem;
-  border:1px solid #ccc;
-  border-radius:8px;
-  margin-bottom:.6rem;
-  font-family:'Poppins',sans-serif;
-}
-button{
-  background:#0e4c92;
-  color:#fff;
-  border:none;
-  padding:.7rem 1.2rem;
-  border-radius:8px;
-  cursor:pointer;
-  font-weight:600;
-}
-button:hover{background:#f6c445;color:#0e4c92}
-.card{
-  background:#fff;
-  padding:1rem;
-  border-radius:8px;
-  box-shadow:0 2px 8px rgba(0,0,0,.05);
-  margin-bottom:1rem;
-  position:relative;
-}
-img{max-width:100%;border-radius:8px;margin-top:.5rem}
-.delBtn{
-  position:absolute;
-  top:10px;
-  right:10px;
-  background:#e63946;
-  color:#fff;
-  border:none;
-  padding:.3rem .6rem;
-  border-radius:4px;
-  cursor:pointer;
-}
-footer{text-align:center;padding:1rem;color:#64748b;margin-top:2rem}
+body{font-family:'Poppins',sans-serif;margin:0;background:#f9fafb;}
+header{background:#0e4c92;color:#fff;padding:1rem;display:flex;justify-content:space-between;align-items:center;}
+#logout{background:#fff;color:#0e4c92;border:none;padding:.5rem 1rem;border-radius:6px;font-weight:600;cursor:pointer;}
+.panel{display:none;padding:1rem;}
+.panel.active{display:block;}
+nav{display:flex;gap:1rem;background:#fff;padding:.6rem 1rem;box-shadow:0 2px 5px rgba(0,0,0,.1);}
+nav button{background:none;border:none;font-weight:600;cursor:pointer;color:#0e4c92;}
+nav button.active{color:#f6c445;}
+h2{color:#0e4c92;}
+.card{background:#fff;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,.08);padding:1rem;margin-bottom:1rem;}
 </style>
 </head>
-
 <body>
 <header>
-  <h1>Dashboard Admin – Karang Taruna Cilosari Barat</h1>
-  <button id="logoutBtn" class="logout">Keluar</button>
+  <h1>Dashboard Karang Taruna</h1>
+  <button id="logout">Keluar</button>
 </header>
 
-<nav>
-  <a href="#" class="active" data-tab="berita">📰 Berita</a>
-  <a href="#" data-tab="umkm">🏪 UMKM</a>
-  <a href="#" data-tab="kas">💰 Kas</a>
-</nav>
+<nav id="menu"></nav>
 
-<!-- ======== BERITA ======== -->
-<section id="berita" class="active">
-  <h2>Tambah Berita</h2>
+<section id="berita" class="panel">
+  <h2>Panel Berita</h2>
   <form id="formBerita">
-    <input type="text" name="judul" placeholder="Judul berita" required>
-    <textarea name="isi" placeholder="Isi berita..." required></textarea>
-    <input type="file" id="gambarBerita" accept="image/*">
-    <button type="submit">Simpan Berita</button>
+    <input type="text" id="judul" placeholder="Judul berita" required><br>
+    <textarea id="isi" placeholder="Isi berita..." required></textarea><br>
+    <input type="file" id="gambar"><br>
+    <button type="submit">Simpan</button>
   </form>
   <div id="listBerita"></div>
 </section>
 
-<!-- ======== UMKM ======== -->
-<section id="umkm">
-  <h2>Tambah UMKM</h2>
+<section id="umkm" class="panel">
+  <h2>Panel UMKM</h2>
   <form id="formUmkm">
-    <input type="text" name="nama" placeholder="Nama UMKM" required>
-    <textarea name="deskripsi" placeholder="Deskripsi singkat..."></textarea>
-    <input type="file" id="fotoUmkm" accept="image/*">
-    <button type="submit">Simpan UMKM</button>
+    <input type="text" id="nama" placeholder="Nama UMKM" required><br>
+    <textarea id="deskripsi" placeholder="Deskripsi singkat"></textarea><br>
+    <input type="file" id="fotoUmkm"><br>
+    <button type="submit">Simpan</button>
   </form>
   <div id="listUmkm"></div>
 </section>
 
-<!-- ======== KAS ======== -->
-<section id="kas">
-  <h2>Tambah Kas</h2>
+<section id="kas" class="panel">
+  <h2>Panel Kas</h2>
   <form id="formKas">
-    <input type="number" name="jumlah" placeholder="Jumlah (Rp)" required>
-    <select name="tipe" required>
+    <input type="number" id="jumlah" placeholder="Jumlah (Rp)" required><br>
+    <select id="tipe" required>
       <option value="masuk">Pemasukan</option>
       <option value="keluar">Pengeluaran</option>
-    </select>
-    <input type="text" name="keterangan" placeholder="Keterangan">
+    </select><br>
+    <input type="text" id="keterangan" placeholder="Keterangan"><br>
     <button type="submit">Simpan Kas</button>
   </form>
   <div id="listKas"></div>
 </section>
 
-<footer>© 2025 Karang Taruna Cilosari Barat RT01/RW08</footer>
+<section id="profil" class="panel">
+  <h2>Profil Akun</h2>
+  <p id="info"></p>
+</section>
 
-<!-- ============= SCRIPT SECTION ============= -->
 <script type="module">
+import { auth, db } from './js/firebase.js';
+import { onAuth, logoutUser, getUserRole } from './js/auth.js';
+import { uploadToImgBB } from './js/imgbb.js';
+import { collection, addDoc, getDocs, deleteDoc, doc, orderBy, query, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-/* =====================================================
-   Proteksi Login Firebase (WAJIB LOGIN DULU)
-===================================================== */
-import { auth, db, uploadToImgBB, logout } from './js/firebase.js';
-import { onAuthStateChanged } 
-  from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-import { 
-  collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, serverTimestamp 
-} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+const logout=document.getElementById('logout');
+const menu=document.getElementById('menu');
+const panels=document.querySelectorAll('.panel');
+const info=document.getElementById('info');
 
-// Cek apakah user sudah login
-onAuthStateChanged(auth, (user) => {
-  if (!user) {
+onAuth(async(user)=>{
+  if(!user){
     alert("Silakan login terlebih dahulu!");
-    location.href = "./login.html";
-  } else {
-    console.log("[Login terdeteksi]", user.email);
+    location.href="./index.html";
+    return;
   }
-});
 
-// Tombol Logout
-document.getElementById('logoutBtn').onclick = async() => {
-  await logout();
-  location.href = "./login.html";
-};
+  const role=await getUserRole(user.uid);
+  info.innerHTML=`Email: ${user.email}<br>Role: <b>${role}</b>`;
 
-/* =====================================================
-   Navigasi antar Tab
-===================================================== */
-document.querySelectorAll('nav a').forEach(a => {
-  a.onclick = e => {
-    e.preventDefault();
-    document.querySelectorAll('nav a').forEach(x => x.classList.remove('active'));
-    document.querySelectorAll('section').forEach(x => x.classList.remove('active'));
-    a.classList.add('active');
-    document.getElementById(a.dataset.tab).classList.add('active');
-  };
-});
+  // role-based visibility
+  const allowed={
+    super_admin:["berita","umkm","kas","profil"],
+    admin:["berita","umkm","profil"],
+    anggota:["profil"]
+  }[role] || ["profil"];
 
-/* =====================================================
-   FUNGSI CRUD: BERITA
-===================================================== */
-const fB = document.getElementById('formBerita');
-const listB = document.getElementById('listBerita');
-
-fB.onsubmit = async (e) => {
-  e.preventDefault();
-  const file = document.getElementById('gambarBerita').files[0];
-  let foto = "";
-  if (file) foto = await uploadToImgBB(file);
-
-  await addDoc(collection(db, 'berita'), {
-    judul: fB.judul.value,
-    isi: fB.isi.value,
-    foto,
-    createdAt: serverTimestamp()
+  // buat menu dinamis
+  menu.innerHTML="";
+  allowed.forEach(id=>{
+    const b=document.createElement('button');
+    b.textContent=id.toUpperCase();
+    b.onclick=()=>{
+      panels.forEach(p=>p.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      menu.querySelectorAll('button').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+    };
+    menu.appendChild(b);
   });
 
+  // buka tab pertama
+  document.getElementById(allowed[0]).classList.add('active');
+  menu.querySelector('button').classList.add('active');
+});
+
+logout.onclick=async()=>{await logoutUser();location.href="./index.html";};
+
+/* ====== Panel Berita ====== */
+const formBerita=document.getElementById('formBerita');
+const listBerita=document.getElementById('listBerita');
+
+formBerita.onsubmit=async(e)=>{
+  e.preventDefault();
+  const file=document.getElementById('gambar').files[0];
+  let foto="";
+  if(file) foto=await uploadToImgBB(file);
+  await addDoc(collection(db,'berita'),{
+    judul:judul.value,
+    isi:isi.value,
+    foto,
+    createdAt:serverTimestamp()
+  });
+  formBerita.reset();
   alert("Berita disimpan!");
-  fB.reset();
   loadBerita();
 };
 
-async function loadBerita() {
-  const snap = await getDocs(query(collection(db, 'berita'), orderBy('createdAt', 'desc')));
-  listB.innerHTML = "";
-  snap.forEach(d => {
-    const b = d.data();
-    const div = document.createElement('div');
-    div.className = "card";
-    div.innerHTML = `
-      <h3>${b.judul}</h3>
-      <p>${b.isi}</p>
-      ${b.foto ? `<img src="${b.foto}" alt="berita">` : ''}
-      <button class="delBtn">Hapus</button>
-    `;
-    div.querySelector('.delBtn').onclick = async () => {
-      if (confirm("Hapus berita ini?")) await deleteDoc(doc(db, 'berita', d.id));
-      loadBerita();
-    };
-    listB.appendChild(div);
+async function loadBerita(){
+  const snap=await getDocs(query(collection(db,'berita'),orderBy('createdAt','desc')));
+  listBerita.innerHTML="";
+  snap.forEach(d=>{
+    const b=d.data();
+    const div=document.createElement('div');
+    div.className='card';
+    div.innerHTML=`<h3>${b.judul}</h3><p>${b.isi}</p>${b.foto?`<img src="${b.foto}" width="200">`:''}
+    <button onclick="hapusBerita('${d.id}')">Hapus</button>`;
+    listBerita.appendChild(div);
   });
 }
+window.hapusBerita=async(id)=>{
+  if(confirm("Hapus berita ini?")) await deleteDoc(doc(db,'berita',id));
+  loadBerita();
+};
 loadBerita();
 
-/* =====================================================
-   FUNGSI CRUD: UMKM
-===================================================== */
-const fU = document.getElementById('formUmkm');
-const listU = document.getElementById('listUmkm');
+/* ====== Panel UMKM ====== */
+const formUmkm=document.getElementById('formUmkm');
+const listUmkm=document.getElementById('listUmkm');
 
-fU.onsubmit = async (e) => {
+formUmkm.onsubmit=async(e)=>{
   e.preventDefault();
-  const file = document.getElementById('fotoUmkm').files[0];
-  let foto = "";
-  if (file) foto = await uploadToImgBB(file);
-
-  await addDoc(collection(db, 'umkm'), {
-    nama: fU.nama.value,
-    deskripsi: fU.deskripsi.value,
+  const file=document.getElementById('fotoUmkm').files[0];
+  let foto="";
+  if(file) foto=await uploadToImgBB(file);
+  await addDoc(collection(db,'umkm'),{
+    nama:nama.value,
+    deskripsi:deskripsi.value,
     foto,
-    createdAt: serverTimestamp()
+    createdAt:serverTimestamp()
   });
-
+  formUmkm.reset();
   alert("UMKM disimpan!");
-  fU.reset();
   loadUmkm();
 };
 
-async function loadUmkm() {
-  const snap = await getDocs(query(collection(db, 'umkm'), orderBy('createdAt', 'desc')));
-  listU.innerHTML = "";
-  snap.forEach(d => {
-    const u = d.data();
-    const div = document.createElement('div');
-    div.className = "card";
-    div.innerHTML = `
-      <h3>${u.nama}</h3>
-      <p>${u.deskripsi || ''}</p>
-      ${u.foto ? `<img src="${u.foto}" alt="${u.nama}">` : ''}
-      <button class="delBtn">Hapus</button>
-    `;
-    div.querySelector('.delBtn').onclick = async () => {
-      if (confirm("Hapus UMKM ini?")) await deleteDoc(doc(db, 'umkm', d.id));
-      loadUmkm();
-    };
-    listU.appendChild(div);
+async function loadUmkm(){
+  const snap=await getDocs(query(collection(db,'umkm'),orderBy('createdAt','desc')));
+  listUmkm.innerHTML="";
+  snap.forEach(d=>{
+    const u=d.data();
+    const div=document.createElement('div');
+    div.className='card';
+    div.innerHTML=`<h3>${u.nama}</h3><p>${u.deskripsi}</p>${u.foto?`<img src="${u.foto}" width="200">`:''}
+    <button onclick="hapusUmkm('${d.id}')">Hapus</button>`;
+    listUmkm.appendChild(div);
   });
 }
+window.hapusUmkm=async(id)=>{
+  if(confirm("Hapus UMKM ini?")) await deleteDoc(doc(db,'umkm',id));
+  loadUmkm();
+};
 loadUmkm();
 
-/* =====================================================
-   FUNGSI CRUD: KAS
-===================================================== */
-const fK = document.getElementById('formKas');
-const listK = document.getElementById('listKas');
+/* ====== Panel Kas ====== */
+const formKas=document.getElementById('formKas');
+const listKas=document.getElementById('listKas');
 
-fK.onsubmit = async (e) => {
+formKas.onsubmit=async(e)=>{
   e.preventDefault();
-  await addDoc(collection(db, 'kas'), {
-    jumlah: Number(fK.jumlah.value),
-    tipe: fK.tipe.value,
-    keterangan: fK.keterangan.value,
-    createdAt: serverTimestamp()
+  await addDoc(collection(db,'kas'),{
+    jumlah:Number(jumlah.value),
+    tipe:tipe.value,
+    keterangan:keterangan.value,
+    createdAt:serverTimestamp()
   });
-
-  alert("Kas disimpan!");
-  fK.reset();
+  formKas.reset();
+  alert("Data kas disimpan!");
   loadKas();
 };
 
-async function loadKas() {
-  const snap = await getDocs(query(collection(db, 'kas'), orderBy('createdAt', 'desc')));
-  listK.innerHTML = "";
-  let total = 0;
-  snap.forEach(d => {
-    const k = d.data();
-    total += k.tipe === "masuk" ? k.jumlah : -k.jumlah;
-    const div = document.createElement('div');
-    div.className = "card";
-    div.innerHTML = `
-      <strong>${k.tipe === "masuk" ? "🟢 Pemasukan" : "🔴 Pengeluaran"} Rp${k.jumlah.toLocaleString()}</strong>
-      <br>${k.keterangan || ''}
-    `;
-    listK.appendChild(div);
+async function loadKas(){
+  const snap=await getDocs(query(collection(db,'kas'),orderBy('createdAt','desc')));
+  listKas.innerHTML="";
+  let total=0;
+  snap.forEach(d=>{
+    const k=d.data();
+    total+=k.tipe==='masuk'?k.jumlah:-k.jumlah;
+    const div=document.createElement('div');
+    div.className='card';
+    div.innerHTML=`<b>${k.tipe==='masuk'?'🟢 Pemasukan':'🔴 Pengeluaran'} Rp${k.jumlah.toLocaleString()}</b><br>${k.keterangan||''}`;
+    listKas.appendChild(div);
   });
-
-  const totalBox = document.createElement('div');
-  totalBox.innerHTML = `<h3>Total Kas: Rp${total.toLocaleString()}</h3>`;
-  listK.prepend(totalBox);
+  const sum=document.createElement('div');
+  sum.innerHTML=`<h3>Total Kas: Rp${total.toLocaleString()}</h3>`;
+  listKas.prepend(sum);
 }
 loadKas();
-
 </script>
 </body>
 </html>
