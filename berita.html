@@ -15,6 +15,13 @@ p{line-height:1.7;font-size:1rem;color:#333;}
 small{color:gray;}
 .btn{display:inline-block;background:#0e4c92;color:#fff;padding:.5rem .8rem;border-radius:6px;text-decoration:none;}
 .btn:hover{background:#f6c445;color:#0e4c92;}
+.comment-box{background:#fff;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,0.1);padding:1rem;margin-top:2rem;}
+.comment-item{border-bottom:1px solid #eee;padding:.6rem 0;}
+.comment-item:last-child{border-bottom:none;}
+.comment-item small{color:#666;font-size:.85rem;}
+.comment-form input,.comment-form textarea{width:100%;padding:.6rem;margin-bottom:.7rem;border:1px solid #ccc;border-radius:6px;font-family:'Poppins',sans-serif;}
+.comment-form button{background:#0e4c92;color:#fff;border:none;padding:.6rem 1rem;border-radius:6px;font-weight:600;cursor:pointer;}
+.comment-form button:hover{background:#f6c445;color:#0e4c92;}
 </style>
 </head>
 <body>
@@ -27,44 +34,96 @@ small{color:gray;}
   <article id="beritaContainer">
     <h2>Memuat...</h2>
   </article>
+
+  <section id="komentarSection" class="comment-box">
+    <h3>Komentar Warga</h3>
+    <div id="commentList">Belum ada komentar.</div>
+    <form id="commentForm" class="comment-form" style="margin-top:1rem;">
+      <input type="text" id="namaKomentar" placeholder="Nama Anda">
+      <textarea id="isiKomentar" rows="3" placeholder="Tulis komentar..."></textarea>
+      <button type="submit">Kirim Komentar</button>
+    </form>
+  </section>
 </main>
 
 <script type="module">
 import { db } from "./js/firebase.js";
-import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+import { auth } from "./js/firebase.js";
+import { doc, getDoc, collection, getDocs, addDoc, serverTimestamp, query, orderBy } 
+  from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-// Ambil ID berita dari URL
+/* ===== AMBIL ID BERITA DARI URL ===== */
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
-
-// Elemen container
 const container = document.getElementById("beritaContainer");
+const commentList = document.getElementById("commentList");
+const commentForm = document.getElementById("commentForm");
+const namaKomentar = document.getElementById("namaKomentar");
+const isiKomentar = document.getElementById("isiKomentar");
 
-async function loadBerita() {
-  if (!id) {
-    container.innerHTML = "<p>Berita tidak ditemukan.</p>";
-    return;
-  }
-  try {
+/* ===== TAMPILKAN BERITA ===== */
+async function loadBerita(){
+  if(!id){ container.innerHTML = "<p>Berita tidak ditemukan.</p>"; return; }
+  try{
     const snap = await getDoc(doc(db, "berita", id));
-    if (!snap.exists()) {
-      container.innerHTML = "<p>Berita tidak ditemukan.</p>";
-      return;
-    }
+    if(!snap.exists()){ container.innerHTML = "<p>Berita tidak ditemukan.</p>"; return; }
     const b = snap.data();
+    const tanggal = b.createdAt?.toDate ? b.createdAt.toDate().toLocaleDateString("id-ID") : "";
     container.innerHTML = `
       ${b.foto ? `<img src="${b.foto}" alt="${b.judul}">` : ""}
       <h1>${b.judul}</h1>
-      <small>✍️ ${b.penulis || "Anonim"} | ${b.createdAt?.toDate?.().toLocaleDateString("id-ID") || ""}</small>
-      <p>${b.isi.replace(/\n/g, "<br>")}</p>
+      <small>✍️ ${b.penulis || "Anonim"} | ${tanggal}</small>
+      <p>${(b.isi||"").replace(/\n/g,"<br>")}</p>
+      <div style="margin-top:1rem">
+        <a class="btn" href="whatsapp://send?text=${encodeURIComponent(b.judul+' '+location.href)}">Bagikan ke WhatsApp</a>
+      </div>
     `;
-  } catch (e) {
+  }catch(e){
     console.error(e);
     container.innerHTML = "<p style='color:red'>Gagal memuat berita.</p>";
   }
 }
 
+/* ===== MUAT KOMENTAR ===== */
+async function loadKomentar(){
+  try{
+    const q = query(collection(db, "berita", id, "komentar"), orderBy("createdAt", "desc"));
+    const snap = await getDocs(q);
+    if(snap.empty){ commentList.innerHTML = "<p>Belum ada komentar.</p>"; return; }
+    commentList.innerHTML = "";
+    snap.forEach(d=>{
+      const k = d.data();
+      const waktu = k.createdAt?.toDate ? k.createdAt.toDate().toLocaleString("id-ID") : "";
+      const div = document.createElement("div");
+      div.className="comment-item";
+      div.innerHTML = `<b>${k.nama||"Anonim"}</b><br><small>${waktu}</small><p>${k.isi||""}</p>`;
+      commentList.appendChild(div);
+    });
+  }catch(e){
+    commentList.innerHTML = "<p style='color:red'>Gagal memuat komentar.</p>";
+  }
+}
+
+/* ===== TAMBAH KOMENTAR ===== */
+commentForm.addEventListener("submit", async(e)=>{
+  e.preventDefault();
+  const nama = namaKomentar.value.trim();
+  const isi = isiKomentar.value.trim();
+  if(!isi) return alert("Tulis isi komentar.");
+  try{
+    await addDoc(collection(db, "berita", id, "komentar"), {
+      nama: nama || "Anonim",
+      isi,
+      createdAt: serverTimestamp()
+    });
+    namaKomentar.value=""; isiKomentar.value="";
+    loadKomentar();
+  }catch(e){ alert("Gagal kirim komentar: "+e.message); }
+});
+
+/* ===== LOAD SAAT AWAL ===== */
 loadBerita();
+loadKomentar();
 </script>
 </body>
 </html>
