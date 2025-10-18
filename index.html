@@ -2,297 +2,151 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 <title>Karang Taruna Cilosari Barat RT01/RW08</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --primary:#0e4c92;
-  --accent:#f6c445;
-  --bg:#f9fafb;
-  --text:#1e293b;
-  --card:#ffffff;
-  --shadow:rgba(0,0,0,0.1);
+  --primary:#0e4c92; --accent:#f6c445; --bg:#f9fafb; --text:#1e293b; --card:#fff; --shadow:rgba(0,0,0,.1);
 }
 body.dark{
-  --primary:#082c55;
-  --accent:#ffd84d;
-  --bg:#0f172a;
-  --text:#e2e8f0;
-  --card:#1e293b;
-  --shadow:rgba(255,255,255,0.1);
+  --primary:#082c55; --accent:#ffd84d; --bg:#0f172a; --text:#e2e8f0; --card:#1f2937; --shadow:rgba(255,255,255,.12);
 }
-body{
-  font-family:'Poppins',sans-serif;
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  scroll-behavior:smooth;
-  transition:background .3s,color .3s;
-}
-nav{
-  position:fixed;
-  top:0;left:0;right:0;
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;line-height:1.6;}
+
+/* NAVBAR */
+.nav{
+  position:sticky;top:0;z-index:1000;
   background:linear-gradient(90deg,var(--primary),#1a6ac2);
-  color:#fff;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:.8rem 1.5rem;
-  z-index:1000;
-  box-shadow:0 2px 8px var(--shadow);
+  color:#fff;display:flex;align-items:center;justify-content:space-between;
+  padding:.75rem 1rem;box-shadow:0 2px 10px var(--shadow);
 }
-nav h1{
-  font-size:1.2rem;
-  letter-spacing:.5px;
-  font-weight:700;
+.brand{font-weight:700;letter-spacing:.3px;font-size:1rem;margin-right:.5rem}
+.nav-right{display:flex;gap:.5rem;align-items:center}
+.btn{border:none;border-radius:8px;padding:.5rem .8rem;font-weight:600;cursor:pointer}
+.btn-accent{background:var(--accent);color:var(--primary)}
+.btn-ghost{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.5)}
+#modeToggle{width:38px;height:38px;border-radius:50%;border:2px solid var(--accent);background:transparent;color:var(--accent)}
+/* Hamburger */
+.burger{display:flex;flex-direction:column;gap:4px;width:28px;cursor:pointer;}
+.burger span{display:block;height:3px;background:#fff;border-radius:2px;transition:.3s}
+.menu{display:flex;gap:1rem;align-items:center}
+@media(max-width:840px){
+  .menu{position:fixed;inset:56px 0 auto 0;background:linear-gradient(180deg,var(--primary),#195eaf);
+        display:none;flex-direction:column;align-items:flex-start;padding:1rem 1.25rem;gap:.75rem;box-shadow:0 6px 16px var(--shadow)}
+  .menu.show{display:flex}
+  .menu a{width:100%}
 }
-nav ul{
-  list-style:none;
-  margin:0;
-  padding:0;
-  display:flex;
-  gap:1.2rem;
-}
-nav ul li a{
-  color:#fff;
-  text-decoration:none;
-  font-weight:600;
-  position:relative;
-}
-nav ul li a::after{
-  content:"";
-  position:absolute;
-  bottom:-3px;left:0;
-  width:0;height:2px;
-  background:var(--accent);
-  transition:.3s;
-}
-nav ul li a:hover::after{
-  width:100%;
-}
-nav button{
-  background:var(--accent);
-  border:none;
-  padding:.5rem .9rem;
-  border-radius:8px;
-  color:var(--primary);
-  font-weight:600;
-  cursor:pointer;
-  box-shadow:0 3px 6px rgba(0,0,0,0.15);
-  transition:.2s;
-}
-nav button:hover{
-  transform:translateY(-2px);
-  box-shadow:0 5px 10px rgba(0,0,0,0.25);
-}
-#modeToggle{
-  background:none;
-  border:2px solid var(--accent);
-  border-radius:50%;
-  width:38px;
-  height:38px;
-  color:var(--accent);
-  font-size:1rem;
-  cursor:pointer;
-  transition:.2s;
-}
-#modeToggle:hover{
-  transform:rotate(15deg);
-  background:var(--accent);
-  color:var(--primary);
-}
+.menu a{color:#fff;text-decoration:none;font-weight:600;position:relative}
+.menu a::after{content:"";position:absolute;left:0;bottom:-3px;width:0;height:2px;background:var(--accent);transition:.2s}
+.menu a:hover::after{width:100%}
+
+/* HERO */
 .hero{
   background:linear-gradient(135deg,var(--primary),#1a6ac2);
-  color:#fff;
-  text-align:center;
-  padding:8rem 1rem 6rem;
-  margin-top:60px;
-  background-attachment:fixed;
-  box-shadow:inset 0 -3px 10px rgba(0,0,0,0.15);
+  color:#fff;text-align:center;padding:3.5rem 1rem 2.5rem;
 }
-.hero h2{
-  font-size:1.5rem;
-  margin-bottom:.5rem;
-  letter-spacing:.5px;
-}
-.hero p{
-  font-size:1rem;
-  opacity:.9;
-  margin-bottom:1rem;
-}
-main{
-  max-width:1100px;
-  margin:auto;
-  padding:2rem 1rem;
-}
-h2{
-  color:var(--primary);
-  border-left:5px solid var(--accent);
-  padding-left:.6rem;
-  margin-top:3rem;
-  letter-spacing:.5px;
-}
-.grid{
-  display:grid;
-  gap:1.5rem;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  margin-top:1rem;
-}
-.card{
-  background:var(--card);
-  padding:1rem;
-  border-radius:12px;
-  box-shadow:0 3px 10px var(--shadow);
-  transition:.3s;
-  overflow:hidden;
-}
-.card:hover{
-  transform:translateY(-4px);
-  box-shadow:0 6px 16px var(--shadow);
-}
-.card img{
-  width:100%;
-  height:180px;
-  object-fit:cover;
-  border-radius:8px;
-  margin-bottom:.6rem;
-}
-footer{
-  text-align:center;
-  padding:2rem;
-  background:linear-gradient(90deg,var(--primary),#1a6ac2);
-  color:#fff;
-  margin-top:3rem;
-  font-weight:500;
-  letter-spacing:.5px;
-}
-/* modal login/register */
-.modal{
-  display:none;
-  position:fixed;
-  top:0;left:0;width:100%;height:100%;
-  background:rgba(0,0,0,.6);
-  justify-content:center;align-items:center;
-  z-index:999;
-  backdrop-filter:blur(3px);
-}
-.modal.active{display:flex;}
-.modal-content{
-  background:var(--card);
-  padding:2rem;
-  border-radius:12px;
-  width:90%;
-  max-width:380px;
-  box-shadow:0 4px 10px var(--shadow);
-  text-align:center;
-  animation:fadeIn .3s ease;
-}
-@keyframes fadeIn{
-  from{opacity:0;transform:scale(.95);}
-  to{opacity:1;transform:scale(1);}
-}
-.modal-content h3{
-  color:var(--primary);
-  margin-bottom:1rem;
-}
-.modal-content input{
-  width:100%;
-  padding:.7rem;
-  margin-bottom:.9rem;
-  border:1px solid #ccc;
-  border-radius:6px;
-  font-family:inherit;
-}
-.modal-content button{
-  width:100%;
-  padding:.8rem;
-  background:var(--primary);
-  color:#fff;
-  border:none;
-  border-radius:8px;
-  font-weight:600;
-  cursor:pointer;
-  margin-bottom:.5rem;
-  transition:.3s;
-}
-.modal-content button:hover{
-  background:var(--accent);
-  color:var(--primary);
-}
-.modal-content p{
-  font-size:.9rem;
-}
-.modal-content a{
-  color:var(--primary);
-  font-weight:600;
-  text-decoration:none;
-}
+.hero h1{font-size:1.35rem;margin:.2rem 0}
+.hero p{opacity:.95;margin:.25rem 0 1rem}
+.cta{background:var(--accent);color:var(--primary);border:none;border-radius:10px;padding:.7rem 1.1rem;font-weight:700;cursor:pointer}
+
+/* MAIN LAYOUT */
+.container{max-width:1100px;margin:auto;padding:1.2rem}
+.section{margin-top:1.2rem}
+.section h2{color:var(--primary);border-left:5px solid var(--accent);padding-left:.6rem;margin:.2rem 0 1rem;font-size:1.05rem}
+.grid{display:grid;gap:1rem;grid-template-columns:repeat(12,1fr)}
+.card{grid-column:span 12;background:var(--card);padding:.9rem;border-radius:12px;box-shadow:0 2px 10px var(--shadow)}
+.card img{width:100%;height:180px;object-fit:cover;border-radius:8px;margin-bottom:.6rem}
+.card h3{margin:.2rem 0 .3rem}
+.card p{margin:.2rem 0 .4rem}
+
+/* Responsive cards */
+@media(min-width:520px){ .card{grid-column:span 6} }
+@media(min-width:900px){ .card{grid-column:span 4} }
+
+/* FOOTER */
+footer{margin-top:1.2rem;background:linear-gradient(90deg,var(--primary),#1a6ac2);color:#fff;text-align:center;padding:1.1rem}
+
+/* MODALS */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;justify-content:center;align-items:center;z-index:1200}
+.modal.show{display:flex}
+.modal .box{background:var(--card);width:92%;max-width:380px;border-radius:12px;padding:1rem 1.1rem;box-shadow:0 10px 30px var(--shadow)}
+.modal .box h3{margin:.2rem 0 1rem;color:var(--primary);text-align:center}
+.modal .box input{width:100%;padding:.7rem;border:1px solid #cbd5e1;background:transparent;border-radius:8px;margin-bottom:.8rem;color:var(--text)}
+.modal .box .btn{width:100%}
+.modal .link{text-align:center;margin-top:.4rem}
+.modal .link a{color:var(--primary);font-weight:700;text-decoration:none}
 </style>
 </head>
 <body>
-<nav>
-  <h1>Karang Taruna Cilosari Barat</h1>
-  <ul>
-    <li><a href="#berita">Berita</a></li>
-    <li><a href="#umkm">UMKM</a></li>
-    <li><a href="#kontak">Kontak</a></li>
-  </ul>
-  <div class="right">
-    <button id="authBtn">Masuk / Daftar</button>
-    <button id="modeToggle">☀️</button>
+  <header class="nav">
+    <div style="display:flex;gap:.8rem;align-items:center">
+      <div class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></div>
+      <div class="brand">Karang Taruna Cilosari Barat</div>
+    </div>
+    <nav class="menu" id="menu">
+      <a href="#berita" onclick="closeMenu()">Berita</a>
+      <a href="#umkm" onclick="closeMenu()">UMKM</a>
+      <a href="#kontak" onclick="closeMenu()">Kontak</a>
+    </nav>
+    <div class="nav-right">
+      <button class="btn btn-accent" id="authBtn">Masuk / Daftar</button>
+      <button class="btn" id="modeToggle">☀️</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>RT01/RW08 • Kelurahan Kemijen, Semarang Timur</h1>
+    <p>Portal pemuda — Informasi, kegiatan, dan UMKM Cilosari Barat</p>
+    <button class="cta" onclick="document.getElementById('berita').scrollIntoView({behavior:'smooth'});">Lihat Kegiatan</button>
+  </section>
+
+  <main class="container">
+    <section id="berita" class="section">
+      <h2>📰 Berita Terbaru</h2>
+      <div id="beritaList" class="grid"></div>
+    </section>
+
+    <section id="umkm" class="section">
+      <h2>🏪 UMKM Binaan</h2>
+      <div id="umkmList" class="grid"></div>
+    </section>
+
+    <section id="kontak" class="section">
+      <h2>📞 Kontak</h2>
+      <div class="card">
+        <p>📍 Cilosari Barat RT01/RW08, Kelurahan Kemijen, Semarang Timur</p>
+        <p>📸 Instagram: <a target="_blank" href="https://instagram.com/karangtaruna_cilosari">@karangtaruna_cilosari</a></p>
+        <p>🎵 TikTok: <a target="_blank" href="https://tiktok.com/@karangtaruna_cilosari">@karangtaruna_cilosari</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer>© 2025 Karang Taruna Cilosari Barat RT01/RW08 – Semarang Timur</footer>
+
+  <!-- AUTH MODAL -->
+  <div class="modal" id="authModal">
+    <div class="box">
+      <h3 id="authTitle">Masuk ke Akun</h3>
+      <input type="email" id="email" placeholder="Email" autocomplete="username" required>
+      <input type="password" id="password" placeholder="Password (≥6 karakter)" autocomplete="current-password" required>
+      <button class="btn btn-accent" id="authAction">Login</button>
+      <div class="link" id="switchText">Belum punya akun? <a href="#" id="switchMode">Daftar</a></div>
+      <div class="link"><a href="#" id="closeModal">Tutup</a></div>
+    </div>
   </div>
-</nav>
 
-<section class="hero">
-  <h2>RT01 / RW08 Kelurahan Kemijen, Semarang Timur</h2>
-  <p>Portal Pemuda – Informasi, Kegiatan, dan UMKM Cilosari Barat</p>
-  <button style="background:var(--accent);color:var(--primary);padding:.8rem 1.2rem;border:none;border-radius:8px;font-weight:600;cursor:pointer;">Gabung Karang Taruna</button>
-</section>
-
-<main>
-<section id="berita">
-  <h2>📰 Berita Terbaru</h2>
-  <div id="beritaList" class="grid"></div>
-</section>
-
-<section id="umkm">
-  <h2>🏪 UMKM Binaan</h2>
-  <div id="umkmList" class="grid"></div>
-</section>
-
-<section id="kontak">
-  <h2>📞 Kontak Kami</h2>
-  <p>📍 Alamat: Cilosari Barat RT01/RW08, Kelurahan Kemijen, Semarang Timur</p>
-  <p>📸 Instagram: <a href="https://instagram.com/karangtaruna_cilosari" target="_blank">@karangtaruna_cilosari</a></p>
-  <p>🎵 TikTok: <a href="https://tiktok.com/@karangtaruna_cilosari" target="_blank">@karangtaruna_cilosari</a></p>
-</section>
-</main>
-
-<footer>© 2025 Karang Taruna Cilosari Barat RT01/RW08 – Semarang Timur</footer>
-
-<!-- MODAL LOGIN/REGISTER -->
-<div id="authModal" class="modal">
-  <div class="modal-content">
-    <h3 id="authTitle">Masuk ke Akun</h3>
-    <input type="email" id="email" placeholder="Email" required>
-    <input type="password" id="password" placeholder="Password (≥6 karakter)" required>
-    <button id="authAction">Login</button>
-    <p id="switchText">Belum punya akun? <a href="#" id="switchMode">Daftar</a></p>
-    <p><a href="#" id="closeModal">Tutup</a></p>
+  <!-- PROFILE MODAL -->
+  <div class="modal" id="profileModal">
+    <div class="box">
+      <h3>Profil Akun</h3>
+      <p id="userEmail">Memuat...</p>
+      <button class="btn btn-accent" id="toDashboard">Buka Dashboard</button>
+      <button class="btn btn-ghost" id="logout">Keluar</button>
+      <div class="link"><a href="#" id="closeProfile">Tutup</a></div>
+    </div>
   </div>
-</div>
-
-<!-- MODAL PROFIL -->
-<div id="profileModal" class="modal">
-  <div class="modal-content">
-    <h3>Profil Akun</h3>
-    <p id="userEmail">Memuat...</p>
-    <button id="toDashboard">Buka Dashboard</button>
-    <button id="logout">Keluar</button>
-    <p><a href="#" id="closeProfile">Tutup</a></p>
-  </div>
-</div>
 
 <script type="module">
 import { db, auth } from './js/firebase.js';
@@ -300,69 +154,67 @@ import { loginUser, registerUser, logoutUser } from './js/auth.js';
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 import { collection, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-/* ========== Mode ========= */
-const toggleBtn=document.getElementById('modeToggle');
-let darkMode=localStorage.getItem('darkMode')==='true';
-function applyMode(){document.body.classList.toggle('dark',darkMode);toggleBtn.textContent=darkMode?'🌙':'☀️';}
-toggleBtn.onclick=()=>{darkMode=!darkMode;localStorage.setItem('darkMode',darkMode);applyMode();};
-applyMode();
+/* ====== NAV mobile ====== */
+const burger=document.getElementById('burger');
+const menu=document.getElementById('menu');
+window.closeMenu=()=>menu.classList.remove('show');
+burger.onclick=()=>menu.classList.toggle('show');
 
-/* ========== Modal Auth ========== */
-const modal=document.getElementById('authModal');
-const profile=document.getElementById('profileModal');
-const openBtn=document.getElementById('authBtn');
-const closeBtn=document.getElementById('closeModal');
+/* ====== Mode ====== */
+const toggle=document.getElementById('modeToggle');
+let dark=localStorage.getItem('darkMode')==='true';
+const apply=()=>{document.body.classList.toggle('dark',dark);toggle.textContent=dark?'🌙':'☀️';};
+toggle.onclick=()=>{dark=!dark;localStorage.setItem('darkMode',dark);apply();}; apply();
+
+/* ====== Auth Modals ====== */
+const authBtn=document.getElementById('authBtn');
+const authModal=document.getElementById('authModal');
+const profileModal=document.getElementById('profileModal');
+const closeModal=document.getElementById('closeModal');
 const closeProfile=document.getElementById('closeProfile');
-const switchMode=document.getElementById('switchMode');
+const authTitle=document.getElementById('authTitle');
+const authAction=document.getElementById('authAction');
 const switchText=document.getElementById('switchText');
-const title=document.getElementById('authTitle');
-const action=document.getElementById('authAction');
-const logout=document.getElementById('logout');
+const switchMode=document.getElementById('switchMode');
 const userEmail=document.getElementById('userEmail');
 const toDashboard=document.getElementById('toDashboard');
-let isLogin=true;
+const logout=document.getElementById('logout');
 
-openBtn.onclick=()=>{if(auth.currentUser){profile.classList.add('active');}else{modal.classList.add('active');}};
-closeBtn.onclick=()=>modal.classList.remove('active');
-closeProfile.onclick=()=>profile.classList.remove('active');
-logout.onclick=async()=>{await logoutUser();profile.classList.remove('active');alert("Berhasil keluar.");};
+let isLogin=true;
+authBtn.onclick=()=>{ if(auth.currentUser){profileModal.classList.add('show');} else {authModal.classList.add('show');} }
+closeModal.onclick=(e)=>{e.preventDefault();authModal.classList.remove('show');}
+closeProfile.onclick=(e)=>{e.preventDefault();profileModal.classList.remove('show');}
 toDashboard.onclick=()=>location.href="./admin.html";
+logout.onclick=async()=>{await logoutUser();profileModal.classList.remove('show');}
+
 switchMode.onclick=(e)=>{e.preventDefault();isLogin=!isLogin;
-  if(isLogin){title.textContent="Masuk ke Akun";action.textContent="Login";switchText.innerHTML='Belum punya akun? <a href="#" id="switchMode">Daftar</a>';}
-  else{title.textContent="Daftar Akun Baru";action.textContent="Daftar";switchText.innerHTML='Sudah punya akun? <a href="#" id="switchMode">Login</a>';}
+  if(isLogin){authTitle.textContent='Masuk ke Akun';authAction.textContent='Login';switchText.innerHTML='Belum punya akun? <a href="#" id="switchMode">Daftar</a>';}
+  else{authTitle.textContent='Daftar Akun Baru';authAction.textContent='Daftar';switchText.innerHTML='Sudah punya akun? <a href="#" id="switchMode">Login</a>';}
+  // re-bind link
+  document.getElementById('switchMode').onclick=switchMode.onclick;
 };
-action.onclick=async()=>{
+authAction.onclick=async()=>{
   const email=document.getElementById('email').value.trim();
   const pass=document.getElementById('password').value;
   try{
     if(isLogin) await loginUser(email,pass);
     else await registerUser(email,pass);
-    modal.classList.remove('active');
+    authModal.classList.remove('show');
   }catch(err){alert("Gagal: "+err.message);}
 };
+onAuthStateChanged(auth,(user)=>{authBtn.textContent=user?'Profil':'Masuk / Daftar';userEmail.textContent=user?user.email:'Memuat...';});
 
-onAuthStateChanged(auth,(user)=>{
-  if(user){
-    document.getElementById('authBtn').textContent="Profil Akun";
-    userEmail.textContent=user.email;
-  }else{
-    document.getElementById('authBtn').textContent="Masuk / Daftar";
-  }
-});
-
-/* ========== Load Data ========= */
+/* ====== Load data ====== */
 async function loadBerita(){
   const c=document.getElementById('beritaList');
   const snap=await getDocs(query(collection(db,'berita'),orderBy('createdAt','desc')));
   c.innerHTML="";
   snap.forEach(d=>{
     const b=d.data();
-    const div=document.createElement('div');
-    div.className='card';
-    div.innerHTML=`${b.foto?`<img src="${b.foto}" alt="${b.judul}">`:''}
-      <h3>${b.judul}</h3>
-      <p>${b.isi?.substring(0,120)||''}...</p>`;
-    c.appendChild(div);
+    const el=document.createElement('div'); el.className='card';
+    el.innerHTML=`${b.foto?`<img src="${b.foto}" alt="${b.judul}">`:''}
+      <h3>${b.judul}</h3><p>${(b.isi||'').slice(0,120)}...</p>`;
+    c.appendChild(el);
   });
 }
 async function loadUmkm(){
@@ -371,15 +223,16 @@ async function loadUmkm(){
   c.innerHTML="";
   snap.forEach(d=>{
     const u=d.data();
-    const div=document.createElement('div');
-    div.className='card';
-    div.innerHTML=`${u.foto?`<img src="${u.foto}" alt="${u.nama}">`:''}
+    const el=document.createElement('div'); el.className='card';
+    el.innerHTML=`${u.foto?`<img src="${u.foto}" alt="${u.nama}">`:''}
       <h3>${u.nama}</h3>
-      <p>${u.deskripsi||''}</p>`;
-    c.appendChild(div);
+      <p>💰 Rp${(u.harga||0).toLocaleString()}</p>
+      <p>${u.deskripsi||''}</p>
+      ${u.wa?`<p>📱 <a target="_blank" href="https://wa.me/${u.wa}">${u.wa}</a></p>`:''}`;
+    c.appendChild(el);
   });
 }
-loadBerita();loadUmkm();
+loadBerita(); loadUmkm();
 </script>
 </body>
 </html>
