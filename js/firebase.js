@@ -1,11 +1,7 @@
-// =======================================================
-// Firebase Init (Auth + Firestore) - v5.2
-// =======================================================
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-// Konfigurasi Firebase kamu
 const firebaseConfig = {
   apiKey: "AIzaSyCgJC8OQBG_wQt57tZHfNuVKPb2VVlAalI",
   authDomain: "karang-taruna-aadaf.firebaseapp.com",
@@ -18,5 +14,3 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
-
-console.log("[Firebase Connected ✅]", firebaseConfig.projectId);
