@@ -2,281 +2,397 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Dashboard Karang Taruna Cilosari Barat</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>Dashboard | Karang Taruna Cilosari Barat</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-body{font-family:'Poppins',sans-serif;margin:0;background:#f9fafb;color:#1e293b;}
-header{background:linear-gradient(90deg,#0e4c92,#1a6ac2);color:#fff;padding:1rem;display:flex;justify-content:space-between;align-items:center;}
-header h1{font-size:1.2rem;}
-#logout{background:#f6c445;color:#0e4c92;border:none;padding:.5rem 1rem;border-radius:6px;font-weight:600;cursor:pointer;}
-nav{display:flex;gap:1rem;background:#fff;padding:.7rem 1rem;box-shadow:0 2px 6px rgba(0,0,0,.1);}
-nav button{background:none;border:none;font-weight:600;cursor:pointer;color:#0e4c92;}
-nav button.active{color:#f6c445;}
-.panel{display:none;padding:1rem;}
-.panel.active{display:block;}
-form{background:#fff;padding:1rem;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.08);margin-bottom:1rem;}
-form input,form textarea,form select{width:100%;padding:.7rem;margin-bottom:.8rem;border:1px solid #ccc;border-radius:6px;font-family:'Poppins',sans-serif;}
-form button{background:#0e4c92;color:#fff;border:none;padding:.7rem 1.2rem;border-radius:8px;font-weight:600;cursor:pointer;transition:.3s;}
-form button:hover{background:#f6c445;color:#0e4c92;}
-.card{background:#fff;padding:1rem;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,.08);margin-bottom:1rem;}
-.card img{width:100%;max-width:250px;border-radius:8px;margin-top:.5rem;}
-.card button{background:#eee;border:none;padding:.4rem .8rem;border-radius:6px;margin:.3rem;cursor:pointer;font-weight:600;}
-.card button:hover{background:#f6c445;color:#0e4c92;}
+:root{--primary:#0e4c92;--accent:#f6c445;--bg:#f3f4f6;--text:#1f2937;--card:#fff;--shadow:rgba(0,0,0,.08)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif}
+
+/* Header */
+.header{display:flex;justify-content:space-between;align-items:center;
+  padding:.8rem 1rem;background:linear-gradient(90deg,var(--primary),#1a6ac2);color:#fff}
+.header .title{font-weight:700;font-size:1rem}
+.header .logout{background:#fff;color:var(--primary);border:none;border-radius:8px;padding:.45rem .8rem;font-weight:700;cursor:pointer}
+
+/* Layout */
+.wrapper{display:grid;grid-template-columns:240px 1fr;gap:1rem;padding:1rem}
+@media(max-width:920px){.wrapper{grid-template-columns:1fr}}
+/* Sidebar */
+.sidebar{background:var(--card);border-radius:12px;box-shadow:0 2px 12px var(--shadow);padding:.6rem}
+.side-item{display:block;width:100%;text-align:left;background:transparent;border:none;padding:.55rem .7rem;border-radius:8px;font-weight:600;color:var(--primary);cursor:pointer}
+.side-item.active{background:var(--accent);color:var(--primary)}
+/* Content */
+.content{min-height:60vh}
+.panel{display:none}
+.panel.active{display:block}
+.card{background:var(--card);border-radius:12px;box-shadow:0 2px 12px var(--shadow);padding:1rem;margin-bottom:1rem}
+.card img{max-width:240px;width:100%;border-radius:8px}
+input,textarea,select{width:100%;padding:.65rem;border:1px solid #cbd5e1;border-radius:8px;margin:.5rem 0}
+.btn{border:none;border-radius:8px;padding:.6rem 1rem;font-weight:700;cursor:pointer}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-primary:hover{opacity:.9}
+.grid{display:grid;gap:1rem}
+@media(min-width:680px){.grid-2{grid-template-columns:repeat(2,1fr)} .grid-3{grid-template-columns:repeat(3,1fr)}}
+.badge{display:inline-block;background:#eef2ff;color:#3730a3;padding:.15rem .5rem;border-radius:999px;font-size:.8rem;font-weight:700}
+.mini{display:flex;gap:.6rem;align-items:center}
+.mini img{width:44px;height:44px;border-radius:50%;object-fit:cover;background:#e5e7eb}
+.row{display:flex;gap:.5rem;flex-wrap:wrap}
 </style>
 </head>
 <body>
-<header>
-  <h1>Dashboard Karang Taruna Cilosari Barat</h1>
-  <button id="logout">Keluar</button>
+<header class="header">
+  <div class="title">Dashboard Karang Taruna</div>
+  <button id="logout" class="logout">Keluar</button>
 </header>
 
-<nav id="menu"></nav>
+<main class="wrapper">
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar"></aside>
 
-<!-- PANEL BERITA -->
-<section id="berita" class="panel">
-  <h2>📰 Berita</h2>
-  <form id="formBerita">
-    <input type="hidden" id="idBerita">
-    <input type="text" id="judul" placeholder="Judul berita" required>
-    <textarea id="isi" placeholder="Isi berita..." rows="5" required></textarea>
-    <input type="file" id="gambar" accept="image/*">
-    <button type="submit" id="btnSimpanBerita">🖊️ Simpan</button>
-    <button type="button" id="btnBatalBerita" style="display:none;">❌ Batal Edit</button>
-  </form>
-  <div id="listBerita"></div>
-</section>
+  <!-- CONTENT -->
+  <section class="content">
+    <!-- PROFIL SAYA -->
+    <div id="panel-profil" class="panel active">
+      <div class="card">
+        <h2>👤 Profil Saya</h2>
+        <div class="mini"><img id="fotoSaya" alt=""><div><div id="namaSaya">-</div><small id="emailSaya">-</small><div id="roleSaya" class="badge">-</div></div></div>
+      </div>
+      <div class="card">
+        <h3>Ubah Profil</h3>
+        <div class="grid grid-2">
+          <div>
+            <label>Nama Lengkap</label>
+            <input id="namaProfil" placeholder="Nama lengkap">
+          </div>
+          <div>
+            <label>Foto Profil</label>
+            <input type="file" id="fotoProfil" accept="image/*">
+          </div>
+        </div>
+        <button class="btn btn-primary" id="saveProfil">💾 Simpan Profil</button>
+      </div>
+    </div>
 
-<!-- PANEL UMKM -->
-<section id="umkm" class="panel">
-  <h2>🏪 UMKM</h2>
-  <form id="formUmkm">
-    <input type="hidden" id="idUmkm">
-    <input type="text" id="nama" placeholder="Nama UMKM" required>
-    <input type="text" id="harga" placeholder="Harga produk (contoh: 15000)" required>
-    <input type="text" id="wa" placeholder="Nomor WhatsApp (contoh: 6281234567890)" required>
-    <textarea id="deskripsi" placeholder="Deskripsi singkat"></textarea>
-    <input type="file" id="fotoUmkm" accept="image/*">
-    <button type="submit" id="btnSimpanUmkm">🖊️ Simpan</button>
-    <button type="button" id="btnBatalUmkm" style="display:none;">❌ Batal Edit</button>
-  </form>
-  <div id="listUmkm"></div>
-</section>
+    <!-- ANGGOTA (MANAGEMENT USER) - hanya super_admin; admin = read-only -->
+    <div id="panel-anggota" class="panel">
+      <div class="card">
+        <h2>👥 Anggota & Manajemen Role</h2>
+        <div id="anggotaList" class="grid"></div>
+      </div>
+    </div>
 
-<!-- PANEL KAS -->
-<section id="kas" class="panel">
-  <h2>💰 Kas</h2>
-  <form id="formKas">
-    <input type="number" id="jumlah" placeholder="Jumlah (Rp)" required>
-    <select id="tipe" required>
-      <option value="masuk">Pemasukan</option>
-      <option value="keluar">Pengeluaran</option>
-    </select>
-    <input type="text" id="keterangan" placeholder="Keterangan">
-    <button type="submit">Simpan Kas</button>
-  </form>
-  <div id="listKas"></div>
-</section>
+    <!-- BERITA -->
+    <div id="panel-berita" class="panel">
+      <div class="card">
+        <h2>📰 Berita</h2>
+        <input id="bJudul" placeholder="Judul berita">
+        <textarea id="bIsi" rows="5" placeholder="Isi berita..."></textarea>
+        <input type="file" id="bFoto" accept="image/*">
+        <div class="row">
+          <button class="btn btn-primary" id="bSimpan">🖊️ Simpan</button>
+          <button class="btn" id="bBatal" style="display:none">❌ Batal</button>
+        </div>
+      </div>
+      <div id="beritaList" class="grid grid-2"></div>
+    </div>
 
-<!-- PANEL PROFIL -->
-<section id="profil" class="panel">
-  <h2>👤 Profil Akun & Role</h2>
-  <div id="info"></div>
-  <form id="formProfil">
-    <input type="text" id="namaProfil" placeholder="Nama Lengkap">
-    <input type="file" id="fotoProfil" accept="image/*">
-    <label>Role:</label>
-    <select id="roleProfil">
-      <option value="anggota">Anggota</option>
-      <option value="admin">Admin</option>
-      <option value="super_admin">Super Admin</option>
-    </select>
-    <button type="submit">💾 Simpan Profil</button>
-  </form>
-</section>
+    <!-- UMKM -->
+    <div id="panel-umkm" class="panel">
+      <div class="card">
+        <h2>🏪 UMKM</h2>
+        <input id="uNama" placeholder="Nama UMKM">
+        <input id="uHarga" type="number" placeholder="Harga (contoh: 15000)">
+        <input id="uWa" placeholder="Nomor WhatsApp (628xxx)">
+        <textarea id="uDes" rows="3" placeholder="Deskripsi singkat"></textarea>
+        <input type="file" id="uFoto" accept="image/*">
+        <div class="row">
+          <button class="btn btn-primary" id="uSimpan">🖊️ Simpan</button>
+          <button class="btn" id="uBatal" style="display:none">❌ Batal</button>
+        </div>
+      </div>
+      <div id="umkmList" class="grid grid-2"></div>
+    </div>
+
+    <!-- KAS -->
+    <div id="panel-kas" class="panel">
+      <div class="card">
+        <h2>💰 Kas</h2>
+        <div class="grid grid-3">
+          <div><label>Jumlah (Rp)</label><input id="kJumlah" type="number" placeholder="cth: 50000"></div>
+          <div><label>Tipe</label><select id="kTipe"><option value="masuk">Pemasukan</option><option value="keluar">Pengeluaran</option></select></div>
+          <div><label>Keterangan</label><input id="kKet" placeholder="cth: Iuran mingguan"></div>
+        </div>
+        <button class="btn btn-primary" id="kSimpan">Simpan Kas</button>
+      </div>
+      <div id="kasList" class="grid grid-2"></div>
+    </div>
+  </section>
+</main>
 
 <script type="module">
 import { auth, db } from './js/firebase.js';
-import { onAuth, logoutUser, getUserRole } from './js/auth.js';
+import { onAuth, logoutUser } from './js/auth.js';
 import { uploadToImgBB } from './js/imgbb.js';
 import {
-  collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, serverTimestamp, updateDoc, getDoc, setDoc
+  collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, serverTimestamp,
+  updateDoc, getDoc, setDoc
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-const logout=document.getElementById('logout');
-const menu=document.getElementById('menu');
+/* ====== Auth gate ====== */
+const sidebar=document.getElementById('sidebar');
 const panels=document.querySelectorAll('.panel');
-const info=document.getElementById('info');
+const logoutBtn=document.getElementById('logout');
+
+let CURRENT_ROLE='anggota';
+let UID=null;
 
 onAuth(async(user)=>{
-  if(!user){
-    alert("Silakan login terlebih dahulu!");
-    location.href="./index.html";
-    return;
-  }
+  if(!user){ alert("Silakan login dulu."); location.href="./index.html"; return; }
+  UID=user.uid;
 
-  const role=await getUserRole(user.uid);
-  info.innerHTML=`<b>Email:</b> ${user.email}<br><b>Role:</b> ${role}`;
+  // Ambil profil & role
+  const uref=doc(db,'users',UID);
+  const usnap=await getDoc(uref);
+  const data=usnap.exists()?usnap.data():{};
+  CURRENT_ROLE = data.role || 'anggota';
 
-  const allowed={
-    super_admin:["berita","umkm","kas","profil"],
-    admin:["berita","umkm","profil"],
-    anggota:["profil"]
-  }[role] || ["profil"];
+  // Render profil saya
+  document.getElementById('emailSaya').textContent = user.email;
+  document.getElementById('roleSaya').textContent  = CURRENT_ROLE;
+  document.getElementById('namaSaya').textContent  = data.nama || '(Belum diisi)';
+  document.getElementById('fotoSaya').src          = data.foto || 'https://i.ibb.co/4Jf2V2R/placeholder-user.png';
 
-  menu.innerHTML="";
-  allowed.forEach(id=>{
+  // Sidebar: role-based
+  const items = [
+    { id:'profil',  label:'Profil Saya', show:true },
+    { id:'anggota', label:'Anggota/Role', show: CURRENT_ROLE==='super_admin' || CURRENT_ROLE==='admin' },
+    { id:'berita',  label:'Berita', show: CURRENT_ROLE!=='anggota' || true /* anggota boleh lihat & tambah jika diizinkan */ },
+    { id:'umkm',    label:'UMKM', show: CURRENT_ROLE!=='anggota' || true },
+    { id:'kas',     label:'Kas', show: CURRENT_ROLE==='super_admin' || CURRENT_ROLE==='admin' }
+  ];
+  sidebar.innerHTML='';
+  items.filter(x=>x.show).forEach((x,i)=>{
     const b=document.createElement('button');
-    b.textContent=id.toUpperCase();
+    b.className='side-item'+(i===0?' active':'');
+    b.textContent=x.label.toUpperCase();
     b.onclick=()=>{
-      panels.forEach(p=>p.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-      menu.querySelectorAll('button').forEach(x=>x.classList.remove('active'));
+      document.querySelectorAll('.side-item').forEach(s=>s.classList.remove('active'));
       b.classList.add('active');
+      panels.forEach(p=>p.classList.remove('active'));
+      document.getElementById('panel-'+x.id).classList.add('active');
+      if(x.id==='anggota') loadAnggota();
+      if(x.id==='berita')  loadBerita();
+      if(x.id==='umkm')    loadUmkm();
+      if(x.id==='kas')     loadKas();
     };
-    menu.appendChild(b);
+    sidebar.appendChild(b);
   });
-  document.getElementById(allowed[0]).classList.add('active');
-  menu.querySelector('button').classList.add('active');
+
+  // Muat panel default
+  loadBerita(); loadUmkm(); if(CURRENT_ROLE!=='anggota') loadKas();
 });
-logout.onclick=async()=>{await logoutUser();location.href="./index.html";};
 
-/* ====== PANEL BERITA ====== */
-const formBerita=document.getElementById('formBerita');
-const listBerita=document.getElementById('listBerita');
-let editIdBerita=null;
+logoutBtn.onclick=async()=>{await logoutUser();location.href='./index.html';};
 
-formBerita.onsubmit=async(e)=>{
-  e.preventDefault();
-  const judul=document.getElementById('judul').value.trim();
-  const isi=document.getElementById('isi').value.trim();
-  const file=document.getElementById('gambar').files[0];
+/* ====== PROFIL SAYA ====== */
+const saveProfil=document.getElementById('saveProfil');
+saveProfil.onclick=async()=>{
+  const nama=document.getElementById('namaProfil').value.trim();
+  const file=document.getElementById('fotoProfil').files[0];
   let foto="";
-  if(file) foto=await uploadToImgBB(file);
+  if(file) foto = await uploadToImgBB(file);
+  await setDoc(doc(db,'users',UID),{ ...(nama && {nama}), ...(foto && {foto}) },{merge:true});
+  alert("Profil disimpan.");
+  // refresh display
+  const s=await getDoc(doc(db,'users',UID));
+  const d=s.data()||{};
+  document.getElementById('namaSaya').textContent=d.nama||'(Belum diisi)';
+  if(d.foto) document.getElementById('fotoSaya').src=d.foto;
+};
 
-  if(editIdBerita){
-    await updateDoc(doc(db,'berita',editIdBerita),{judul,isi,...(foto&&{foto})});
-    alert("Berita diperbarui!");
+/* ====== ANGGOTA / ROLE MANAGEMENT ====== */
+const anggotaList=document.getElementById('anggotaList');
+async function loadAnggota(){
+  anggotaList.innerHTML='Memuat...';
+  const snap=await getDocs(query(collection(db,'users')));
+  anggotaList.innerHTML='';
+  snap.forEach(docu=>{
+    const u=docu.data(); const id=docu.id;
+    const card=document.createElement('div'); card.className='card';
+    card.innerHTML = `
+      <div class="mini">
+        <img src="${u.foto||'https://i.ibb.co/4Jf2V2R/placeholder-user.png'}" alt="">
+        <div>
+          <div><b>${u.nama||'(Tanpa nama)'}</b> <span class="badge">${u.role||'anggota'}</span></div>
+          <small>${u.email||''}</small>
+        </div>
+      </div>
+      <div class="row" style="margin-top:.6rem">
+        <select id="role-${id}" ${CURRENT_ROLE==='admin'?'disabled':''}>
+          <option value="anggota" ${u.role==='anggota'?'selected':''}>anggota</option>
+          <option value="admin" ${u.role==='admin'?'selected':''}>admin</option>
+          <option value="super_admin" ${u.role==='super_admin'?'selected':''}>super_admin</option>
+        </select>
+        <button class="btn btn-primary" id="save-${id}" ${CURRENT_ROLE==='admin'?'disabled':''}>Simpan Role</button>
+        <button class="btn" id="del-${id}" ${CURRENT_ROLE==='admin'?'disabled':''}>Soft Delete</button>
+      </div>
+    `;
+    anggotaList.appendChild(card);
+
+    document.getElementById(`save-${id}`).onclick=async()=>{
+      const newRole=(document.getElementById(`role-${id}`)).value;
+      await setDoc(doc(db,'users',id),{role:newRole},{merge:true});
+      alert("Role diperbarui.");
+      loadAnggota();
+    };
+    document.getElementById(`del-${id}`).onclick=async()=>{
+      if(!confirm('Tandai user ini sebagai non-aktif?')) return;
+      await setDoc(doc(db,'users',id),{status:'inactive'},{merge:true});
+      alert('User ditandai non-aktif. (Catatan: penghapusan akun Auth perlu Admin SDK)');
+      loadAnggota();
+    };
+  });
+}
+
+/* ====== BERITA (CRUD) ====== */
+let editBeritaId=null;
+const bJudul=document.getElementById('bJudul');
+const bIsi=document.getElementById('bIsi');
+const bFoto=document.getElementById('bFoto');
+const bSimpan=document.getElementById('bSimpan');
+const bBatal=document.getElementById('bBatal');
+const beritaList=document.getElementById('beritaList');
+
+bSimpan.onclick=async()=>{
+  const judul=bJudul.value.trim(); const isi=bIsi.value.trim();
+  if(!judul || !isi){ alert('Judul & isi wajib.'); return; }
+  let foto=""; if(bFoto.files[0]) foto=await uploadToImgBB(bFoto.files[0]);
+
+  if(editBeritaId){
+    await updateDoc(doc(db,'berita',editBeritaId),{judul,isi,...(foto&&{foto})});
+    editBeritaId=null; bBatal.style.display='none';
   }else{
-    await addDoc(collection(db,'berita'),{
-      judul,isi,foto,
-      penulis:auth.currentUser.email,
-      createdAt:serverTimestamp()
-    });
-    alert("Berita disimpan!");
+    await addDoc(collection(db,'berita'),{judul,isi,foto,penulis:auth.currentUser.email,createdAt:serverTimestamp()});
   }
-  formBerita.reset();editIdBerita=null;
+  bJudul.value=''; bIsi.value=''; bFoto.value='';
   loadBerita();
 };
+bBatal.onclick=()=>{editBeritaId=null;bJudul.value='';bIsi.value='';bFoto.value='';bBatal.style.display='none';};
+
 async function loadBerita(){
   const snap=await getDocs(query(collection(db,'berita'),orderBy('createdAt','desc')));
-  listBerita.innerHTML="";
+  beritaList.innerHTML='';
   snap.forEach(d=>{
     const b=d.data();
-    const div=document.createElement('div');
-    div.className='card';
-    div.innerHTML=`${b.foto?`<img src="${b.foto}">`:''}
-      <h3>${b.judul}</h3><p>${b.isi}</p>
-      <small>Oleh: ${b.penulis||'anonim'}</small><br>
-      <button onclick="editBerita('${d.id}')">✏️ Edit</button>
-      <button onclick="hapusBerita('${d.id}')">🗑️ Hapus</button>`;
-    listBerita.appendChild(div);
+    const card=document.createElement('div'); card.className='card';
+    card.innerHTML = `
+      ${b.foto?`<img src="${b.foto}" alt="">`:''}
+      <h3>${b.judul}</h3>
+      <p>${b.isi}</p>
+      <small>oleh ${b.penulis||'anonim'}</small>
+      <div class="row" style="margin-top:.5rem">
+        <button class="btn btn-primary" id="be-${d.id}">Edit</button>
+        <button class="btn" id="bd-${d.id}">Hapus</button>
+      </div>`;
+    beritaList.appendChild(card);
+    document.getElementById(`be-${d.id}`).onclick=async()=>{
+      const ds=await getDoc(doc(db,'berita',d.id)); const v=ds.data();
+      bJudul.value=v.judul; bIsi.value=v.isi; editBeritaId=d.id; bBatal.style.display='inline-block';
+      window.scrollTo({top:0,behavior:'smooth'});
+    };
+    document.getElementById(`bd-${d.id}`).onclick=async()=>{
+      if(confirm('Hapus berita ini?')){ await deleteDoc(doc(db,'berita',d.id)); loadBerita(); }
+    };
   });
 }
-window.hapusBerita=async(id)=>{if(confirm("Hapus berita ini?"))await deleteDoc(doc(db,'berita',id));loadBerita();}
-window.editBerita=async(id)=>{const d=await getDoc(doc(db,'berita',id));const b=d.data();judul.value=b.judul;isi.value=b.isi;editIdBerita=id;}
-loadBerita();
 
-/* ====== PANEL UMKM ====== */
-const formUmkm=document.getElementById('formUmkm');
-const listUmkm=document.getElementById('listUmkm');
-let editIdUmkm=null;
-formUmkm.onsubmit=async(e)=>{
-  e.preventDefault();
-  const nama=document.getElementById('nama').value.trim();
-  const harga=Number(document.getElementById('harga').value);
-  const wa=document.getElementById('wa').value.trim();
-  const deskripsi=document.getElementById('deskripsi').value.trim();
-  const file=document.getElementById('fotoUmkm').files[0];
-  let foto="";
-  if(file) foto=await uploadToImgBB(file);
-  if(editIdUmkm){
-    await updateDoc(doc(db,'umkm',editIdUmkm),{nama,harga,wa,deskripsi,...(foto&&{foto})});
-    alert("UMKM diperbarui!");
+/* ====== UMKM (CRUD) ====== */
+let editUmkmId=null;
+const uNama=document.getElementById('uNama');
+const uHarga=document.getElementById('uHarga');
+const uWa=document.getElementById('uWa');
+const uDes=document.getElementById('uDes');
+const uFoto=document.getElementById('uFoto');
+const uSimpan=document.getElementById('uSimpan');
+const uBatal=document.getElementById('uBatal');
+const umkmList=document.getElementById('umkmList');
+
+uSimpan.onclick=async()=>{
+  const nama=uNama.value.trim();
+  const harga=Number(uHarga.value||0);
+  const wa=uWa.value.trim();
+  const des=uDes.value.trim();
+  let foto=""; if(uFoto.files[0]) foto=await uploadToImgBB(uFoto.files[0]);
+
+  if(!nama || !wa){ alert('Nama & WhatsApp wajib.'); return; }
+
+  if(editUmkmId){
+    await updateDoc(doc(db,'umkm',editUmkmId),{nama,harga,wa,deskripsi:des,...(foto&&{foto})});
+    editUmkmId=null; uBatal.style.display='none';
   }else{
-    await addDoc(collection(db,'umkm'),{nama,harga,wa,deskripsi,foto,createdAt:serverTimestamp()});
-    alert("UMKM disimpan!");
+    await addDoc(collection(db,'umkm'),{nama,harga,wa,deskripsi:des,foto,createdAt:serverTimestamp()});
   }
-  formUmkm.reset();editIdUmkm=null;
+  uNama.value='';uHarga.value='';uWa.value='';uDes.value='';uFoto.value='';
   loadUmkm();
 };
+uBatal.onclick=()=>{editUmkmId=null;uNama.value='';uHarga.value='';uWa.value='';uDes.value='';uFoto.value='';uBatal.style.display='none';};
+
 async function loadUmkm(){
   const snap=await getDocs(query(collection(db,'umkm'),orderBy('createdAt','desc')));
-  listUmkm.innerHTML="";
+  umkmList.innerHTML='';
   snap.forEach(d=>{
     const u=d.data();
-    const div=document.createElement('div');
-    div.className='card';
-    div.innerHTML=`${u.foto?`<img src="${u.foto}">`:''}
-    <h3>${u.nama}</h3>
-    <p>💰 Rp${u.harga?.toLocaleString()||'-'}</p>
-    <p>${u.deskripsi||''}</p>
-    <p>📱 <a href="https://wa.me/${u.wa}" target="_blank">${u.wa}</a></p>
-    <button onclick="editUmkm('${d.id}')">✏️ Edit</button>
-    <button onclick="hapusUmkm('${d.id}')">🗑️ Hapus</button>`;
-    listUmkm.appendChild(div);
+    const card=document.createElement('div'); card.className='card';
+    card.innerHTML = `
+      ${u.foto?`<img src="${u.foto}" alt="">`:''}
+      <h3>${u.nama}</h3>
+      <p>💰 Rp${(u.harga||0).toLocaleString()}</p>
+      <p>${u.deskripsi||''}</p>
+      <p>📱 <a target="_blank" href="https://wa.me/${u.wa}">${u.wa}</a></p>
+      <div class="row" style="margin-top:.5rem">
+        <button class="btn btn-primary" id="ue-${d.id}">Edit</button>
+        <button class="btn" id="ud-${d.id}">Hapus</button>
+      </div>`;
+    umkmList.appendChild(card);
+    document.getElementById(`ue-${d.id}`).onclick=async()=>{
+      const ds=await getDoc(doc(db,'umkm',d.id)); const v=ds.data();
+      uNama.value=v.nama; uHarga.value=v.harga; uWa.value=v.wa; uDes.value=v.deskripsi||''; editUmkmId=d.id; uBatal.style.display='inline-block';
+      window.scrollTo({top:0,behavior:'smooth'});
+    };
+    document.getElementById(`ud-${d.id}`).onclick=async()=>{
+      if(confirm('Hapus UMKM ini?')){ await deleteDoc(doc(db,'umkm',d.id)); loadUmkm(); }
+    };
   });
 }
-window.hapusUmkm=async(id)=>{if(confirm("Hapus UMKM ini?"))await deleteDoc(doc(db,'umkm',id));loadUmkm();}
-window.editUmkm=async(id)=>{const d=await getDoc(doc(db,'umkm',id));const u=d.data();
-  nama.value=u.nama;harga.value=u.harga;wa.value=u.wa;deskripsi.value=u.deskripsi;editIdUmkm=id;}
-loadUmkm();
 
-/* ====== PANEL KAS ====== */
-const formKas=document.getElementById('formKas');
-const listKas=document.getElementById('listKas');
-formKas.onsubmit=async(e)=>{
-  e.preventDefault();
+/* ====== KAS ====== */
+const kJumlah=document.getElementById('kJumlah');
+const kTipe=document.getElementById('kTipe');
+const kKet=document.getElementById('kKet');
+const kSimpan=document.getElementById('kSimpan');
+const kasList=document.getElementById('kasList');
+
+kSimpan.onclick=async()=>{
   await addDoc(collection(db,'kas'),{
-    jumlah:Number(jumlah.value),
-    tipe:tipe.value,
-    keterangan:keterangan.value,
-    createdAt:serverTimestamp()
+    jumlah:Number(kJumlah.value||0), tipe:kTipe.value, keterangan:kKet.value, createdAt:serverTimestamp()
   });
-  formKas.reset();
+  kJumlah.value=''; kKet.value='';
   loadKas();
 };
 async function loadKas(){
   const snap=await getDocs(query(collection(db,'kas'),orderBy('createdAt','desc')));
-  listKas.innerHTML="";
-  let total=0;
+  kasList.innerHTML=''; let total=0;
   snap.forEach(d=>{
-    const k=d.data();
-    total+=k.tipe==='masuk'?k.jumlah:-k.jumlah;
-    const div=document.createElement('div');
-    div.className='card';
-    div.innerHTML=`<b>${k.tipe==='masuk'?'🟢 Pemasukan':'🔴 Pengeluaran'} Rp${k.jumlah.toLocaleString()}</b><br>${k.keterangan||''}`;
-    listKas.appendChild(div);
+    const k=d.data(); total += (k.tipe==='masuk'?1:-1)*(k.jumlah||0);
+    const card=document.createElement('div'); card.className='card';
+    card.innerHTML=`<b>${k.tipe==='masuk'?'🟢 Pemasukan':'🔴 Pengeluaran'} Rp${(k.jumlah||0).toLocaleString()}</b><br>${k.keterangan||''}`;
+    kasList.appendChild(card);
   });
-  const sum=document.createElement('div');
-  sum.innerHTML=`<h3>Total Kas: Rp${total.toLocaleString()}</h3>`;
-  listKas.prepend(sum);
+  const sum=document.createElement('div'); sum.className='card'; sum.innerHTML=`<h3>Total Kas: Rp${total.toLocaleString()}</h3>`;
+  kasList.prepend(sum);
 }
-loadKas();
-
-/* ====== PANEL PROFIL ====== */
-const formProfil=document.getElementById('formProfil');
-formProfil.onsubmit=async(e)=>{
-  e.preventDefault();
-  const nama=namaProfil.value.trim();
-  const role=roleProfil.value;
-  const file=fotoProfil.files[0];
-  let foto="";
-  if(file) foto=await uploadToImgBB(file);
-  const ref=doc(db,'users',auth.currentUser.uid);
-  await setDoc(ref,{nama,role,...(foto&&{foto})},{merge:true});
-  alert("Profil diperbarui!");
-};
 </script>
 </body>
 </html>
