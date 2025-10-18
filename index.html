@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-<title>Karang Taruna Cilosari Barat RT01/RW08</title>
+<title>Portal Karang Taruna Cilosari Barat RT01/RW08</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
 <style>
 :root {
@@ -35,19 +35,13 @@ header {
   align-items: center;
   flex-wrap: wrap;
 }
-header h1 {
-  font-size: 1.1rem;
-  margin: 0;
-  font-weight: 700;
-}
+header h1 { font-size: 1.1rem; margin: 0; font-weight: 700; }
 nav { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
-nav a {
-  color: #fff;
-  text-decoration: none;
-  font-weight: 600;
-  transition: 0.2s;
+nav a, nav button {
+  color: #fff; text-decoration: none; font-weight: 600; background:none;
+  border:none; cursor:pointer; font-family:'Poppins',sans-serif;
 }
-nav a:hover { color: var(--emas); }
+nav a:hover, nav button:hover { color: var(--emas); }
 #themeToggle {
   background: var(--emas);
   color: var(--biru);
@@ -109,21 +103,18 @@ footer {
   margin-top: 2rem;
   font-size: 0.9rem;
 }
-footer .nav-footer { margin-bottom: 0.6rem; }
 footer a { color: var(--emas); text-decoration: none; margin: 0 0.5rem; font-weight: 600; }
 footer a:hover { color: #fff; }
 
-.search-box {
-  margin-bottom: 1.2rem;
-  text-align: right;
-}
+.search-box { margin-bottom: 1.2rem; text-align: right; }
 .search-box input {
-  width: 100%;
-  max-width: 300px;
-  padding: 0.5rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+  width: 100%; max-width: 300px;
+  padding: 0.5rem; border-radius: 6px; border: 1px solid #ccc;
 }
+.profile-nav {
+  display: flex; gap: .5rem; align-items: center;
+}
+.profile-name { font-weight:600; }
 @media(max-width:600px){
   header{flex-direction:column;align-items:flex-start;gap:.5rem}
   nav{gap:.5rem}
@@ -138,6 +129,7 @@ footer a:hover { color: #fff; }
     <a href="#berita">Berita</a>
     <a href="#umkm">UMKM</a>
     <a id="navAdmin" href="./admin.html" style="display:none;">Admin</a>
+    <div id="navAuth" class="profile-nav"></div>
     <button id="themeToggle">🌙</button>
   </nav>
 </header>
@@ -145,7 +137,7 @@ footer a:hover { color: #fff; }
 <main>
   <section class="hero">
     <h2>Selamat Datang di Portal Karang Taruna</h2>
-    <p>Media informasi kegiatan, pengumuman, dan pengembangan UMKM warga Cilosari Barat RT01/RW08, Kelurahan Kemijen, Kecamatan Semarang Timur</p>
+    <p>Media informasi kegiatan, pengumuman, dan pengembangan UMKM warga Cilosari Barat RT01/RW08, Kelurahan Kemijen, Kecamatan Semarang Timur.</p>
   </section>
 
   <!-- === BERITA === -->
@@ -169,22 +161,20 @@ footer a:hover { color: #fff; }
 </main>
 
 <footer>
-  <div class="nav-footer">
-    <a href="#berita">Berita</a> |
-    <a href="#umkm">UMKM</a>
-  </div>
   <p>&copy; 2025 Karang Taruna Cilosari Barat RT01/RW08 - Semarang Timur</p>
 </footer>
 
-<!-- === JS FIREBASE + DARKMODE + SEARCH === -->
+<!-- === JS FIREBASE + AUTH + DARKMODE === -->
 <script type="module">
 import { db, auth } from "./js/firebase.js";
 import {
-  collection, query, getDocs, orderBy
+  onAuthStateChanged, signOut
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import {
+  collection, getDocs
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 
-// === DARK MODE TOGGLE ===
+// === DARK MODE ===
 const themeToggle = document.getElementById("themeToggle");
 if(localStorage.getItem("theme")==="dark"){
   document.documentElement.setAttribute("data-theme","dark");
@@ -202,15 +192,31 @@ themeToggle.onclick = ()=>{
   }
 };
 
-// === ADMIN VISIBILITY ===
-onAuthStateChanged(auth,(user)=>{
-  document.getElementById("navAdmin").style.display = user ? "inline-block" : "none";
+// === LOGIN STATE ===
+const navAdmin = document.getElementById("navAdmin");
+const navAuth = document.getElementById("navAuth");
+
+onAuthStateChanged(auth, (user)=>{
+  if(user){
+    navAuth.innerHTML = `
+      <span class="profile-name">👤 ${user.email.split('@')[0]}</span>
+      <button id="logoutBtn">Keluar</button>
+    `;
+    navAdmin.style.display = "inline-block";
+    document.getElementById("logoutBtn").onclick = async ()=>{
+      await signOut(auth);
+      alert("Anda telah keluar.");
+    };
+  } else {
+    navAuth.innerHTML = `<a href="./login.html">Masuk / Daftar</a>`;
+    navAdmin.style.display = "none";
+  }
 });
 
 // === LOAD BERITA ===
 const beritaList=document.getElementById("beritaList");
 async function loadBerita(){
-  const snap=await getDocs(query(collection(db,"berita"),orderBy("createdAt","desc")));
+  const snap=await getDocs(collection(db,"berita"));
   beritaList.innerHTML="";
   snap.forEach((d)=>{
     const b=d.data();
@@ -231,7 +237,7 @@ loadBerita();
 const umkmList=document.getElementById("umkmList");
 let allUmkm=[];
 async function loadUmkm(){
-  const snap=await getDocs(query(collection(db,"umkm"),orderBy("createdAt","desc")));
+  const snap=await getDocs(collection(db,"umkm"));
   umkmList.innerHTML="";
   allUmkm=[];
   snap.forEach((d)=>{
