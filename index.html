@@ -6,54 +6,48 @@
 <title>Karang Taruna Cilosari Barat RT01/RW08</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --biru:#0e4c92;
-  --emas:#f6c445;
-  --gelap:#1e293b;
-  --abu:#f5f7fa;
-  --putih:#ffffff;
+:root{
+  --biru:#0e4c92; --emas:#f6c445; --gelap:#1e293b; --abu:#f5f7fa; --putih:#ffffff;
 }
-[data-theme='dark'] {
-  --biru:#1a73e8;
-  --gelap:#e2e8f0;
-  --abu:#0f172a;
-  --putih:#1e293b;
+[data-theme='dark']{
+  --biru:#1a73e8; --gelap:#e2e8f0; --abu:#0f172a; --putih:#1e293b;
 }
 *{box-sizing:border-box;transition:background .3s,color .3s;}
 body{margin:0;font-family:'Poppins',sans-serif;background:var(--abu);color:var(--gelap);}
+
+/* HEADER + NAV */
 header{
   background:linear-gradient(90deg,var(--biru),#1a6ac2);
-  color:#fff;padding:.8rem 1.2rem;
-  display:flex;justify-content:space-between;align-items:center;
+  color:#fff;padding:.8rem 1.2rem;display:flex;justify-content:space-between;align-items:center;
   position:sticky;top:0;z-index:999;
 }
-header h1{margin:0;font-size:1rem;font-weight:700;letter-spacing:.5px;}
-nav{display:flex;gap:1rem;align-items:center;}
+header h1{margin:0;font-size:1rem;font-weight:700;}
 nav a,nav button{
-  color:#fff;text-decoration:none;font-weight:600;background:none;border:none;
-  cursor:pointer;font-family:'Poppins',sans-serif;
+  color:#fff;text-decoration:none;font-weight:600;background:none;border:none;cursor:pointer;font-family:'Poppins',sans-serif;
 }
 nav a:hover,nav button:hover{color:var(--emas);}
-#themeToggle{
-  background:var(--emas);color:var(--biru);
-  border:none;border-radius:20px;padding:.3rem .8rem;cursor:pointer;font-weight:600;
-}
-
-/* === HAMBURGER === */
+#themeToggle{background:var(--emas);color:var(--biru);border:none;border-radius:20px;padding:.3rem .8rem;cursor:pointer;font-weight:600;}
+nav.desktop{display:flex;gap:1rem;align-items:center;}
+/* HAMBURGER */
 .hamburger{display:none;flex-direction:column;cursor:pointer;gap:5px;}
 .hamburger div{width:25px;height:3px;background:#fff;border-radius:2px;transition:.3s;}
 nav.mobile{display:none;flex-direction:column;background:var(--biru);width:100%;text-align:center;padding:1rem 0;}
-nav.mobile a{padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,.2);}
+nav.mobile a{padding:.6rem 0;border-bottom:1px solid rgba(255,255,255,.2);}
 .show{display:flex !important;}
 
+/* HERO */
 .hero{background:linear-gradient(180deg,var(--biru),#155fa3);color:#fff;text-align:center;padding:3.5rem 1rem;border-bottom:4px solid var(--emas);}
 .hero h2{font-size:1.8rem;margin:0 0 .5rem;}
 .hero p{max-width:680px;margin:auto;line-height:1.6;font-size:.95rem;}
+
+/* LAYOUT */
 .container{max-width:1100px;margin:auto;padding:1rem;}
 .section-title{font-size:1.3rem;color:var(--biru);border-left:5px solid var(--emas);padding-left:.6rem;margin-bottom:1.2rem;}
 .grid{display:grid;gap:1.2rem;}
 @media(min-width:600px){.grid-2{grid-template-columns:repeat(2,1fr)}}
 @media(min-width:900px){.grid-3{grid-template-columns:repeat(3,1fr)}}
+
+/* CARD */
 .card{background:var(--putih);border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.08);overflow:hidden;transition:transform .2s ease,box-shadow .3s ease;}
 .card:hover{transform:translateY(-5px);box-shadow:0 4px 12px rgba(0,0,0,0.15);}
 .card img{width:100%;height:180px;object-fit:cover;}
@@ -64,15 +58,31 @@ nav.mobile a{padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,.2);}
 .btn:hover{background:var(--emas);color:var(--biru);}
 .search-box{text-align:right;margin-bottom:1rem;}
 .search-box input{padding:.5rem;border-radius:6px;border:1px solid #ccc;width:100%;max-width:300px;}
+
+/* PENGUMUMAN */
+.pengumuman-box{background:#e9f2ff;border-left:5px solid var(--biru);border-radius:8px;padding:1rem 1.2rem;box-shadow:0 2px 8px rgba(0,0,0,.05);}
+.pengumuman-item{margin-bottom:.8rem;padding-bottom:.8rem;border-bottom:1px dashed rgba(0,0,0,0.1);}
+.pengumuman-item:last-child{border-bottom:none;}
+.pengumuman-item h4{color:var(--biru);margin:0 0 .3rem;font-size:1rem;}
+.pengumuman-item p{margin:0;color:#333;font-size:.92rem;}
+.pengumuman-item small{color:gray;font-size:.8rem;}
+
+/* KAS */
+#kasSection h1{font-size:2rem;color:var(--biru);margin:.3rem 0;}
+
+/* FOOTER */
 footer{background:var(--biru);color:#fff;text-align:center;padding:1rem;margin-top:2rem;font-size:.9rem;}
-.profile-nav{display:flex;gap:.5rem;align-items:center;}
 .profile-name{font-weight:600;}
-.auth-box{background:var(--putih);color:var(--gelap);border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,0.1);max-width:400px;margin:1.5rem auto;padding:1.2rem;text-align:center;}
+
+/* MODAL LOGIN */
+#authModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:1000;justify-content:center;align-items:center;}
+.auth-box{background:var(--putih);color:var(--gelap);border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,0.2);max-width:400px;width:90%;padding:1.5rem;position:relative;}
 .auth-box input{width:100%;padding:.6rem;margin-bottom:.7rem;border:1px solid #ccc;border-radius:6px;}
 .auth-box button{width:100%;padding:.6rem;font-weight:600;border:none;border-radius:6px;background:var(--biru);color:#fff;cursor:pointer;}
 .auth-box button:hover{background:var(--emas);color:var(--biru);}
-.auth-box small{display:block;margin-top:.5rem;}
-#kasSection h1{font-size:2rem;color:var(--biru);}
+#closeModal{position:absolute;top:8px;right:12px;cursor:pointer;font-size:1.3rem;color:#555;}
+
+/* RESPONSIVE */
 @media(max-width:700px){
   .hamburger{display:flex;}
   nav.desktop{display:none;}
@@ -82,10 +92,9 @@ footer{background:var(--biru);color:#fff;text-align:center;padding:1rem;margin-t
 <body>
 <header>
   <h1>Karang Taruna Cilosari Barat</h1>
-  <div class="hamburger" id="hamburger">
-    <div></div><div></div><div></div>
-  </div>
+  <div class="hamburger" id="hamburger"><div></div><div></div><div></div></div>
   <nav class="desktop">
+    <a href="#pengumuman">Pengumuman</a>
     <a href="#berita">Berita</a>
     <a href="#umkm">UMKM</a>
     <a href="#kasSection">Kas</a>
@@ -94,45 +103,50 @@ footer{background:var(--biru);color:#fff;text-align:center;padding:1rem;margin-t
     <button id="themeToggle">🌙</button>
   </nav>
 </header>
+
+<!-- NAV MOBILE -->
 <nav class="mobile" id="mobileNav">
+  <a href="#pengumuman">Pengumuman</a>
   <a href="#berita">Berita</a>
   <a href="#umkm">UMKM</a>
   <a href="#kasSection">Kas</a>
   <a id="navAdminMobile" href="./admin.html" style="display:none;">Admin</a>
+  <a href="#" id="openLogin">Masuk / Daftar</a>
   <div id="navAuthMobile" class="profile-nav" style="justify-content:center;margin-top:.5rem;"></div>
 </nav>
 
+<!-- HERO -->
 <section class="hero">
   <h2>Selamat Datang di Portal Karang Taruna</h2>
-  <p>Informasi kegiatan, berita warga, dan UMKM RT01/RW08 Kelurahan Kemijen, Semarang Timur.</p>
+  <p>Informasi kegiatan, berita warga, pengumuman, kas dan UMKM RT01/RW08 Kelurahan Kemijen, Semarang Timur.</p>
 </section>
 
-<section id="authSection">
-  <div class="auth-box" id="authBox">
-    <h3 id="authTitle">Masuk ke Portal</h3>
-    <input type="email" id="email" placeholder="Email" />
-    <input type="password" id="password" placeholder="Kata Sandi" />
-    <button id="loginBtn">Masuk</button>
-    <button id="registerBtn" style="background:var(--emas);color:var(--biru);margin-top:.5rem;">Daftar</button>
-    <small id="authMessage"></small>
+<!-- PENGUMUMAN -->
+<section id="pengumuman">
+  <div class="container">
+    <h2 class="section-title">📢 Pengumuman Warga</h2>
+    <div id="pengumumanList" class="pengumuman-box"></div>
   </div>
 </section>
 
 <main class="container">
+  <!-- BERITA -->
   <section id="berita">
     <h2 class="section-title">📰 Berita Terkini</h2>
     <div id="beritaList" class="grid grid-2"></div>
   </section>
 
+  <!-- UMKM -->
   <section id="umkm">
     <h2 class="section-title">🏪 UMKM Warga</h2>
     <div class="search-box"><input type="text" id="searchUmkm" placeholder="Cari UMKM..."></div>
     <div id="umkmList" class="grid grid-3"></div>
   </section>
 
+  <!-- KAS -->
   <section id="kasSection" style="display:none;">
     <h2 class="section-title">💰 Informasi Kas Karang Taruna</h2>
-    <div id="kasBox" class="card" style="max-width:600px;margin:auto;text-align:center;">
+    <div id="kasBox" class="card" style="max-width:640px;margin:auto;text-align:center;">
       <h3>Total Kas Saat Ini</h3>
       <h1 id="kasTotal">Rp 0</h1>
       <div id="kasList" style="text-align:left;margin-top:1rem;"></div>
@@ -142,123 +156,218 @@ footer{background:var(--biru);color:#fff;text-align:center;padding:1rem;margin-t
 
 <footer><p>&copy; 2025 Karang Taruna Cilosari Barat RT01/RW08 - Semarang Timur</p></footer>
 
+<!-- MODAL LOGIN / REGISTER -->
+<div id="authModal">
+  <div class="auth-box">
+    <span id="closeModal">✕</span>
+    <h3 id="authTitle">Masuk ke Portal</h3>
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Kata Sandi">
+    <button id="loginBtn">Masuk</button>
+    <button id="registerBtn" style="background:var(--emas);color:var(--biru);margin-top:.5rem;">Daftar</button>
+    <small id="authMessage"></small>
+  </div>
+</div>
+
+<!-- SCRIPT -->
 <script type="module">
+/* ===== IMPORTS ===== */
 import { db, auth } from "./js/firebase.js";
 import {
   onAuthStateChanged, signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 import { collection, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-// === HAMBURGER ===
+/* ===== HAMBURGER ===== */
 const hamburger=document.getElementById("hamburger");
 const mobileNav=document.getElementById("mobileNav");
 hamburger.onclick=()=>{mobileNav.classList.toggle("show");};
 
-// === DARK MODE ===
+/* ===== DARK MODE ===== */
 const themeToggle=document.getElementById("themeToggle");
-if(localStorage.getItem("theme")==="dark"){document.documentElement.setAttribute("data-theme","dark");themeToggle.textContent="☀️";}
-themeToggle.onclick=()=>{if(document.documentElement.getAttribute("data-theme")==="dark"){document.documentElement.removeAttribute("data-theme");localStorage.setItem("theme","light");themeToggle.textContent="🌙";}else{document.documentElement.setAttribute("data-theme","dark");localStorage.setItem("theme","dark");themeToggle.textContent="☀️";}};
+if(localStorage.getItem("theme")==="dark"){
+  document.documentElement.setAttribute("data-theme","dark");
+  if(themeToggle) themeToggle.textContent="☀️";
+}
+if(themeToggle){
+  themeToggle.onclick=()=>{
+    if(document.documentElement.getAttribute("data-theme")==="dark"){
+      document.documentElement.removeAttribute("data-theme");
+      localStorage.setItem("theme","light");
+      themeToggle.textContent="🌙";
+    }else{
+      document.documentElement.setAttribute("data-theme","dark");
+      localStorage.setItem("theme","dark");
+      themeToggle.textContent="☀️";
+    }
+  };
+}
 
-// === AUTH ===
+/* ===== MODAL LOGIN ===== */
+const authModal=document.getElementById("authModal");
+const openLogin=document.getElementById("openLogin");
+const closeModal=document.getElementById("closeModal");
+if(openLogin){ openLogin.onclick=(e)=>{e.preventDefault();authModal.style.display="flex";}; }
+if(closeModal){ closeModal.onclick=()=>{authModal.style.display="none";}; }
+window.addEventListener("click",(e)=>{ if(e.target===authModal) authModal.style.display="none"; });
+
+/* ===== AUTH STATE ===== */
 const navAuth=document.getElementById("navAuth");
 const navAdmin=document.getElementById("navAdmin");
 const navAuthMobile=document.getElementById("navAuthMobile");
 const navAdminMobile=document.getElementById("navAdminMobile");
-const authBox=document.getElementById("authBox");
 const kasSection=document.getElementById("kasSection");
 
 onAuthStateChanged(auth,(user)=>{
   if(user){
     const profileHTML=`<span class="profile-name">👤 ${user.email.split('@')[0]}</span>
     <button id="logoutBtn">Keluar</button>`;
-    navAuth.innerHTML=profileHTML;
-    navAuthMobile.innerHTML=profileHTML;
+    if(navAuth) navAuth.innerHTML=profileHTML;
+    if(navAuthMobile) navAuthMobile.innerHTML=profileHTML;
     document.querySelectorAll("#logoutBtn").forEach(btn=>btn.onclick=async()=>{await signOut(auth);});
-    navAdmin.style.display="inline-block";
-    navAdminMobile.style.display="block";
-    authBox.style.display="none";
-    kasSection.style.display="block";
+    if(navAdmin) navAdmin.style.display="inline-block";
+    if(navAdminMobile) navAdminMobile.style.display="block";
+    if(kasSection) kasSection.style.display="block";
     loadKas();
   }else{
-    navAuth.innerHTML=`<a href="#authSection">Masuk / Daftar</a>`;
-    navAuthMobile.innerHTML=`<a href="#authSection">Masuk / Daftar</a>`;
-    navAdmin.style.display="none";
-    navAdminMobile.style.display="none";
-    authBox.style.display="block";
-    kasSection.style.display="none";
+    if(navAuth) navAuth.innerHTML="";
+    if(navAuthMobile) navAuthMobile.innerHTML="";
+    if(navAdmin) navAdmin.style.display="none";
+    if(navAdminMobile) navAdminMobile.style.display="none";
+    if(kasSection) kasSection.style.display="none";
   }
 });
 
-document.getElementById("loginBtn").onclick=async()=>{
+/* ===== LOGIN/REGISTER ACTION ===== */
+const loginBtn=document.getElementById("loginBtn");
+const registerBtn=document.getElementById("registerBtn");
+if(loginBtn){ loginBtn.onclick=async()=>{
   const email=document.getElementById("email").value.trim();
   const password=document.getElementById("password").value;
-  try{await signInWithEmailAndPassword(auth,email,password);}catch(e){alert("Login gagal: "+e.message);}
-};
-document.getElementById("registerBtn").onclick=async()=>{
+  try{ await signInWithEmailAndPassword(auth,email,password); authModal.style.display="none"; }
+  catch(e){ alert("Login gagal: "+e.message); }
+};}
+if(registerBtn){ registerBtn.onclick=async()=>{
   const email=document.getElementById("email").value.trim();
   const password=document.getElementById("password").value;
-  try{await createUserWithEmailAndPassword(auth,email,password);}catch(e){alert("Daftar gagal: "+e.message);}
-};
+  try{ await createUserWithEmailAndPassword(auth,email,password); authModal.style.display="none"; }
+  catch(e){ alert("Daftar gagal: "+e.message); }
+};}
 
-// === BERITA ===
+/* ===== PENGUMUMAN ===== */
+const pengumumanList=document.getElementById("pengumumanList");
+async function loadPengumuman(){
+  try{
+    const snap=await getDocs(query(collection(db,"pengumuman"),orderBy("createdAt","desc")));
+    pengumumanList.innerHTML="";
+    if(snap.empty){ pengumumanList.innerHTML="<p>Tidak ada pengumuman terbaru.</p>"; return; }
+    snap.forEach((doc)=>{
+      const p=doc.data();
+      const item=document.createElement("div");
+      item.className="pengumuman-item";
+      item.innerHTML=`
+        <h4>📢 ${p.judul||"Pengumuman"}</h4>
+        <p>${p.isi||""}</p>
+        <small>${p.tanggal || new Date().toLocaleDateString("id-ID")}</small>
+      `;
+      pengumumanList.appendChild(item);
+    });
+  }catch(e){
+    pengumumanList.innerHTML="<p style='color:red'>Gagal memuat pengumuman.</p>";
+    console.error(e);
+  }
+}
+loadPengumuman();
+
+/* ===== BERITA ===== */
 const beritaList=document.getElementById("beritaList");
 async function loadBerita(){
-  const snap=await getDocs(collection(db,"berita"));
-  beritaList.innerHTML="";
-  const arr=[];snap.forEach((d)=>arr.push({...d.data(),id:d.id}));
-  arr.sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
-  arr.forEach((b)=>{
-    const isi=(b.isi||"").slice(0,180)+"...";
-    const el=document.createElement("div");
-    el.className="card";
-    el.innerHTML=`${b.foto?`<img src="${b.foto}" alt="${b.judul}">`:""}
-    <div class="card-content"><h3>${b.judul}</h3><p>${isi}</p>
-    <a class="btn" href="berita.html?id=${b.id}">Selengkapnya</a></div>`;
-    beritaList.appendChild(el);
-  });
+  try{
+    const snap=await getDocs(collection(db,"berita"));
+    beritaList.innerHTML="";
+    const arr=[]; snap.forEach((d)=>arr.push({...d.data(),id:d.id}));
+    // sort manual (aman walau createdAt kosong)
+    arr.sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
+    if(arr.length===0){ beritaList.innerHTML="<p>Belum ada berita.</p>"; return; }
+    arr.forEach((b)=>{
+      const isi=(b.isi||"");
+      const ringkas= isi.length>180 ? isi.slice(0,180)+"..." : isi;
+      const el=document.createElement("div");
+      el.className="card";
+      el.innerHTML=`
+        ${b.foto?`<img src="${b.foto}" alt="${b.judul}">`:""}
+        <div class="card-content">
+          <h3>${b.judul||"Tanpa Judul"}</h3>
+          <p>${ringkas}</p>
+          <a class="btn" href="berita.html?id=${b.id}">Selengkapnya</a>
+        </div>`;
+      beritaList.appendChild(el);
+    });
+  }catch(e){
+    console.error(e);
+    beritaList.innerHTML="<p style='color:red'>Gagal memuat berita.</p>";
+  }
 }
 loadBerita();
 
-// === UMKM ===
+/* ===== UMKM ===== */
 const umkmList=document.getElementById("umkmList");
 let allUmkm=[];
 async function loadUmkm(){
-  const snap=await getDocs(collection(db,"umkm"));
-  allUmkm=[];snap.forEach((d)=>allUmkm.push({...d.data(),id:d.id}));
-  renderUmkm(allUmkm);
+  try{
+    const snap=await getDocs(collection(db,"umkm"));
+    allUmkm=[]; snap.forEach((d)=>allUmkm.push({...d.data(),id:d.id}));
+    renderUmkm(allUmkm);
+  }catch(e){
+    umkmList.innerHTML="<p style='color:red'>Gagal memuat UMKM.</p>";
+  }
 }
 function renderUmkm(data){
   umkmList.innerHTML="";
+  if(data.length===0){ umkmList.innerHTML="<p>Belum ada UMKM.</p>"; return; }
   data.forEach((u)=>{
     const el=document.createElement("div");
     el.className="card";
-    el.innerHTML=`${u.foto?`<img src="${u.foto}" alt="${u.nama}">`:""}
-    <div class="card-content"><h4>${u.nama}</h4><p>💰 Rp${(u.harga||0).toLocaleString()}</p>
-    <p>${u.deskripsi||""}</p>${u.wa?`<a href="https://wa.me/${u.wa}" class="btn" target="_blank">Hubungi</a>`:""}</div>`;
+    el.innerHTML=`
+      ${u.foto?`<img src="${u.foto}" alt="${u.nama}">`:""}
+      <div class="card-content">
+        <h4>${u.nama||"Produk Warga"}</h4>
+        <p>💰 Rp${(u.harga||0).toLocaleString()}</p>
+        <p>${u.deskripsi||""}</p>
+        ${u.wa?`<a href="https://wa.me/${u.wa}" class="btn" target="_blank">Hubungi</a>`:""}
+      </div>`;
     umkmList.appendChild(el);
   });
 }
 document.getElementById("searchUmkm").oninput=(e)=>{
   const key=e.target.value.toLowerCase();
-  renderUmkm(allUmkm.filter(u=>u.nama.toLowerCase().includes(key)||(u.deskripsi||"").toLowerCase().includes(key)));
+  renderUmkm(allUmkm.filter(u=>
+    (u.nama||"").toLowerCase().includes(key) ||
+    (u.deskripsi||"").toLowerCase().includes(key)
+  ));
 };
 loadUmkm();
 
-// === KAS ===
+/* ===== KAS ===== */
 const kasTotal=document.getElementById("kasTotal");
 const kasList=document.getElementById("kasList");
 async function loadKas(){
-  const snap=await getDocs(query(collection(db,"kas"),orderBy("tanggal","desc")));
-  let total=0;let html="";
-  snap.forEach((d)=>{
-    const k=d.data();
-    const val=k.jenis==="masuk"?k.nominal:-k.nominal;
-    total+=val;
-    html+=`<p>${k.tanggal} - ${k.keterangan} <br>
-      <strong style="color:${k.jenis==="masuk"?"green":"red"};">${k.jenis==="masuk"?"+":"-"} Rp${k.nominal.toLocaleString()}</strong></p>`;
-  });
-  kasTotal.textContent="Rp "+total.toLocaleString();
-  kasList.innerHTML=html||"<p>Belum ada transaksi kas.</p>";
+  try{
+    const snap=await getDocs(query(collection(db,"kas"),orderBy("tanggal","desc")));
+    let total=0; let html="";
+    snap.forEach((d)=>{
+      const k=d.data();
+      const val=k.jenis==="masuk"?k.nominal:-k.nominal;
+      total+=val;
+      html+=`<p>${k.tanggal||""} - ${k.keterangan||""}<br>
+        <strong style="color:${k.jenis==="masuk"?"green":"red"};">
+        ${k.jenis==="masuk"?"+":"-"} Rp${(k.nominal||0).toLocaleString()}</strong></p>`;
+    });
+    kasTotal.textContent="Rp "+total.toLocaleString();
+    kasList.innerHTML= html || "<p>Belum ada transaksi kas.</p>";
+  }catch(e){
+    kasList.innerHTML="<p style='color:red'>Gagal memuat kas.</p>";
+  }
 }
 </script>
 </body>
