@@ -28,7 +28,7 @@
     .umkm-card img{width:100%;height:160px;object-fit:cover;border-radius:10px;margin-bottom:.6rem}
     footer{text-align:center;padding:1.5rem;color:#64748b;background:#fff;margin-top:3rem}
     .hidden{display:none}
-    /* Modal */
+    /* Modal Login/Register */
     .modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:999}
     .modal.active{display:flex}
     .modal-box{background:#fff;border-radius:12px;padding:1.2rem;width:90%;max-width:380px;box-shadow:0 10px 40px rgba(0,0,0,.2)}
@@ -133,7 +133,7 @@
     </div>
   </div>
 
-  <!-- Profil popup -->
+  <!-- Profil -->
   <div id="profileCard">
     <img id="profilePhoto" src="./assets/user.svg">
     <div id="profileName">Nama Anggota</div>
@@ -141,6 +141,7 @@
     <button class="btn outline" id="logoutBtn">Keluar</button>
   </div>
 
+  <!-- Firebase Scripts -->
   <script src="./env.js"></script>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
@@ -148,11 +149,12 @@
     import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
     const cfg = window.__ENV;
+    console.log("[Firebase Config Loaded]", cfg);
     const app = initializeApp(cfg);
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    // Modal logic
+    // Elements
     const modal = document.getElementById('modalAuth');
     const btnLogin = document.getElementById('btnLogin');
     const btnProfile = document.getElementById('btnProfile');
@@ -162,45 +164,50 @@
     const profileEmail = document.getElementById('profileEmail');
     const profilePhoto = document.getElementById('profilePhoto');
     const logoutBtn = document.getElementById('logoutBtn');
-
     const tabLogin = document.getElementById('tabLogin');
     const tabRegister = document.getElementById('tabRegister');
     const loginBox = document.getElementById('loginFormBox');
     const regBox = document.getElementById('registerFormBox');
+
+    // Tabs
     tabLogin.onclick = ()=>{tabLogin.classList.add('active');tabRegister.classList.remove('active');loginBox.classList.remove('hidden');regBox.classList.add('hidden');};
     tabRegister.onclick = ()=>{tabRegister.classList.add('active');tabLogin.classList.remove('active');regBox.classList.remove('hidden');loginBox.classList.add('hidden');};
 
     btnLogin.onclick = ()=> modal.classList.add('active');
     window.onclick = e => {if(e.target===modal) modal.classList.remove('active');};
     btnProfile.onclick = ()=> profileCard.style.display = (profileCard.style.display==='block'?'none':'block');
+    logoutBtn.onclick = async ()=>{await signOut(auth);profileCard.style.display='none';};
 
-    logoutBtn.onclick = async ()=>{ await signOut(auth); profileCard.style.display='none'; };
-
-    // Login
+    // LOGIN
     document.getElementById('loginForm').onsubmit = async(e)=>{
       e.preventDefault();
-      const email = e.target.email.value;
-      const pass = e.target.password.value;
-      try{ await signInWithEmailAndPassword(auth,email,pass); modal.classList.remove('active'); }
-      catch(err){ alert(err.message); }
+      const email = e.target.email.value, pass = e.target.password.value;
+      try{
+        await signInWithEmailAndPassword(auth,email,pass);
+        modal.classList.remove('active');
+      }catch(err){
+        console.error("Login error", err);
+        alert("Gagal login: "+err.message);
+      }
     };
 
-    // Register
+    // REGISTER
     document.getElementById('registerForm').onsubmit = async(e)=>{
       e.preventDefault();
-      const name = e.target.name.value;
-      const email = e.target.email.value;
-      const pass = e.target.password.value;
+      const name = e.target.name.value, email = e.target.email.value, pass = e.target.password.value;
       try{
         const cred = await createUserWithEmailAndPassword(auth,email,pass);
         await updateProfile(cred.user,{displayName:name});
         await setDoc(doc(db,'users',cred.user.uid),{name,email,role:'anggota',joinedAt:new Date()});
         alert('Akun berhasil dibuat!');
         modal.classList.remove('active');
-      }catch(err){ alert(err.message); }
+      }catch(err){
+        console.error("Register error", err);
+        alert("Gagal daftar: "+err.message);
+      }
     };
 
-    // State changes
+    // STATE
     onAuthStateChanged(auth, async (user)=>{
       if(user){
         btnLogin.classList.add('hidden');
@@ -209,7 +216,6 @@
         profileEmail.textContent = user.email;
         profilePhoto.src = user.photoURL || './assets/user.svg';
 
-        // cek role
         const snap = await getDoc(doc(db,'users',user.uid));
         if(snap.exists()){
           const role = snap.data().role;
@@ -225,8 +231,7 @@
     });
   </script>
 
-  <!-- data modules -->
-  <script type="module" src="./js/firebase.js"></script>
+  <!-- Dynamic content -->
   <script type="module" src="./js/umkm.js"></script>
   <script type="module" src="./js/berita.js"></script>
   <script type="module" src="./js/galeri.js"></script>
