@@ -1,35 +1,44 @@
-const GDRIVE = window.__GDRIVE || {};
-export const driveFolders = GDRIVE.folders || { profil:'', galeri:'', umkm:'', surat:'', proposal:'', laporan:'' };
+// ============ IMGBB UPLOAD HANDLER ============
+// Pastikan env.js sudah dimuat terlebih dahulu sebelum file ini
+// dan sudah memiliki window.__IMGBB.apiKey
 
-export async function initDrive() {
-  return new Promise((resolve) => {
-    gapi.load("client:auth2", async () => {
-      await gapi.client.init({
-        apiKey: GDRIVE.apiKey,
-        clientId: GDRIVE.clientId,
-        discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"],
-        scope: "https://www.googleapis.com/auth/drive.file"
-      });
-      const auth = gapi.auth2.getAuthInstance();
-      if (!auth.isSignedIn.get()) await auth.signIn();
-      resolve(gapi.auth.getToken().access_token);
+export async function uploadToImgBB(file) {
+  // Validasi dasar
+  if (!file) throw new Error("File tidak ditemukan untuk diupload.");
+  const key = window.__IMGBB?.apiKey;
+  if (!key) throw new Error("API Key ImgBB belum diatur di env.js");
+
+  // Cek tipe file
+  const allowed = ["image/jpeg", "image/png", "image/webp", "image/jpg"];
+  if (!allowed.includes(file.type)) {
+    alert("Format file tidak didukung. Gunakan JPG, PNG, atau WEBP.");
+    return "";
+  }
+
+  // Buat FormData
+  const formData = new FormData();
+  formData.append("image", file);
+
+  try {
+    const res = await fetch(`https://api.imgbb.com/1/upload?key=${key}`, {
+      method: "POST",
+      body: formData
     });
-  });
-}
 
-export async function uploadToDrive(file, folderKey) {
-  const accessToken = gapi.auth.getToken().access_token;
-  const folderId = driveFolders[folderKey];
-  const form = new FormData();
-  form.append('metadata', new Blob([JSON.stringify({ name: file.name, parents: [folderId] })], { type: 'application/json' }));
-  form.append('file', file);
-  const res = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id', {
-    method: 'POST', headers: new Headers({ 'Authorization': 'Bearer ' + accessToken }), body: form
-  });
-  const data = await res.json();
-  await fetch(`https://www.googleapis.com/drive/v3/files/${data.id}/permissions`, {
-    method: 'POST', headers: {'Authorization':'Bearer '+accessToken,'Content-Type':'application/json'},
-    body: JSON.stringify({ role:'reader', type:'anyone' })
-  });
-  return `https://drive.google.com/uc?id=${data.id}`;
+    const data = await res.json();
+
+    if (!data.success) {
+      console.error("ImgBB Error:", data);
+      alert("Upload gagal: " + data.error?.message);
+      return "";
+    }
+
+    const imageUrl = data.data.url;
+    console.log("[ImgBB] Upload sukses:", imageUrl);
+    return imageUrl;
+  } catch (err) {
+    console.error("Upload Error:", err);
+    alert("Gagal mengunggah gambar: " + err.message);
+    return "";
+  }
 }
