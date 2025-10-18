@@ -1,49 +1,334 @@
-:root{--brand:#0e4c92;--brand2:#0a3566;--accent:#f6c445;--text:#111827;--muted:#6b7280;--card:#fff;}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,system-ui,Arial;color:var(--text);background:#f7fafc}
-.container{width:min(1100px,92%);margin:0 auto}
-header{position:sticky;top:0;background:#fff;z-index:20;box-shadow:0 6px 24px rgba(0,0,0,.06)}
-nav{display:flex;gap:.8rem;flex-wrap:wrap;padding:.8rem 0}
-nav a{text-decoration:none;color:var(--brand);font-weight:700}
-.brand{display:flex;gap:.6rem;align-items:center;padding:.6rem 0}
-.brand img{width:36px;height:36px}
-.section{padding:2.2rem 0}.section.alt{background:#fff}
-.section-header{text-align:center;margin-bottom:1.2rem}
-.grid{display:grid;gap:1rem}
-.card{background:var(--card);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.06);padding:1rem}
-.btn{display:inline-block;border-radius:999px;padding:.6rem 1rem;border:1px solid #e5e7eb;background:#fff;color:#111;text-decoration:none;cursor:pointer}
-.btn.primary{background:var(--accent);border-color:transparent;font-weight:800}
-.btn.outline{background:#fff}
-footer{padding:1.2rem;text-align:center;color:var(--muted);margin-top:2rem}
-.muted{color:var(--muted)}
+:root {
+  --brand: #007aff;           /* iOS blue */
+  --brand2: #0051a8;
+  --accent: #ffd60a;          /* iOS yellow accent */
+  --text: #0a0a0a;
+  --muted: #6e6e73;
+  --card: rgba(255,255,255,0.7);
+  --blur-bg: rgba(255,255,255,0.55);
+  --shadow: 0 8px 30px rgba(0,0,0,0.08);
+}
 
-/* Lists */
-.news{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
-.masonry{columns:3 260px;column-gap:14px}.masonry img{width:100%;margin:0 0 14px;display:block;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,.06);break-inside:avoid}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-/* UMKM */
-.umkm{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
-.umkm-card{text-align:center;transition:transform .2s}
-.umkm-card:hover{transform:translateY(-4px)}
-.umkm-foto{width:100%;height:180px;object-fit:cover;border-radius:12px;margin-bottom:.8rem;box-shadow:0 4px 16px rgba(0,0,0,.08)}
-.umkm-links{display:flex;justify-content:center;gap:.6rem;flex-wrap:wrap;margin-top:.6rem}
+html { scroll-behavior: smooth; }
 
-/* Tables */
-.table{width:100%;border-collapse:collapse;border-radius:12px;overflow:hidden}
-.table th,.table td{padding:.6rem .7rem;border-bottom:1px solid #eef2f7;text-align:left}
-.total-box{margin-top:.8rem;font-weight:800}
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", sans-serif;
+  color: var(--text);
+  background: linear-gradient(180deg, #f9f9f9 0%, #f0f0f5 100%);
+  -webkit-font-smoothing: antialiased;
+  transition: background .4s ease, color .3s ease;
+}
 
-/* Forms */
-.form-grid{display:grid;gap:.6rem}
-input,textarea,select{width:100%;padding:.6rem;border:1px solid #e5e7eb;border-radius:10px}
-label{display:block;font-weight:700;margin-top:.4rem}
+.container { width: min(1100px, 92%); margin: 0 auto; }
 
-/* Modal simple */
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:1000;padding:1rem}
-.modal.active{display:flex}
-.modal-box{background:#fff;border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,.2);padding:1.2rem;max-width:420px;width:100%;position:relative}
-.close-modal{position:absolute;right:12px;top:10px;background:none;border:none;font-size:1.3rem;cursor:pointer}
-.avatar{width:96px;height:96px;border-radius:50%;object-fit:cover;display:block;margin:0 auto .6rem;border:2px solid var(--accent)}
+/* Header / Nav --------------------------------------------------------- */
+header {
+  position: sticky;
+  top: 0;
+  backdrop-filter: blur(16px) saturate(180%);
+  background: var(--blur-bg);
+  border-bottom: 1px solid rgba(255,255,255,0.4);
+  z-index: 20;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+  transition: background .3s ease, border .3s ease;
+}
 
-/* Responsive */
-@media(max-width:720px){.masonry{columns:2 260px}}
-@media(max-width:520px){.masonry{columns:1 260px}}
+nav {
+  display: flex;
+  gap: .8rem;
+  flex-wrap: wrap;
+  padding: .8rem 0;
+  justify-content: center;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--brand);
+  font-weight: 600;
+  border-radius: 12px;
+  padding: .4rem .8rem;
+  transition: all .25s ease;
+}
+
+nav a:hover {
+  background: rgba(0,122,255,0.1);
+}
+
+/* Brand --------------------------------------------------------- */
+.brand {
+  display: flex;
+  gap: .6rem;
+  align-items: center;
+  padding: .6rem 0;
+}
+
+.brand img {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+/* Sections --------------------------------------------------------- */
+.section { padding: 2.4rem 0; }
+.section.alt { background: rgba(255,255,255,0.6); backdrop-filter: blur(12px); }
+
+.section-header {
+  text-align: center;
+  margin-bottom: 1.4rem;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+/* Grid & Cards --------------------------------------------------------- */
+.grid { display: grid; gap: 1.2rem; }
+
+.card {
+  background: var(--card);
+  border-radius: 20px;
+  backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: var(--shadow);
+  padding: 1.2rem;
+  transition: transform .2s ease, box-shadow .2s ease, background .3s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+}
+
+/* Buttons --------------------------------------------------------- */
+.btn {
+  display: inline-block;
+  border-radius: 999px;
+  padding: .6rem 1.2rem;
+  border: 1px solid rgba(0,0,0,0.1);
+  background: #fff;
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .25s ease;
+}
+
+.btn.primary {
+  background: var(--brand);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 4px 16px rgba(0,122,255,0.25);
+}
+
+.btn.primary:hover { filter: brightness(1.05); }
+
+.btn.outline {
+  background: transparent;
+  border: 1.5px solid var(--brand);
+  color: var(--brand);
+}
+
+/* Footer --------------------------------------------------------- */
+footer {
+  padding: 1.4rem;
+  text-align: center;
+  color: var(--muted);
+  margin-top: 2rem;
+  font-size: .9rem;
+}
+
+/* Lists --------------------------------------------------------- */
+.news { grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); }
+
+.masonry {
+  columns: 3 260px;
+  column-gap: 14px;
+}
+
+.masonry img {
+  width: 100%;
+  margin: 0 0 14px;
+  display: block;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  break-inside: avoid;
+  transition: transform .3s ease;
+}
+
+.masonry img:hover { transform: scale(1.03); }
+
+/* UMKM --------------------------------------------------------- */
+.umkm { grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); }
+
+.umkm-card {
+  text-align: center;
+  transition: transform .2s, box-shadow .2s;
+  background: var(--card);
+  border-radius: 20px;
+  backdrop-filter: blur(14px);
+  box-shadow: var(--shadow);
+  padding: 1rem;
+}
+
+.umkm-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+}
+
+.umkm-foto {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 16px;
+  margin-bottom: .8rem;
+}
+
+.umkm-links {
+  display: flex;
+  justify-content: center;
+  gap: .6rem;
+  flex-wrap: wrap;
+  margin-top: .6rem;
+}
+
+/* Tables --------------------------------------------------------- */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 16px;
+  overflow: hidden;
+  backdrop-filter: blur(12px);
+}
+
+.table th, .table td {
+  padding: .8rem 1rem;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  text-align: left;
+}
+
+.total-box { margin-top: .8rem; font-weight: 800; }
+
+/* Forms --------------------------------------------------------- */
+.form-grid { display: grid; gap: .8rem; }
+
+input, textarea, select {
+  width: 100%;
+  padding: .7rem .9rem;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 14px;
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(12px);
+  font-size: .95rem;
+  transition: border .2s, box-shadow .2s, background .3s;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: var(--brand);
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(0,122,255,0.15);
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-top: .4rem;
+}
+
+/* Modal --------------------------------------------------------- */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.4);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+  backdrop-filter: blur(6px);
+}
+
+.modal.active { display: flex; }
+
+.modal-box {
+  background: var(--card);
+  border-radius: 20px;
+  box-shadow: 0 12px 40px rgba(0,0,0,.25);
+  padding: 1.4rem;
+  max-width: 420px;
+  width: 100%;
+  position: relative;
+  backdrop-filter: blur(16px);
+}
+
+.close-modal {
+  position: absolute;
+  right: 14px;
+  top: 10px;
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto .8rem;
+  border: 3px solid var(--brand);
+  box-shadow: 0 0 0 4px rgba(0,122,255,0.1);
+}
+
+/* Responsive --------------------------------------------------------- */
+@media (max-width: 720px) { .masonry { columns: 2 260px; } }
+@media (max-width: 520px) { .masonry { columns: 1 260px; } }
+
+/* ---------------------------------------------------------------------
+   DARK MODE (automatic)
+------------------------------------------------------------------------*/
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #f5f5f7;
+    --muted: #a1a1aa;
+    --card: rgba(30,30,30,0.7);
+    --blur-bg: rgba(25,25,25,0.55);
+    --shadow: 0 8px 30px rgba(0,0,0,0.4);
+  }
+
+  body {
+    background: linear-gradient(180deg, #1c1c1e 0%, #2c2c2e 100%);
+    color: var(--text);
+  }
+
+  header {
+    background: var(--blur-bg);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  nav a { color: #9ec8ff; }
+  nav a:hover { background: rgba(255,255,255,0.08); }
+
+  .btn {
+    background: rgba(255,255,255,0.1);
+    color: var(--text);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .btn.primary {
+    background: var(--brand);
+    color: #fff;
+  }
+
+  .card, .umkm-card, .modal-box, input, textarea, select {
+    background: rgba(40,40,40,0.8);
+    color: var(--text);
+    border-color: rgba(255,255,255,0.08);
+  }
+
+  .section.alt { background: rgba(255,255,255,0.04); }
+  footer { color: var(--muted); }
+}
