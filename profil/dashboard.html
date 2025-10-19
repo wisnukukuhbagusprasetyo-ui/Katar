@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Dashboard Karang Taruna Cilosari Barat</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+body{margin:0;font-family:'Poppins',sans-serif;background:#f5f7fa;color:#1e293b}
+header{background:linear-gradient(90deg,#0e4c92,#1a6ac2);color:#fff;padding:1rem;display:flex;justify-content:space-between;align-items:center}
+header h1{margin:0;font-size:1.1rem}
+header button{background:#f6c445;color:#0e4c92;border:none;border-radius:8px;padding:.5rem 1rem;font-weight:600;cursor:pointer}
+.wrapper{display:grid;grid-template-columns:220px 1fr;gap:1rem;padding:1rem}
+@media(max-width:850px){.wrapper{grid-template-columns:1fr}}
+.sidebar{background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.08);padding:.6rem}
+.side-item{display:block;width:100%;padding:.55rem .7rem;margin-bottom:.3rem;border:none;background:transparent;font-weight:600;color:#0e4c92;text-align:left;border-radius:6px;cursor:pointer}
+.side-item.active{background:#f6c445;color:#0e4c92}
+.panel{display:none}
+.panel.active{display:block}
+.card{background:#fff;padding:1rem;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.1);margin-bottom:1rem}
+input,textarea,select{width:100%;padding:.6rem;margin-bottom:.7rem;border:1px solid #ccc;border-radius:6px;font-family:'Poppins',sans-serif}
+.btn{border:none;border-radius:8px;padding:.6rem 1rem;font-weight:600;cursor:pointer}
+.btn-primary{background:#0e4c92;color:#fff}
+.btn-primary:hover{background:#f6c445;color:#0e4c92}
+.grid{display:grid;gap:1rem}
+@media(min-width:700px){.grid-2{grid-template-columns:repeat(2,1fr)}}
+.mini{display:flex;gap:.6rem;align-items:center}
+.mini img{width:44px;height:44px;border-radius:50%;object-fit:cover;background:#e5e7eb}
+.badge{display:inline-block;background:#eef2ff;color:#3730a3;padding:.15rem .5rem;border-radius:999px;font-size:.8rem;font-weight:700}
+.row{display:flex;gap:.5rem;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<header>
+  <h1>Dashboard Karang Taruna</h1>
+  <button id="logout">Keluar</button>
+</header>
+
+<main class="wrapper">
+  <aside class="sidebar" id="sidebar"></aside>
+
+  <section class="content" id="contentArea">
+    <!-- Panel Dinamis -->
+  </section>
+</main>
+
+<script type="module">
+import { auth, db } from "../js/firebase.js";
+import { uploadToImgBB } from "../js/imgbb.js";
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import {
+  doc, getDoc, collection, addDoc, getDocs, updateDoc, deleteDoc,
+  query, orderBy, serverTimestamp, setDoc, where
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+/* === GLOBAL === */
+let UID=null, ROLE='anggota';
+const $=s=>document.querySelector(s);
+const sidebar=$("#sidebar"), content=$("#contentArea");
+
+/* === LOGOUT === */
+$("#logout").onclick=async()=>{await signOut(auth);location.href="../index.html";};
+
+/* === AUTH === */
+onAuthStateChanged(auth, async(user)=>{
+  if(!user){location.href="../index.html";return;}
+  UID=user.uid;
+  const snap=await getDoc(doc(db,"users",UID));
+  const data=snap.exists()?snap.data():{};
+  ROLE=data.role||"anggota";
+  renderSidebar(ROLE);
+  loadPanel(ROLE,user);
+});
+
+/* === SIDEBAR ROLE === */
+function renderSidebar(role){
+  sidebar.innerHTML="";
+  const menu={
+    super_admin:["Profil","Anggota","Berita","UMKM","Kas","Pengumuman"],
+    admin:["Profil","Berita","UMKM","Kas"],
+    admin_berita:["Profil","Berita"],
+    admin_umkm:["Profil","UMKM"],
+    admin_keuangan:["Profil","Kas"],
+    admin_pengumuman:["Profil","Pengumuman"],
+    anggota:["Profil","Kas","Pengumuman"]
+  };
+  const list=menu[role]||menu.anggota;
+  list.forEach((m,i)=>{
+    const b=document.createElement("button");
+    b.className="side-item"+(i==0?" active":"");
+    b.textContent=m;
+    b.onclick=()=>showPanel(m);
+    sidebar.appendChild(b);
+  });
+}
+
+/* === SWITCH PANEL === */
+function showPanel(id){
+  document.querySelectorAll(".side-item").forEach(b=>b.classList.remove("active"));
+  [...sidebar.children].find(b=>b.textContent===id).classList.add("active");
+  renderPanel(id);
+}
+
+/* === RENDER PANEL === */
+async function loadPanel(role,user){
+  // pertama kali muat panel pertama
+  const first=document.querySelector(".side-item");
+  if(first) showPanel(first.textContent);
+}
+
+/* === PANEL CONTENT === */
+async function renderPanel(name){
+  content.innerHTML="";
+  switch(name){
+    case "Profil": return renderProfil();
+    case "Anggota": return renderAnggota();
+    case "Berita": return renderBerita();
+    case "UMKM": return renderUmkm();
+    case "Kas": return renderKas();
+    case "Pengumuman": return renderPengumuman();
+  }
+}
+
+/* === PANEL PROFIL === */
+async function renderProfil(){
+  const user=auth.currentUser;
+  const ref=doc(db,"users",user.uid);
+  const snap=await getDoc(ref);
+  const data=snap.exists()?snap.data():{};
+  content.innerHTML=`
+    <div class="card">
+      <h2>👤 Profil</h2>
+      <img src="${data.foto||"https://i.ibb.co/4Jf2V2R/placeholder-user.png"}" style="width:80px;height:80px;border-radius:50%;object-fit:cover">
+      <p><b>Nama:</b> ${data.nama||user.email.split('@')[0]}</p>
+      <p><b>Email:</b> ${user.email}</p>
+      <p><b>Role:</b> <span class="badge">${ROLE}</span></p>
+      <input id="namaBaru" placeholder="Ubah Nama">
+      <input type="file" id="fotoBaru" accept="image/*">
+      <button class="btn btn-primary" id="saveProfil">Simpan Perubahan</button>
+    </div>`;
+  $("#saveProfil").onclick=async()=>{
+    const nama=$("#namaBaru").value.trim();
+    const file=$("#fotoBaru").files[0];
+    let foto="";
+    if(file) foto=await uploadToImgBB(file);
+    await setDoc(ref,{...(nama&&{nama}),...(foto&&{foto})},{merge:true});
+    alert("Profil diperbarui!");
+    renderProfil();
+  };
+}
+
+/* === PANEL ANGGOTA === */
+async function renderAnggota(){
+  const snap=await getDocs(collection(db,"users"));
+  content.innerHTML="<div class='card'><h2>👥 Daftar Anggota</h2></div>";
+  snap.forEach(u=>{
+    const d=u.data();
+    content.innerHTML+=`
+      <div class='card mini'>
+        <img src='${d.foto||"https://i.ibb.co/4Jf2V2R/placeholder-user.png"}'>
+        <div>
+          <b>${d.nama||"(Tanpa nama)"}</b> <span class='badge'>${d.role||"anggota"}</span><br>
+          <small>${d.email}</small>
+        </div>
+      </div>`;
+  });
+}
+
+/* === PANEL BERITA === */
+async function renderBerita(){
+  content.innerHTML=`
+    <div class="card">
+      <h2>📰 Berita</h2>
+      <input id="judulB" placeholder="Judul">
+      <textarea id="isiB" rows="4" placeholder="Isi berita"></textarea>
+      <input type="file" id="fotoB" accept="image/*">
+      <button class="btn btn-primary" id="saveB">Simpan</button>
+    </div>
+    <div id="listB" class="grid grid-2"></div>`;
+  $("#saveB").onclick=async()=>{
+    const judul=$("#judulB").value.trim(),isi=$("#isiB").value.trim(),file=$("#fotoB").files[0];
+    let foto="";
+    if(file) foto=await uploadToImgBB(file);
+    await addDoc(collection(db,"berita"),{judul,isi,foto,penulis:auth.currentUser.email,createdAt:serverTimestamp()});
+    alert("Berita disimpan");
+    renderBerita();
+  };
+  const snap=await getDocs(query(collection(db,"berita"),orderBy("createdAt","desc")));
+  const list=$("#listB");
+  snap.forEach(d=>{
+    const b=d.data();
+    list.innerHTML+=`
+      <div class='card'>
+        ${b.foto?`<img src='${b.foto}' style='width:100%;height:150px;object-fit:cover;'>`:""}
+        <h3>${b.judul}</h3>
+        <p>${(b.isi||"").slice(0,120)}...</p>
+        <small>${b.penulis||""}</small>
+      </div>`;
+  });
+}
+
+/* === PANEL UMKM === */
+async function renderUmkm(){
+  content.innerHTML=`
+    <div class="card">
+      <h2>🏪 UMKM</h2>
+      <input id="namaU" placeholder="Nama Produk">
+      <input id="hargaU" type="number" placeholder="Harga">
+      <input id="waU" placeholder="Nomor WA">
+      <textarea id="desU" rows="3" placeholder="Deskripsi"></textarea>
+      <input type="file" id="fotoU" accept="image/*">
+      <button class="btn btn-primary" id="saveU">Simpan</button>
+    </div>
+    <div id="listU" class="grid grid-2"></div>`;
+  $("#saveU").onclick=async()=>{
+    const nama=$("#namaU").value.trim(),harga=Number($("#hargaU").value),wa=$("#waU").value.trim(),des=$("#desU").value.trim(),file=$("#fotoU").files[0];
+    let foto="";
+    if(file) foto=await uploadToImgBB(file);
+    await addDoc(collection(db,"umkm"),{nama,harga,wa,deskripsi:des,foto,dibuatOleh:auth.currentUser.email,createdAt:serverTimestamp()});
+    alert("UMKM disimpan");
+    renderUmkm();
+  };
+  const snap=await getDocs(query(collection(db,"umkm"),orderBy("createdAt","desc")));
+  const list=$("#listU");
+  snap.forEach(d=>{
+    const u=d.data();
+    list.innerHTML+=`
+      <div class='card'>
+        ${u.foto?`<img src='${u.foto}' style='width:100%;height:150px;object-fit:cover;'>`:""}
+        <h3>${u.nama}</h3>
+        <p>💰 Rp${(u.harga||0).toLocaleString()}</p>
+        <p>${u.deskripsi||""}</p>
+        <a href='https://wa.me/${u.wa}' target='_blank'>${u.wa}</a>
+      </div>`;
+  });
+}
+
+/* === PANEL KAS === */
+async function renderKas(){
+  content.innerHTML=`
+    <div class='card'>
+      <h2>💰 Kas</h2>
+      <input id='jumlahK' type='number' placeholder='Jumlah'>
+      <select id='tipeK'><option value='masuk'>Pemasukan</option><option value='keluar'>Pengeluaran</option></select>
+      <input id='ketK' placeholder='Keterangan'>
+      <input id='pembayarK' placeholder='Nama / Email Pembayar'>
+      <button class='btn btn-primary' id='saveK'>Simpan</button>
+    </div>
+    <div class='card'><canvas id='chartKas' height='100'></canvas></div>
+    <div id='listK'></div>`;
+  $("#saveK").onclick=async()=>{
+    const j=Number($("#jumlahK").value),t=$("#tipeK").value,k=$("#ketK").value.trim(),p=$("#pembayarK").value.trim();
+    await addDoc(collection(db,"kas"),{jumlah:j,tipe:t,keterangan:k,pembayar:p,createdAt:serverTimestamp()});
+    alert("Kas disimpan"); renderKas();
+  };
+  const snap=await getDocs(query(collection(db,"kas"),orderBy("createdAt","desc")));
+  const list=$("#listK");let masuk=0,keluar=0,total=0;
+  snap.forEach(d=>{
+    const k=d.data();
+    total+=(k.tipe==="masuk"?1:-1)*(k.jumlah||0);
+    if(k.tipe==="masuk") masuk+=k.jumlah; else keluar+=k.jumlah;
+    list.innerHTML+=`<div class='card'><b>${k.tipe==="masuk"?"🟢":"🔴"} Rp${(k.jumlah||0).toLocaleString()}</b><br>${k.keterangan||""}<br><small>${k.pembayar||""}</small></div>`;
+  });
+  const ctx=$("#chartKas").getContext("2d");
+  new Chart(ctx,{type:'bar',data:{labels:["Masuk","Keluar"],datasets:[{data:[masuk,keluar]}]},options:{plugins:{legend:{display:false}}}});
+  content.prepend(document.createElement("div")).innerHTML=`<div class='card'><h3>Total Kas: Rp ${total.toLocaleString()}</h3></div>`;
+}
+
+/* === PANEL PENGUMUMAN === */
+async function renderPengumuman(){
+  content.innerHTML=`
+    <div class="card">
+      <h2>📢 Pengumuman</h2>
+      <input id="judulP" placeholder="Judul">
+      <textarea id="isiP" rows="3" placeholder="Isi pengumuman"></textarea>
+      <button class="btn btn-primary" id="saveP">Simpan</button>
+    </div>
+    <div id="listP"></div>`;
+  $("#saveP").onclick=async()=>{
+    const judul=$("#judulP").value.trim(),isi=$("#isiP").value.trim();
+    await addDoc(collection(db,"pengumuman"),{judul,isi,dibuatOleh:auth.currentUser.email,createdAt:serverTimestamp()});
+    alert("Pengumuman disimpan"); renderPengumuman();
+  };
+  const snap=await getDocs(query(collection(db,"pengumuman"),orderBy("createdAt","desc")));
+  const list=$("#listP");
+  snap.forEach(d=>{
+    const p=d.data();
+    list.innerHTML+=`<div class='card'><h4>${p.judul}</h4><p>${p.isi}</p><small>${p.dibuatOleh||""}</small></div>`;
+  });
+}
+</script>
+</body>
+</html>
