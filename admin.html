@@ -1,168 +1,45 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Portal Karang Taruna Cilosari Barat</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Mengalihkan ke Dashboard...</title>
+<meta http-equiv="refresh" content="2; url=./profil/dashboard.html">
 <style>
-:root{--biru:#0e4c92;--emas:#f6c445;--bg:#f5f7fa;--text:#1e293b;--card:#fff;}
-body{margin:0;font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);}
-header{background:linear-gradient(90deg,var(--biru),#1a6ac2);color:#fff;padding:1rem;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10;}
-header h1{font-size:1rem;margin:0;}
-nav a,nav button{color:#fff;background:none;border:none;cursor:pointer;font-weight:600;font-family:'Poppins',sans-serif;margin-left:1rem;}
-nav a:hover,nav button:hover{color:var(--emas);}
-.btn{background:var(--biru);color:#fff;border:none;border-radius:8px;padding:.6rem 1rem;font-weight:600;cursor:pointer;}
-.btn:hover{background:var(--emas);color:var(--biru);}
-section{padding:2rem 1rem;max-width:900px;margin:auto;}
-h2{color:var(--biru);}
-.card{background:var(--card);padding:1rem;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.08);margin-bottom:1rem;}
-footer{background:var(--biru);color:#fff;text-align:center;padding:1rem;margin-top:2rem;font-size:.9rem;}
-/* Modal Auth */
-#authModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;justify-content:center;align-items:center;}
-.auth-box{background:#fff;color:#000;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,0.2);max-width:400px;width:90%;padding:1.5rem;position:relative;}
-.auth-box h3{text-align:center;margin-bottom:1rem;}
-.auth-box input{width:100%;padding:.6rem;margin-bottom:.6rem;border:1px solid #ccc;border-radius:6px;}
-.auth-box button{width:100%;padding:.6rem;font-weight:600;border:none;border-radius:6px;margin-top:.4rem;}
-#closeModal{position:absolute;top:8px;right:12px;cursor:pointer;font-size:1.3rem;color:#555;}
-.auth-switch{color:var(--biru);cursor:pointer;font-size:.9rem;text-align:center;margin-top:.5rem;}
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(120deg, #0e4c92, #1a6ac2);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  flex-direction: column;
+  text-align: center;
+}
+h1 {
+  font-size: 1.6rem;
+  margin-bottom: .6rem;
+}
+.spinner {
+  width: 40px; height: 40px;
+  border: 4px solid rgba(255,255,255,0.4);
+  border-top-color: #f6c445;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-top: 10px;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
 </style>
 </head>
 <body>
-<header>
-  <h1>Karang Taruna Cilosari Barat RT01/RW08</h1>
-  <nav id="navArea">
-    <button id="btnLogin">Masuk / Daftar</button>
-  </nav>
-</header>
-
-<section>
-  <h2>Selamat Datang 👋</h2>
-  <div class="card">
-    <p>Portal resmi Karang Taruna Cilosari Barat — tempat berbagi berita, pengumuman, kas warga, dan produk UMKM.</p>
-  </div>
-  <div id="infoArea"></div>
-</section>
-
-<footer>
-  <p>&copy; 2025 Karang Taruna Cilosari Barat RT01/RW08 - Semarang Timur</p>
-</footer>
-
-<!-- MODAL AUTH -->
-<div id="authModal">
-  <div class="auth-box">
-    <span id="closeModal">✕</span>
-    <h3 id="authTitle">Masuk ke Portal</h3>
-    <input type="email" id="email" placeholder="Email">
-    <input type="password" id="password" placeholder="Kata Sandi">
-    <button id="loginBtn" style="background:var(--biru);color:#fff;">Masuk</button>
-    <button id="registerBtn" style="background:var(--emas);color:var(--biru);">Daftar</button>
-    <button id="forgotBtn" style="background:#e2e8f0;color:#0f172a;">Lupa Password</button>
-    <div class="auth-switch" id="switchText">Belum punya akun? <span id="switchAction">Daftar</span></div>
-  </div>
-</div>
-
-<script type="module">
-import { auth, db } from "./js/firebase.js";
-import {
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  sendPasswordResetEmail,
-  signOut
-} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-import { doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
-
-const modal=document.getElementById("authModal");
-const btnLogin=document.getElementById("btnLogin");
-const closeModal=document.getElementById("closeModal");
-const authTitle=document.getElementById("authTitle");
-const switchText=document.getElementById("switchText");
-const switchAction=document.getElementById("switchAction");
-const loginBtn=document.getElementById("loginBtn");
-const registerBtn=document.getElementById("registerBtn");
-const forgotBtn=document.getElementById("forgotBtn");
-const emailInput=document.getElementById("email");
-const passInput=document.getElementById("password");
-const navArea=document.getElementById("navArea");
-const infoArea=document.getElementById("infoArea");
-let mode="login";
-
-btnLogin.onclick=()=>{ modal.style.display="flex"; mode="login"; setMode(); };
-closeModal.onclick=()=>{ modal.style.display="none"; };
-window.onclick=(e)=>{ if(e.target===modal) modal.style.display="none"; };
-switchAction.onclick=()=>{ mode=mode==="login"?"register":"login"; setMode(); };
-function setMode(){
-  if(mode==="login"){
-    authTitle.textContent="Masuk ke Portal";
-    loginBtn.style.display="block";
-    registerBtn.style.display="block";
-    forgotBtn.style.display="block";
-    switchText.innerHTML='Belum punya akun? <span id="switchAction">Daftar</span>';
-  }else{
-    authTitle.textContent="Daftar Akun Baru";
-    loginBtn.style.display="none";
-    registerBtn.style.display="block";
-    forgotBtn.style.display="none";
-    switchText.innerHTML='Sudah punya akun? <span id="switchAction">Masuk</span>';
-  }
-  document.getElementById("switchAction").onclick=()=>{mode=mode==="login"?"register":"login";setMode();}
-}
-
-/* ==== AUTH ==== */
-onAuthStateChanged(auth, async(user)=>{
-  if(user){
-    // cek role
-    const ref=doc(db,"users",user.uid);
-    const snap=await getDoc(ref);
-    if(!snap.exists()){
-      await setDoc(ref,{email:user.email,role:"anggota",createdAt:new Date().toISOString()});
-    }
-    // tampilkan profil + tombol keluar
-    navArea.innerHTML=`
-      <span style="font-weight:600">👤 ${user.email.split('@')[0]}</span>
-      <button id="goProfile" class="btn">Profil Saya</button>
-      <button id="btnLogout" class="btn" style="background:#e2e8f0;color:#0f172a;">Keluar</button>`;
-    document.getElementById("goProfile").onclick=()=>location.href="./profil/dashboard.html";
-    document.getElementById("btnLogout").onclick=async()=>{await signOut(auth);location.reload();};
-    infoArea.innerHTML="<div class='card'><b>Anda sudah login sebagai:</b> "+user.email+"</div>";
-    // auto redirect
-    setTimeout(()=>location.href="./profil/dashboard.html",1000);
-  }else{
-    navArea.innerHTML=`<button id="btnLogin">Masuk / Daftar</button>`;
-    document.getElementById("btnLogin").onclick=()=>{modal.style.display="flex";}
-  }
-});
-
-/* ==== LOGIN ==== */
-loginBtn.onclick=async()=>{
-  const email=emailInput.value.trim(), pass=passInput.value;
-  try{ await signInWithEmailAndPassword(auth,email,pass);
-    modal.style.display="none";
-  }catch(e){ alert("Login gagal: "+e.message); }
-};
-
-/* ==== REGISTER ==== */
-registerBtn.onclick=async()=>{
-  const email=emailInput.value.trim(), pass=passInput.value;
-  if(pass.length<6) return alert("Minimal 6 karakter.");
-  try{
-    const cred=await createUserWithEmailAndPassword(auth,email,pass);
-    await setDoc(doc(db,"users",cred.user.uid),{email,role:"anggota",createdAt:new Date().toISOString()});
-    alert("Registrasi berhasil!");
-    modal.style.display="none";
-  }catch(e){ alert("Gagal daftar: "+e.message); }
-};
-
-/* ==== LUPA PASSWORD ==== */
-forgotBtn.onclick=async()=>{
-  const email=emailInput.value.trim();
-  if(!email) return alert("Masukkan email Anda dulu.");
-  try{
-    await sendPasswordResetEmail(auth,email);
-    alert("Email reset password telah dikirim ke "+email);
-  }catch(e){ alert("Gagal kirim email: "+e.message); }
-};
-</script>
+  <h1>🔄 Mengalihkan ke Dashboard Baru...</h1>
+  <p>Harap tunggu sebentar, Anda akan diarahkan ke portal terbaru.</p>
+  <div class="spinner"></div>
+  <script>
+    setTimeout(()=>{ window.location.href = './profil/dashboard.html'; }, 2000);
+  </script>
 </body>
 </html>
