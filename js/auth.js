@@ -1,47 +1,52 @@
-<!-- /js/auth.js -->
-<script type="module">
-import { auth, db } from "./firebase.js";
+// === js/auth.js ===
+import { auth, db } from './firebase.js';
 import {
-  setPersistence, browserLocalPersistence,
-  onAuthStateChanged, signOut,
-  createUserWithEmailAndPassword, signInWithEmailAndPassword,
-  sendPasswordResetEmail
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+  signOut,
+  onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 import { doc, setDoc, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-// Persist login
-await setPersistence(auth, browserLocalPersistence);
-
-// pastikan user punya dokumen user
-async function ensureUserDoc(uid, email){
-  const uref = doc(db, "users", uid);
-  const snap = await getDoc(uref);
-  if(!snap.exists()){
-    await setDoc(uref, {
-      email, role: "anggota", createdAt: serverTimestamp()
-    }, { merge:true });
-  }
-}
-
-// API auth yang di-expose ke window  (INI yang mencegah error undefined)
 window.AuthAPI = {
-  async register(email, pass){
-    const { user } = await createUserWithEmailAndPassword(auth, email, pass);
-    await ensureUserDoc(user.uid, user.email);
+  // REGISTER
+  async register(email, password) {
+    const userCred = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCred.user;
+    const uref = doc(db, "users", user.uid);
+    await setDoc(uref, {
+      email: user.email,
+      role: "anggota",
+      createdAt: serverTimestamp()
+    });
+    console.log("✅ User terdaftar:", user.email);
     return user;
   },
-  async login(email, pass){
-    const { user } = await signInWithEmailAndPassword(auth, email, pass);
-    await ensureUserDoc(user.uid, user.email);
-    return user;
+
+  // LOGIN
+  async login(email, password) {
+    const userCred = await signInWithEmailAndPassword(auth, email, password);
+    console.log("✅ Login:", userCred.user.email);
+    return userCred.user;
   },
-  async reset(email){
+
+  // RESET PASSWORD
+  async reset(email) {
     await sendPasswordResetEmail(auth, email);
-    return true;
+    console.log("📧 Link reset dikirim ke", email);
   },
-  async logout(){ await signOut(auth); },
-  onAuth(cb){ return onAuthStateChanged(auth, cb); },
-  get auth(){ return auth; },
-  get db(){ return db; }
+
+  // LOGOUT
+  async logout() {
+    await signOut(auth);
+    console.log("🚪 Logout sukses");
+  },
+
+  // LISTENER
+  onAuth(callback) {
+    onAuthStateChanged(auth, callback);
+  },
+
+  db
 };
-</script>
