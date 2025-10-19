@@ -78,26 +78,27 @@ footer{background:var(--biru);color:#fff;text-align:center;padding:1rem;margin-t
     <a class="desktop-only" href="#pengumuman">Pengumuman</a>
     <a class="desktop-only" href="#berita">Berita</a>
     <a class="desktop-only" href="#umkm">UMKM</a>
-    <a class="desktop-only" href="#kas">Kas</a>
+    <a class="desktop-only" href="#kas">Ringkasan Kas</a>
     <button id="btnOpenAuth">Masuk / Daftar</button>
     <button id="btnProfile" class="btn" style="display:none">Profil Saya</button>
     <button id="btnLogout" style="display:none">Keluar</button>
   </nav>
   <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
 </header>
+
+<!-- NAV MOBILE (tanpa Masuk/Daftar sesuai permintaan) -->
 <nav class="mobile" id="navMobile">
   <a href="#pengumuman">Pengumuman</a>
   <a href="#berita">Berita</a>
   <a href="#umkm">UMKM</a>
-  <a href="#kas" class="last">Kas</a>
-  <button id="mOpenAuth">Masuk / Daftar</button>
+  <a href="#kas" class="last">Ringkasan Kas</a>
   <button id="mProfile" class="last" style="display:none">Profil Saya</button>
   <button id="mLogout" class="last" style="display:none">Keluar</button>
 </nav>
 
 <section class="hero">
-  <h1>Portal Warga — Karang Taruna</h1>
-  <p>Informasi resmi kegiatan, pengumuman, berita, kas, dan UMKM warga RW08, Kelurahan Kemijen, Kecamatan Semarang Timur.</p>
+  <h1>Portal Karang Taruna Cilosari Barat</h1>
+  <p>Informasi resmi kegiatan, pengumuman, berita, kas, dan UMKM di RT01/RW08 Kelurahan Kemijen, Semarang Timur.</p>
 </section>
 
 <main class="container">
@@ -115,13 +116,13 @@ footer{background:var(--biru);color:#fff;text-align:center;padding:1rem;margin-t
 
   <!-- UMKM -->
   <div class="section-head" id="umkm">
-    <h2>🏪 UMKM Warga</h2>
+    <h2>🏪 UMKM</h2>
   </div>
   <div id="umkmList" class="grid grid-3"></div>
 
   <!-- KAS -->
   <div class="section-head" id="kas">
-    <h2>💰 Kas Ringkas</h2>
+    <h2>💰 Ringkasan Kas</h2>
   </div>
   <div class="grid grid-3">
     <div class="card kas-box" style="grid-column:1/-1">
@@ -171,26 +172,22 @@ footer{background:var(--biru);color:#fff;text-align:center;padding:1rem;margin-t
 </div>
 
 <script type="module">
-/* ===== IMPORTS ===== */
 import { auth, db } from "./js/firebase.js";
 import {
   onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   sendPasswordResetEmail, signOut
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-import {
-  collection, getDocs, orderBy, query, limit
-} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
-import { doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+import { collection, getDocs, orderBy, query, limit, doc, setDoc, getDoc } 
+from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-/* ===== NAV / HAMBURGER ===== */
+/* ===== HAMBURGER ===== */
 const hamburger=document.getElementById("hamburger");
 const navMobile=document.getElementById("navMobile");
-hamburger.onclick=()=>{ navMobile.style.display = navMobile.style.display==='flex' ? 'none' : 'flex'; };
+hamburger.onclick=()=>{navMobile.style.display=navMobile.style.display==='flex'?'none':'flex';};
 
-/* ===== AUTH MODAL TABS ===== */
+/* ===== AUTH MODAL ===== */
 const modal=document.getElementById("authModal");
 const btnOpenAuth=document.getElementById("btnOpenAuth");
-const mOpenAuth=document.getElementById("mOpenAuth");
 const closeModal=document.getElementById("closeModal");
 const tabs=[...document.querySelectorAll(".tab-btn")];
 const panels={
@@ -202,12 +199,11 @@ function openModal(tab="login"){
   modal.style.display="flex";
   tabs.forEach(t=>t.classList.remove("active"));
   tabs.find(t=>t.dataset.tab===tab).classList.add("active");
-  Object.keys(panels).forEach(k=>panels[k].style.display = (k===tab?'block':'none'));
+  Object.keys(panels).forEach(k=>panels[k].style.display=(k===tab?'block':'none'));
 }
-if(btnOpenAuth) btnOpenAuth.onclick=()=>openModal("login");
-if(mOpenAuth) mOpenAuth.onclick=()=>openModal("login");
+btnOpenAuth.onclick=()=>openModal("login");
 closeModal.onclick=()=>modal.style.display="none";
-window.addEventListener("click",(e)=>{ if(e.target===modal) modal.style.display="none"; });
+window.addEventListener("click",(e)=>{if(e.target===modal)modal.style.display="none";});
 tabs.forEach(t=>t.onclick=()=>openModal(t.dataset.tab));
 
 /* ===== AUTH STATE ===== */
@@ -216,30 +212,29 @@ const btnLogout=document.getElementById("btnLogout");
 const mProfile=document.getElementById("mProfile");
 const mLogout=document.getElementById("mLogout");
 
-onAuthStateChanged(auth, async(user)=>{
+onAuthStateChanged(auth,async(user)=>{
   if(user){
-    // pastikan dokumen user ada
     const uref=doc(db,"users",user.uid);
     const usnap=await getDoc(uref);
     if(!usnap.exists()){
       await setDoc(uref,{email:user.email,role:"anggota",createdAt:new Date().toISOString()});
     }
-    // toggle nav
-    if(btnOpenAuth) btnOpenAuth.style.display="none";
-    if(mOpenAuth) mOpenAuth.style.display="none";
+    // Desktop toggle
+    btnOpenAuth.style.display="none";
     btnProfile.style.display="inline-block";
     btnLogout.style.display="inline-block";
+    // Mobile toggle (hamburger)
     mProfile.style.display="block";
     mLogout.style.display="block";
+    // Actions
     btnProfile.onclick=()=>location.href="./profil/dashboard.html";
     mProfile.onclick=()=>location.href="./profil/dashboard.html";
-    btnLogout.onclick=async()=>{await signOut(auth); location.reload();};
-    mLogout.onclick=async()=>{await signOut(auth); location.reload();};
-    // auto redirect sesaat
-    setTimeout(()=>location.href="./profil/dashboard.html", 800);
+    btnLogout.onclick=async()=>{await signOut(auth);location.reload();};
+    mLogout.onclick=async()=>{await signOut(auth);location.reload();};
+    // (Optional) auto-redirect lembut:
+    // setTimeout(()=>location.href="./profil/dashboard.html",800);
   }else{
-    if(btnOpenAuth) btnOpenAuth.style.display="inline-block";
-    if(mOpenAuth) mOpenAuth.style.display="block";
+    btnOpenAuth.style.display="inline-block";
     btnProfile.style.display="none";
     btnLogout.style.display="none";
     mProfile.style.display="none";
@@ -247,130 +242,79 @@ onAuthStateChanged(auth, async(user)=>{
   }
 });
 
-/* ===== AUTH ACTIONS ===== */
+/* ===== LOGIN / REGISTER / FORGOT ===== */
 document.getElementById("loginBtn").onclick=async()=>{
   const email=document.getElementById("logEmail").value.trim();
   const pass=document.getElementById("logPass").value;
-  try{
-    await signInWithEmailAndPassword(auth,email,pass);
-    modal.style.display="none";
-  }catch(e){ alert("Login gagal: "+e.message); }
+  try{await signInWithEmailAndPassword(auth,email,pass);modal.style.display="none";}
+  catch(e){alert("Login gagal: "+e.message);}
 };
 document.getElementById("registerBtn").onclick=async()=>{
   const email=document.getElementById("regEmail").value.trim();
   const pass=document.getElementById("regPass").value;
-  if(pass.length<6) return alert("Kata sandi minimal 6 karakter.");
+  if(pass.length<6)return alert("Kata sandi minimal 6 karakter.");
   try{
     const cred=await createUserWithEmailAndPassword(auth,email,pass);
     await setDoc(doc(db,"users",cred.user.uid),{email,role:"anggota",createdAt:new Date().toISOString()});
     alert("Registrasi berhasil.");
     modal.style.display="none";
-  }catch(e){ alert("Gagal daftar: "+e.message); }
+  }catch(e){alert("Gagal daftar: "+e.message);}
 };
 document.getElementById("forgotBtn").onclick=async()=>{
   const email=document.getElementById("fogEmail").value.trim();
-  if(!email) return alert("Masukkan email terlebih dahulu.");
+  if(!email)return alert("Masukkan email terlebih dahulu.");
   try{
     await sendPasswordResetEmail(auth,email);
     alert("Link reset password dikirim ke: "+email);
     modal.style.display="none";
-  }catch(e){ alert("Gagal mengirim email reset: "+e.message); }
+  }catch(e){alert("Gagal mengirim email reset: "+e.message);}
 };
 
-/* ===== LOAD PENGUMUMAN (3 terbaru) ===== */
-async function loadPengumuman(){
-  const box=document.getElementById("pengumumanList");
+/* ===== LOAD DATA HELPERS ===== */
+async function loadList(coll,container){
+  const box=document.getElementById(container);
   try{
-    const snap=await getDocs(query(collection(db,"pengumuman"),orderBy("createdAt","desc"),limit(3)));
+    const snap=await getDocs(query(collection(db,coll),orderBy("createdAt","desc"),limit(6)));
     box.innerHTML="";
-    if(snap.empty){ box.innerHTML="<div class='card'><div class='content'>Belum ada pengumuman.</div></div>"; return; }
+    if(snap.empty){box.innerHTML=`<div class='card'><div class='content'>Belum ada ${coll}.</div></div>`;return;}
     snap.forEach(d=>{
-      const p=d.data();
+      const x=d.data();
       const el=document.createElement("div");
       el.className="card";
-      el.innerHTML=`
-        <div class="content">
-          <div class="badge">Pengumuman</div>
-          <h3 style="margin:.4rem 0">${p.judul||"Tanpa Judul"}</h3>
-          <p>${p.isi||""}</p>
-          <small style="color:#64748b">${p.tanggal||""}</small>
-        </div>`;
-      box.appendChild(el);
+      let inner="";
+      if(coll==="berita"){
+        inner=`${x.foto?`<img src="${x.foto}" alt="">`:""}
+        <div class="content"><h3>${x.judul||"Tanpa Judul"}</h3><p>${(x.isi||"").length>150?(x.isi||"").slice(0,150)+"…":(x.isi||"")}</p></div>`;
+      }else if(coll==="pengumuman"){
+        inner=`<div class="content"><div class="badge">Pengumuman</div><h3>${x.judul||"Tanpa Judul"}</h3><p>${x.isi||""}</p><small>${x.tanggal||""}</small></div>`;
+      }else if(coll==="umkm"){
+        inner=`${x.foto?`<img src="${x.foto}" alt="">`:""}
+        <div class="content"><div class="badge">UMKM</div><h3>${x.produk||"Produk"}</h3>
+        ${x.penjual?`<p>👤 ${x.penjual}</p>`:""}<p>💰 Rp${(x.harga||0).toLocaleString()}</p>
+        ${x.wa?`<a href="https://wa.me/${x.wa}" class="btn" target="_blank">Hubungi</a>`:""}</div>`;
+      }
+      el.innerHTML=inner; box.appendChild(el);
     });
-  }catch(e){ console.error(e); }
+  }catch(e){console.error(e);}
 }
 
-/* ===== LOAD BERITA (6 terbaru) ===== */
-async function loadBerita(){
-  const box=document.getElementById("beritaList");
-  try{
-    const snap=await getDocs(query(collection(db,"berita"),orderBy("createdAt","desc"),limit(6)));
-    box.innerHTML="";
-    if(snap.empty){ box.innerHTML="<div class='card'><div class='content'>Belum ada berita.</div></div>"; return; }
-    snap.forEach(d=>{
-      const b=d.data();
-      const el=document.createElement("div");
-      el.className="card";
-      el.innerHTML=`
-        ${b.foto?`<img src="${b.foto}" alt="${b.judul}">`:""}
-        <div class="content">
-          <h3 style="margin:.2rem 0">${b.judul||"Tanpa Judul"}</h3>
-          <p>${(b.isi||"").length>150?(b.isi||"").slice(0,150)+"…":(b.isi||"")}</p>
-          <small style="color:#64748b">${b.penulis||""}</small>
-        </div>`;
-      box.appendChild(el);
-    });
-  }catch(e){ console.error(e); }
-}
-
-/* ===== LOAD UMKM (6 terbaru) ===== */
-async function loadUmkm(){
-  const box=document.getElementById("umkmList");
-  try{
-    const snap=await getDocs(query(collection(db,"umkm"),orderBy("createdAt","desc"),limit(6)));
-    box.innerHTML="";
-    if(snap.empty){ box.innerHTML="<div class='card'><div class='content'>Belum ada UMKM.</div></div>"; return; }
-    snap.forEach(d=>{
-      const u=d.data();
-      const el=document.createElement("div");
-      el.className="card";
-      el.innerHTML=`
-        ${u.foto?`<img src="${u.foto}" alt="${u.produk||u.nama||'Produk'}">`:""}
-        <div class="content">
-          <div class="badge">UMKM</div>
-          <h3 style="margin:.2rem 0">${u.produk||u.nama||"Produk Warga"}</h3>
-          ${u.penjual?`<p style="margin:.2rem 0">👤 ${u.penjual}</p>`:""}
-          <p>💰 Rp${(u.harga||0).toLocaleString()}</p>
-          ${u.wa?`<a class="btn" target="_blank" href="https://wa.me/${u.wa}">Hubungi</a>`:""}
-        </div>`;
-      box.appendChild(el);
-    });
-  }catch(e){ console.error(e); }
-}
-
-/* ===== LOAD KAS RINGKAS (total + 5 terakhir) ===== */
+/* ===== LOAD KAS RINGKAS ===== */
 async function loadKas(){
   const totalEl=document.getElementById("kasTotal");
   const list=document.getElementById("kasShortList");
   try{
-    // Ambil 50 terbaru (cukup untuk total ringkas)
     const snap=await getDocs(query(collection(db,"kas"),orderBy("createdAt","desc"),limit(50)));
-    let total=0; let html="";
-    snap.forEach(d=>{
-      const k=d.data();
-      total += (k.tipe==="masuk"?1:-1) * (k.jumlah||0);
-    });
+    let total=0; snap.forEach(d=>{const k=d.data(); total+=(k.tipe==="masuk"?1:-1)*(k.jumlah||0);});
     totalEl.textContent="Rp "+total.toLocaleString();
 
-    // tampilkan 5 item terbaru
     const recent=await getDocs(query(collection(db,"kas"),orderBy("createdAt","desc"),limit(5)));
     if(recent.empty){ list.innerHTML="<p>Belum ada transaksi kas.</p>"; return; }
-    recent.forEach(d=>{
+    let html=""; recent.forEach(d=>{
       const k=d.data();
       html+=`<div class="kas-item">
         <b style="color:${k.tipe==='masuk'?'green':'#b91c1c'}">${k.tipe==='masuk'?'+':'-'} Rp${(k.jumlah||0).toLocaleString()}</b>
         <div>${k.keterangan||''}</div>
-        <small style="color:#64748b">${k.tanggal||''} ${k.nama?('• '+k.nama):''}</small>
+        <small style="color:#64748b">${k.tanggal||''}${k.nama?(' • '+k.nama):''}</small>
       </div>`;
     });
     list.innerHTML=html;
@@ -378,7 +322,10 @@ async function loadKas(){
 }
 
 /* ===== INIT LOAD ===== */
-loadPengumuman(); loadBerita(); loadUmkm(); loadKas();
+loadList("pengumuman","pengumumanList");
+loadList("berita","beritaList");
+loadList("umkm","umkmList");
+loadKas();
 </script>
 </body>
 </html>
