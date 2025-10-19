@@ -1,79 +1,47 @@
-// === AUTH.JS FINAL ===
-// Untuk Firebase Auth & Firestore integrasi Karang Taruna Cilosari Barat
-
-import { auth, db } from './firebase.js';
+<!-- /js/auth.js -->
+<script type="module">
+import { auth, db } from "./firebase.js";
 import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
-  onAuthStateChanged,
-  setPersistence,
-  browserLocalPersistence
+  setPersistence, browserLocalPersistence,
+  onAuthStateChanged, signOut,
+  createUserWithEmailAndPassword, signInWithEmailAndPassword,
+  sendPasswordResetEmail
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+import { doc, setDoc, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-// Pastikan sesi login tersimpan agar tidak logout saat reload
-setPersistence(auth, browserLocalPersistence)
-  .then(() => console.log("🔒 Persistence mode aktif (browserLocalPersistence)"))
-  .catch(err => console.error("⚠️ Gagal set persistence:", err));
+// Persist login
+await setPersistence(auth, browserLocalPersistence);
 
-// === REGISTER USER BARU ===
-export async function registerUser(email, password) {
-  try {
-    console.log("📩 Proses mendaftar user:", email);
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
-
-    // Otomatis buat dokumen di Firestore
-    const uref = doc(db, "users", user.uid);
+// pastikan user punya dokumen user
+async function ensureUserDoc(uid, email){
+  const uref = doc(db, "users", uid);
+  const snap = await getDoc(uref);
+  if(!snap.exists()){
     await setDoc(uref, {
-      email: user.email,
-      name: "",
-      foto: "",
-      role: "anggota", // default role
-      joinedAt: new Date().toLocaleString("id-ID")
-    });
+      email, role: "anggota", createdAt: serverTimestamp()
+    }, { merge:true });
+  }
+}
 
-    console.log("✅ User baru disimpan di Firestore:", user.email);
-    alert("Pendaftaran berhasil! Silakan login untuk melanjutkan.");
+// API auth yang di-expose ke window  (INI yang mencegah error undefined)
+window.AuthAPI = {
+  async register(email, pass){
+    const { user } = await createUserWithEmailAndPassword(auth, email, pass);
+    await ensureUserDoc(user.uid, user.email);
     return user;
-  } catch (err) {
-    console.error("🚫 Gagal daftar:", err);
-    alert("Gagal daftar: " + err.message);
-  }
-}
-
-// === LOGIN USER ===
-export async function loginUser(email, password) {
-  try {
-    console.log("🔐 Login user:", email);
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    console.log("✅ Login berhasil:", userCredential.user.email);
-    return userCredential.user;
-  } catch (err) {
-    console.error("🚫 Login gagal:", err);
-    alert("Login gagal: " + err.message);
-  }
-}
-
-// === LOGOUT ===
-export async function logoutUser() {
-  try {
-    await signOut(auth);
-    console.log("👋 User logout");
-  } catch (err) {
-    console.error("Gagal logout:", err);
-  }
-}
-
-// === CEK LOGIN STATE ===
-export function onAuth(callback) {
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      console.log("👤 User aktif:", user.email);
-    } else {
-      console.log("🚫 Tidak ada user login.");
-    }
-    callback(user);
-  });
-}
+  },
+  async login(email, pass){
+    const { user } = await signInWithEmailAndPassword(auth, email, pass);
+    await ensureUserDoc(user.uid, user.email);
+    return user;
+  },
+  async reset(email){
+    await sendPasswordResetEmail(auth, email);
+    return true;
+  },
+  async logout(){ await signOut(auth); },
+  onAuth(cb){ return onAuthStateChanged(auth, cb); },
+  get auth(){ return auth; },
+  get db(){ return db; }
+};
+</script>
