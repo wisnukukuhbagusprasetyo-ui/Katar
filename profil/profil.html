@@ -1,101 +1,71 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Dashboard Karang Taruna Cilosari Barat</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Profil & Dashboard Anggota</title>
+<link rel="stylesheet" href="../css/style.css">
 <style>
-:root{--biru:#0e4c92;--emas:#f6c445;--bg:#f5f7fa;--text:#1e293b;--card:#fff}
-*{box-sizing:border-box}
-body{margin:0;font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text)}
-header{background:linear-gradient(90deg,var(--biru),#1a6ac2);color:#fff;padding:1rem;display:flex;justify-content:space-between;align-items:center}
-header h1{margin:0;font-size:1.05rem}
-header button{background:var(--emas);color:var(--biru);border:none;border-radius:8px;padding:.5rem .9rem;font-weight:700;cursor:pointer}
-.wrapper{display:grid;grid-template-columns:240px 1fr;gap:1rem;padding:1rem}
-@media(max-width:900px){.wrapper{grid-template-columns:1fr}}
-.sidebar{background:var(--card);border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.08);padding:.7rem;position:sticky;top:.7rem;height:max-content}
-.side-item{display:block;width:100%;padding:.55rem .7rem;margin-bottom:.35rem;border:none;background:transparent;font-weight:700;color:var(--biru);text-align:left;border-radius:8px;cursor:pointer}
-.side-item.active{background:var(--emas);color:var(--biru)}
-.content .panel{display:none}
-.content .panel.active{display:block}
-.card{background:var(--card);padding:1rem;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.08);margin-bottom:1rem}
-.grid{display:grid;gap:1rem}
-@media(min-width:720px){.grid-2{grid-template-columns:repeat(2,1fr)}}
-@media(min-width:980px){.grid-3{grid-template-columns:repeat(3,1fr)}.grid-4{grid-template-columns:repeat(4,1fr)}}
-input,textarea,select{width:100%;padding:.6rem;margin-bottom:.7rem;border:1px solid #cbd5e1;border-radius:8px;font-family:'Poppins',sans-serif}
-.row{display:flex;gap:.6rem;flex-wrap:wrap}
-.btn{border:none;border-radius:8px;padding:.55rem .9rem;font-weight:700;cursor:pointer}
-.btn-primary{background:var(--biru);color:#fff}
-.btn-primary:hover{background:var(--emas);color:var(--biru)}
-.btn-ghost{background:#e2e8f0;color:#0f172a}
-.btn-danger{background:#fee2e2;color:#991b1b}
-.mini{display:flex;gap:.7rem;align-items:center}
-.mini img{width:46px;height:46px;border-radius:50%;object-fit:cover;background:#e5e7eb}
-.badge{display:inline-block;background:#eef2ff;color:#3730a3;padding:.18rem .55rem;border-radius:999px;font-size:.8rem;font-weight:800}
-.muted{color:#64748b;font-size:.9rem}
-img.thumb{width:100%;height:180px;object-fit:cover;border-radius:8px;margin-bottom:.5rem}
-.kpi{display:flex;align-items:center;gap:.7rem}
-.kpi .num{font-size:1.6rem;font-weight:800;color:var(--biru)}
-.kpi .label{color:#475569}
-.table{width:100%;border-collapse:collapse}
-.table th,.table td{padding:.6rem;border-bottom:1px dashed #e2e8f0;text-align:left;font-size:.92rem}
+  :root{--biru:#0e4c92;--emas:#f6c445;--bg:#f5f7fa;--card:#fff;--text:#1e293b}
+  body{margin:0;font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text)}
+  header{background:linear-gradient(90deg,var(--biru),#1a6ac2);color:#fff;padding:.8rem 1rem;display:flex;justify-content:space-between;align-items:center}
+  .wrapper{display:grid;grid-template-columns:240px 1fr;gap:1rem;padding:1rem}
+  @media(max-width:900px){.wrapper{grid-template-columns:1fr}}
+  .sidebar{background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.08);padding:.7rem}
+  .side-item{display:block;width:100%;padding:.55rem .7rem;margin-bottom:.35rem;border:none;background:transparent;font-weight:700;color:var(--biru);text-align:left;border-radius:8px;cursor:pointer}
+  .side-item.active{background:var(--emas);color:var(--biru)}
+  .panel{display:none}
+  .panel.active{display:block}
+  .card{background:#fff;padding:1rem;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.08);margin-bottom:1rem}
+  .grid{display:grid;gap:1rem}
+  @media(min-width:720px){.grid-2{grid-template-columns:repeat(2,1fr)}}
+  input,textarea,select{width:100%;padding:.6rem;margin-bottom:.7rem;border:1px solid #cbd5e1;border-radius:8px;font-family:'Poppins',sans-serif}
+  .row{display:flex;gap:.6rem;flex-wrap:wrap}
+  .btn{border:none;border-radius:8px;padding:.55rem .9rem;font-weight:700;cursor:pointer}
+  .btn-primary{background:var(--biru);color:#fff}
+  .btn-primary:hover{background:var(--emas);color:var(--biru)}
+  .btn-ghost{background:#e2e8f0;color:#0f172a}
+  .mini{display:flex;gap:.7rem;align-items:center}
+  .mini img{width:46px;height:46px;border-radius:50%;object-fit:cover;background:#e5e7eb}
+  .badge{display:inline-block;background:#eef2ff;color:#3730a3;padding:.18rem .55rem;border-radius:999px;font-size:.8rem;font-weight:800}
+  .muted{color:#64748b;font-size:.9rem}
+  img.thumb{width:100%;height:180px;object-fit:cover;border-radius:8px;margin-bottom:.5rem}
+  .note{font-size:.85rem;color:#475569}
 </style>
 </head>
 <body>
 <header>
-  <h1>Dashboard Karang Taruna</h1>
-  <div class="row"><span id="whoami" class="muted"></span><button id="logout">Keluar</button></div>
+  <b>Profil & Dashboard</b>
+  <div class="row"><span id="whoami" class="muted"></span><button id="logout" class="btn">Keluar</button></div>
 </header>
 
 <main class="wrapper">
   <aside class="sidebar" id="sidebar"></aside>
 
   <section class="content">
-    <!-- ===== OVERVIEW ===== -->
-    <div id="panel-overview" class="panel active">
-      <div class="grid grid-4">
-        <div class="card"><div class="kpi"><div class="num" id="kpiAnggota">0</div><div class="label">Anggota</div></div></div>
-        <div class="card"><div class="kpi"><div class="num" id="kpiSaldo">Rp 0</div><div class="label">Saldo Kas</div></div></div>
-        <div class="card"><div class="kpi"><div class="num" id="kpiBerita">0</div><div class="label">Berita</div></div></div>
-        <div class="card"><div class="kpi"><div class="num" id="kpiUmkm">0</div><div class="label">UMKM</div></div></div>
-      </div>
-      <div class="grid grid-2">
-        <div class="card">
-          <h3>Grafik Kas</h3>
-          <canvas id="kasChart" height="120"></canvas>
-        </div>
-        <div class="card">
-          <h3>Agenda Terdekat</h3>
-          <div id="agendaNear"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ===== PROFIL ===== -->
-    <div id="panel-profil" class="panel">
+    <!-- PROFIL -->
+    <div id="panel-profil" class="panel active">
       <div class="card">
-        <h2>👤 Profil Saya</h2>
+        <h2>👤 Profil Akun</h2>
         <p>Email: <b id="emailSaya">-</b></p>
         <p>Role: <span id="roleSaya" class="badge">-</span></p>
         <input id="namaProfil" placeholder="Nama Lengkap">
         <input type="file" id="fotoProfil" accept="image/*">
         <button class="btn btn-primary" id="saveProfil">Simpan Profil</button>
-        <p class="muted">Foto disimpan via ImgBB.</p>
+        <p class="note">Foto akan diupload ke ImgBB.</p>
       </div>
     </div>
 
-    <!-- ===== ANGGOTA ===== -->
+    <!-- ANGGOTA -->
     <div id="panel-anggota" class="panel">
       <div class="card">
         <h2>👥 Manajemen Anggota</h2>
         <div id="anggotaList" class="grid"></div>
-        <p class="muted">Hanya <b>super_admin</b> yang dapat mengubah role atau menghapus dokumen user. Admin lain hanya baca.</p>
+        <p class="note">Hanya <b>super_admin</b> yang dapat mengubah role; admin lain hanya baca.</p>
       </div>
     </div>
 
-    <!-- ===== PENGUMUMAN ===== -->
+    <!-- PENGUMUMAN -->
     <div id="panel-pengumuman" class="panel">
       <div class="card">
         <h2>📢 Pengumuman</h2>
@@ -110,13 +80,13 @@ img.thumb{width:100%;height:180px;object-fit:cover;border-radius:8px;margin-bott
       <div id="pengumumanList" class="grid grid-2"></div>
     </div>
 
-    <!-- ===== BERITA ===== -->
+    <!-- BERITA -->
     <div id="panel-berita" class="panel">
       <div class="card">
         <h2>📰 Berita</h2>
         <input id="bJudul" placeholder="Judul Berita">
         <textarea id="bIsi" rows="4" placeholder="Isi Berita"></textarea>
-        <input type="file" id="bFoto" accept="image/*">
+        <input type="file" id="bFoto" accept="image/*" multiple>
         <div class="row">
           <button class="btn btn-primary" id="bSimpan">Simpan</button>
           <button class="btn btn-ghost" id="bBatal" style="display:none">Batal Edit</button>
@@ -125,16 +95,16 @@ img.thumb{width:100%;height:180px;object-fit:cover;border-radius:8px;margin-bott
       <div id="beritaList" class="grid grid-2"></div>
     </div>
 
-    <!-- ===== UMKM ===== -->
+    <!-- UMKM -->
     <div id="panel-umkm" class="panel">
       <div class="card">
         <h2>🏪 Produk (UMKM)</h2>
-        <input id="uProduk" placeholder="Nama Produk">
+        <input id="uProduk"  placeholder="Nama Produk">
         <input id="uPenjual" placeholder="Nama Penjual">
-        <input id="uHarga" type="number" placeholder="Harga (Rp)">
-        <input id="uWa" placeholder="Nomor WhatsApp (628xxxx)">
-        <textarea id="uDes" rows="3" placeholder="Deskripsi produk"></textarea>
-        <input type="file" id="uFoto" accept="image/*">
+        <input id="uHarga"   type="number" placeholder="Harga (Rp)">
+        <input id="uWa"      placeholder="Nomor WhatsApp (628xxxx)">
+        <textarea id="uDes" rows="3" placeholder="Deskripsi"></textarea>
+        <input type="file" id="uFoto" accept="image/*" multiple>
         <div class="row">
           <button class="btn btn-primary" id="uSimpan">Simpan</button>
           <button class="btn btn-ghost" id="uBatal" style="display:none">Batal Edit</button>
@@ -143,7 +113,7 @@ img.thumb{width:100%;height:180px;object-fit:cover;border-radius:8px;margin-bott
       <div id="umkmList" class="grid grid-2"></div>
     </div>
 
-    <!-- ===== KAS ===== -->
+    <!-- KAS -->
     <div id="panel-kas" class="panel">
       <div class="card">
         <h2>💰 Kas</h2>
@@ -152,594 +122,358 @@ img.thumb{width:100%;height:180px;object-fit:cover;border-radius:8px;margin-bott
         <input id="kJumlah" type="number" placeholder="Jumlah (Rp)">
         <select id="kTipe"><option value="masuk">Pemasukan</option><option value="keluar">Pengeluaran</option></select>
         <input id="kKet" placeholder="Keterangan">
-        <div class="row">
-          <button class="btn btn-primary" id="kSimpan">Simpan Kas</button>
-        </div>
+        <div class="row"><button class="btn btn-primary" id="kSimpan">Simpan</button></div>
       </div>
       <div id="kasList"></div>
     </div>
-
-    <!-- ===== AGENDA / KEGIATAN ===== -->
-    <div id="panel-agenda" class="panel">
-      <div class="card">
-        <h2>🗓️ Agenda / Kegiatan</h2>
-        <input id="aJudul" placeholder="Judul Agenda">
-        <input id="aTanggal" type="datetime-local">
-        <input id="aLokasi" placeholder="Lokasi">
-        <input id="aPJ" placeholder="Penanggung Jawab">
-        <textarea id="aDes" rows="3" placeholder="Deskripsi singkat"></textarea>
-        <div class="row">
-          <button class="btn btn-primary" id="aSimpan">Simpan</button>
-          <button class="btn btn-ghost" id="aBatal" style="display:none">Batal Edit</button>
-        </div>
-      </div>
-      <div class="card">
-        <table class="table" id="agendaTable">
-          <thead><tr><th>Waktu</th><th>Agenda</th><th>Lokasi</th><th>PJ</th><th></th></tr></thead>
-          <tbody></tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- ===== LEADERBOARD ===== -->
-    <div id="panel-leaderboard" class="panel">
-      <div class="card">
-        <h2>🏆 Leaderboard Aktivitas</h2>
-        <p class="muted">Peringkat berdasarkan jumlah kontribusi (Berita, UMKM, Pengumuman, input Kas).</p>
-        <div class="grid grid-2">
-          <div>
-            <h3>Kontributor Teratas</h3>
-            <table class="table" id="lbTable">
-              <thead><tr><th>Email</th><th>Skor</th><th>Berita</th><th>UMKM</th><th>Pengumuman</th><th>Kas</th></tr></thead>
-              <tbody></tbody>
-            </table>
-          </div>
-          <div>
-            <h3>Grafik Kontribusi</h3>
-            <canvas id="lbChart" height="130"></canvas>
-          </div>
-        </div>
-      </div>
-    </div>
-
   </section>
 </main>
 
+<script src="../env.js"></script>
+<script src="../js/imgbb.js"></script>
 <script type="module">
-/* ================== IMPORTS ================== */
-import { auth, db } from "../js/firebase.js";
-import { uploadToImgBB } from "../js/imgbb.js";
-import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-import {
-  doc, getDoc, setDoc, collection, addDoc, getDocs, updateDoc, deleteDoc,
-  query, orderBy, serverTimestamp, limit
-} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+  import "../js/firebase.js";
+  import "../js/auth.js";
 
-/* ================== STATE & UTILS ================== */
-let UID=null, ROLE='anggota';
-const $ = (s)=>document.querySelector(s);
-const can = {
-  pengumuman: ()=> ['super_admin','admin','admin_pengumuman'].includes(ROLE),
-  berita:     ()=> ['super_admin','admin','admin_berita'].includes(ROLE),
-  umkm:       ()=> ['super_admin','admin','admin_umkm'].includes(ROLE),
-  kas:        ()=> ['super_admin','admin','admin_keuangan'].includes(ROLE),
-  agenda:     ()=> ['super_admin','admin'].includes(ROLE),
-  anggotaRW:  ()=> ['super_admin','admin'].includes(ROLE),
-  superOnly:  ()=> ROLE==='super_admin'
-};
-const ensure = (v,f='') => (v===undefined||v===null)?f:v;
+  const { auth, db } = window.__FB;
+  const { onAuth, logout } = window.AuthAPI;
+  const $ = (s)=>document.querySelector(s);
 
-/* ===== DEFAULT PANEL BY ROLE ===== */
-function getDefaultPanel(role){
-  switch(role){
-    case 'super_admin':     return 'overview';
-    case 'admin':           return 'overview';
-    case 'admin_keuangan':  return 'kas';
-    case 'admin_berita':    return 'berita';
-    case 'admin_umkm':      return 'umkm';
-    case 'admin_pengumuman':return 'pengumuman';
-    case 'anggota':         return 'profil';
-    default:                return 'overview';
-  }
-}
-
-/* ================== LOGOUT ================== */
-$('#logout').onclick = async()=>{ await signOut(auth); location.href="../index.html"; };
-
-/* ================== AUTH BOOTSTRAP ================== */
-onAuthStateChanged(auth, async (user)=>{
-  if(!user){ location.href="../index.html"; return; }
-  UID=user.uid;
-  $('#whoami').textContent = user.email;
-  $('#emailSaya').textContent = user.email;
-
-  const usnap=await getDoc(doc(db,'users',UID));
-  const udata=usnap.exists()?usnap.data():{};
-  ROLE=udata.role||'anggota';
-  $('#roleSaya').textContent = ROLE;
-
-  renderMenuByRole();
-  await loadOverview();
-});
-
-/* ================== SIDEBAR BY ROLE ================== */
-function renderMenuByRole(){
-  const sidebar=$('#sidebar');
-  const map={
-    super_admin:['overview','profil','anggota','pengumuman','berita','umkm','kas','agenda','leaderboard'],
-    admin:['overview','profil','anggota','pengumuman','berita','umkm','kas','agenda','leaderboard'],
-    admin_pengumuman:['overview','profil','pengumuman','leaderboard'],
-    admin_berita:['overview','profil','berita','leaderboard'],
-    admin_umkm:['overview','profil','umkm','leaderboard'],
-    admin_keuangan:['overview','profil','kas','leaderboard'],
-    anggota:['overview','profil','agenda']
+  let UID=null, ROLE='anggota';
+  const can = {
+    pengumuman: ()=> ['super_admin','admin','admin_pengumuman'].includes(ROLE),
+    berita:     ()=> ['super_admin','admin','admin_berita'].includes(ROLE),
+    umkm:       ()=> ['super_admin','admin','admin_umkm'].includes(ROLE),
+    kas:        ()=> ['super_admin','admin','admin_keuangan'].includes(ROLE),
+    anggota:    ()=> ['super_admin','admin'].includes(ROLE),
+    superOnly:  ()=> ROLE==='super_admin'
   };
-  const list = map[ROLE] || ['overview','profil'];
 
-  // build sidebar
-  sidebar.innerHTML='';
-  list.forEach(id=>{
-    const b=document.createElement('button');
-    b.className='side-item';
-    b.textContent=id.toUpperCase();
-    b.onclick=()=>showPanel(id);
-    sidebar.appendChild(b);
+  $('#logout').onclick = async()=>{ await logout(); location.href="../index.html"; };
+
+  onAuth(async (user)=>{
+    if(!user){ alert("Silakan login dulu"); location.href="../index.html"; return; }
+    UID=user.uid;
+    $('#whoami').textContent = user.email;
+    const { doc, getDoc } = await import("https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js");
+    const u = await getDoc(doc(db,'users',UID));
+    ROLE = u.exists()? (u.data().role||'anggota') : 'anggota';
+    $('#emailSaya').textContent = user.email;
+    $('#roleSaya').textContent  = ROLE;
+    renderMenu();
+    attachHandlers();
+    preload();
   });
 
-  // pilih panel default sesuai role (atau ?panel=)
-  const urlPanel = new URLSearchParams(location.search).get('panel');
-  const prefer   = urlPanel && list.includes(urlPanel) ? urlPanel : getDefaultPanel(ROLE);
-  const first    = list.includes(prefer) ? prefer : list[0];
-  showPanel(first);
-
-  // preload
-  if(list.includes('pengumuman')) loadPengumuman();
-  if(list.includes('berita'))     loadBerita();
-  if(list.includes('umkm'))       loadUmkm();
-  if(list.includes('kas'))        loadKas();
-  if(list.includes('anggota'))    loadAnggota();
-  if(list.includes('agenda'))     loadAgenda();
-  if(list.includes('leaderboard')) buildLeaderboard();
-
-  lockFormsByRole();
-}
-function showPanel(id){
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-  document.getElementById('panel-'+id).classList.add('active');
-  document.querySelectorAll('.side-item').forEach(b=>b.classList.remove('active'));
-  [...document.querySelectorAll('.side-item')].find(b=>b.textContent===id.toUpperCase())?.classList.add('active');
-}
-function lockFormsByRole(){
-  // Pengumuman
-  ['pJudul','pIsi','pTanggal','pSimpan'].forEach(id=>{$('#'+id)?.setAttribute('disabled', !can.pengumuman());});
-  // Berita
-  ['bJudul','bIsi','bFoto','bSimpan'].forEach(id=>{$('#'+id)?.setAttribute('disabled', !can.berita());});
-  // UMKM
-  ['uProduk','uPenjual','uHarga','uWa','uDes','uFoto','uSimpan'].forEach(id=>{$('#'+id)?.setAttribute('disabled', !can.umkm());});
-  // Kas
-  ['kNama','kTanggal','kJumlah','kTipe','kKet','kSimpan'].forEach(id=>{$('#'+id)?.setAttribute('disabled', !can.kas());});
-  // Agenda
-  ['aJudul','aTanggal','aLokasi','aPJ','aDes','aSimpan'].forEach(id=>{$('#'+id)?.setAttribute('disabled', !can.agenda());});
-}
-
-/* ================== OVERVIEW (KPI + GRAFIK + AGENDA NEAR) ================== */
-let kasChartRef=null;
-async function loadOverview(){
-  // KPI Anggota
-  const u = await getDocs(collection(db,'users'));
-  $('#kpiAnggota').textContent = u.size;
-
-  // KPI Berita
-  const b = await getDocs(collection(db,'berita'));
-  $('#kpiBerita').textContent = b.size;
-
-  // KPI UMKM
-  const m = await getDocs(collection(db,'umkm'));
-  $('#kpiUmkm').textContent = m.size;
-
-  // Saldo Kas + grafik
-  let masuk=0, keluar=0, total=0;
-  const k = await getDocs(query(collection(db,'kas'), orderBy('createdAt','desc'), limit(200)));
-  k.forEach(d=>{
-    const v=d.data();
-    if(v.tipe==='masuk'){masuk+=(v.jumlah||0);} else {keluar+=(v.jumlah||0);}
-    total += (v.tipe==='masuk'?1:-1) * (v.jumlah||0);
-  });
-  $('#kpiSaldo').textContent = 'Rp '+ total.toLocaleString();
-  const ctx=document.getElementById('kasChart').getContext('2d');
-  if(kasChartRef) kasChartRef.destroy();
-  kasChartRef=new Chart(ctx,{type:'bar',data:{labels:['Masuk','Keluar'],datasets:[{data:[masuk,keluar]}]},options:{plugins:{legend:{display:false}}}});
-
-  // Agenda terdekat
-  const anear=$('#agendaNear'); anear.innerHTML='Memuat...';
-  const ag=await getDocs(query(collection(db,'agenda'), orderBy('waktu','asc'), limit(5)));
-  if(ag.empty){ anear.innerHTML='<p class="muted">Belum ada agenda terdekat.</p>'; return; }
-  anear.innerHTML='';
-  ag.forEach(d=>{
-    const a=d.data();
-    const t=new Date(a.waktu?.seconds?a.waktu.seconds*1000:a.waktu||Date.now());
-    const div=document.createElement('div');
-    div.className='mini';
-    div.innerHTML=`<div><b>${ensure(a.judul,'(Tanpa judul)')}</b><br>
-      <small class="muted">📅 ${t.toLocaleString('id-ID')} • 📍 ${ensure(a.lokasi,'-')} • 👤 ${ensure(a.pj,'-')}</small></div>`;
-    anear.appendChild(div);
-  });
-}
-
-/* ================== PROFIL ================== */
-$('#saveProfil').onclick = async ()=>{
-  const nama=$('#namaProfil').value.trim();
-  const file=$('#fotoProfil').files[0];
-  let foto="";
-  if(file) foto = await uploadToImgBB(file);
-  await setDoc(doc(db,'users',UID), { ...(nama&&{nama}), ...(foto&&{foto}) }, { merge:true });
-  alert('Profil diperbarui.');
-};
-
-/* ================== ANGGOTA (list, ubah role, nonaktif, hapus doc) ================== */
-async function loadAnggota(){
-  const wrap=$('#anggotaList');
-  wrap.innerHTML='Memuat...';
-  const snap=await getDocs(query(collection(db,'users'), orderBy('email')));
-  wrap.innerHTML='';
-  snap.forEach(u=>{
-    const d=u.data(), id=u.id;
-    const card=document.createElement('div'); card.className='card';
-    card.innerHTML=`
-      <div class="mini">
-        <img src="${d.foto||'https://i.ibb.co/4Jf2V2R/placeholder-user.png'}" alt="">
-        <div>
-          <div><b>${d.nama||'(Tanpa nama)'}</b> <span class="badge">${d.role||'anggota'}</span></div>
-          <small class="muted">${d.email||''}</small>
-          ${d.status==='inactive' ? `<div class="muted">Status: Nonaktif</div>` : ``}
-        </div>
-      </div>
-      ${can.superOnly()?`
-      <div class="row" style="margin-top:.6rem">
-        <select id="role-${id}">
-          <option value="anggota" ${d.role==='anggota'?'selected':''}>anggota</option>
-          <option value="admin" ${d.role==='admin'?'selected':''}>admin</option>
-          <option value="admin_pengumuman" ${d.role==='admin_pengumuman'?'selected':''}>admin_pengumuman</option>
-          <option value="admin_berita" ${d.role==='admin_berita'?'selected':''}>admin_berita</option>
-          <option value="admin_umkm" ${d.role==='admin_umkm'?'selected':''}>admin_umkm</option>
-          <option value="admin_keuangan" ${d.role==='admin_keuangan'?'selected':''}>admin_keuangan</option>
-          <option value="super_admin" ${d.role==='super_admin'?'selected':''}>super_admin</option>
-        </select>
-        <button class="btn btn-primary" onclick="updateRole('${id}')">Simpan Role</button>
-        <button class="btn btn-ghost" onclick="nonaktifUser('${id}')">${d.status==='inactive'?'Aktifkan':'Nonaktifkan'}</button>
-        <button class="btn btn-danger" onclick="hapusUserDoc('${id}')">Hapus Dokumen</button>
-      </div>`:''}
-    `;
-    wrap.appendChild(card);
-  });
-}
-window.updateRole = async (id)=>{
-  const newRole = document.getElementById(`role-${id}`).value;
-  await setDoc(doc(db,'users',id), { role:newRole }, { merge:true });
-  alert('Role diperbarui');
-  loadAnggota();
-};
-window.nonaktifUser = async (id)=>{
-  if(!can.superOnly()) return;
-  const ref = doc(db,'users',id);
-  const snap = await getDoc(ref);
-  const nowInactive = !(snap.data()?.status==='inactive');
-  const label = nowInactive ? 'menonaktifkan' : 'mengaktifkan';
-  if(!confirm(`Yakin ${label} user ini?`)) return;
-  await setDoc(ref, { status: nowInactive ? 'inactive' : 'active' }, { merge:true });
-  alert(`User ${nowInactive ? 'dinonaktifkan' : 'diaktifkan'}.`);
-  loadAnggota();
-};
-window.hapusUserDoc = async (id)=>{
-  if(!can.superOnly()) return;
-  if(!confirm('Hapus DOKUMEN user dari Firestore? (Akun Auth TIDAK terhapus)')) return;
-  await deleteDoc(doc(db,'users',id));
-  alert('Dokumen user di Firestore terhapus.');
-  loadAnggota();
-};
-
-/* ================== PENGUMUMAN (CRUD) ================== */
-let editPengId=null;
-$('#pSimpan').onclick = async ()=>{
-  if(!can.pengumuman()) return alert('Akses ditolak.');
-  const judul=$('#pJudul').value.trim();
-  const isi=$('#pIsi').value.trim();
-  const tanggal=$('#pTanggal').value || new Date().toISOString().split('T')[0];
-  if(!judul||!isi) return alert('Lengkapi judul & isi.');
-  if(editPengId){
-    await updateDoc(doc(db,'pengumuman',editPengId), { judul, isi, tanggal });
-    editPengId=null; $('#pBatal').style.display='none'; alert('Pengumuman diperbarui.');
-  }else{
-    await addDoc(collection(db,'pengumuman'), { judul, isi, tanggal, createdAt:serverTimestamp(), dibuatOleh:auth.currentUser.email });
-    alert('Pengumuman disimpan.');
+  function renderMenu(){
+    const side=$('#sidebar'); side.innerHTML='';
+    const map={
+      super_admin:['profil','anggota','pengumuman','berita','umkm','kas'],
+      admin:['profil','anggota','pengumuman','berita','umkm','kas'],
+      admin_pengumuman:['profil','pengumuman'],
+      admin_berita:['profil','berita'],
+      admin_umkm:['profil','umkm'],
+      admin_keuangan:['profil','kas'],
+      anggota:['profil']
+    };
+    const list=map[ROLE]||['profil'];
+    list.forEach((id,i)=>{
+      const b=document.createElement('button');
+      b.className='side-item'+(i===0?' active':'');
+      b.textContent=id.toUpperCase();
+      b.onclick=()=>showPanel(id);
+      side.appendChild(b);
+    });
+    showPanel(list[0]);
+    lockForms();
   }
-  $('#pJudul').value=''; $('#pIsi').value=''; $('#pTanggal').value='';
-  loadPengumuman();
-};
-$('#pBatal').onclick=()=>{editPengId=null; $('#pJudul').value=''; $('#pIsi').value=''; $('#pTanggal').value=''; $('#pBatal').style.display='none';};
-async function loadPengumuman(){
-  const c=$('#pengumumanList');
-  const snap=await getDocs(query(collection(db,'pengumuman'), orderBy('createdAt','desc')));
-  c.innerHTML='';
-  snap.forEach(d=>{
-    const p=d.data();
-    const el=document.createElement('div'); el.className='card';
-    el.innerHTML=`
-      <h3>${ensure(p.judul,'(Tanpa judul)')}</h3>
-      <p>${ensure(p.isi,'')}</p>
-      <small class="muted">📅 ${p.tanggal||'-'} • ✍️ ${p.dibuatOleh||''}</small>
-      <div class="row" style="margin-top:.6rem">
-        ${can.pengumuman()?`<button class="btn btn-primary" onclick="editPeng('${d.id}')">✏️ Edit</button>
-        <button class="btn btn-danger" onclick="hapusPeng('${d.id}')">🗑️ Hapus</button>`:''}
-      </div>`;
-    c.appendChild(el);
-  });
-}
-window.editPeng=async(id)=>{
-  if(!can.pengumuman()) return;
-  const v=(await getDoc(doc(db,'pengumuman',id))).data();
-  $('#pJudul').value=v.judul||'';
-  $('#pIsi').value=v.isi||'';
-  $('#pTanggal').value=v.tanggal||'';
-  editPengId=id; $('#pBatal').style.display='inline-block'; window.scrollTo({top:0,behavior:'smooth'});
-};
-window.hapusPeng=async(id)=>{
-  if(!can.pengumuman()) return;
-  if(!confirm('Hapus pengumuman ini?'))return;
-  await deleteDoc(doc(db,'pengumuman',id)); loadPengumuman();
-};
-
-/* ================== BERITA (CRUD) ================== */
-let editBeritaId=null;
-$('#bSimpan').onclick = async ()=>{
-  if(!can.berita()) return alert('Akses ditolak.');
-  const judul=$('#bJudul').value.trim();
-  const isi=$('#bIsi').value.trim();
-  const file=$('#bFoto').files[0];
-  let foto="";
-  if(editBeritaId){
-    if(file) foto=await uploadToImgBB(file);
-    await updateDoc(doc(db,'berita',editBeritaId), { judul, isi, ...(foto&&{foto}) });
-    alert('Berita diperbarui.'); editBeritaId=null; $('#bBatal').style.display='none';
-  }else{
-    if(file) foto=await uploadToImgBB(file);
-    await addDoc(collection(db,'berita'), { judul, isi, foto, penulis: auth.currentUser?.email||'anonim', createdAt:serverTimestamp() });
-    alert('Berita disimpan.');
+  function showPanel(id){
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    document.getElementById('panel-'+id).classList.add('active');
+    document.querySelectorAll('.side-item').forEach(b=>b.classList.remove('active'));
+    [...document.querySelectorAll('.side-item')].find(b=>b.textContent===id.toUpperCase())?.classList.add('active');
   }
-  $('#bJudul').value=''; $('#bIsi').value=''; $('#bFoto').value='';
-  loadBerita();
-};
-$('#bBatal').onclick=()=>{editBeritaId=null; $('#bJudul').value=''; $('#bIsi').value=''; $('#bFoto').value=''; $('#bBatal').style.display='none';};
-async function loadBerita(){
-  const c=$('#beritaList');
-  const snap=await getDocs(query(collection(db,'berita'), orderBy('createdAt','desc')));
-  c.innerHTML='';
-  snap.forEach(d=>{
-    const b=d.data();
-    const el=document.createElement('div'); el.className='card';
-    el.innerHTML=`
-      ${b.foto?`<img class="thumb" src="${b.foto}" alt="">`:''}
-      <h3>${ensure(b.judul,'(Tanpa judul)')}</h3>
-      <p>${ensure(b.isi,'')}</p>
-      <small class="muted">✍️ ${b.penulis||''}</small>
-      <div class="row" style="margin-top:.6rem">
-        ${can.berita()?`<button class="btn btn-primary" onclick="editBerita('${d.id}')">✏️ Edit</button>
-        <button class="btn btn-danger" onclick="hapusBerita('${d.id}')">🗑️ Hapus</button>`:''}
-      </div>`;
-    c.appendChild(el);
-  });
-}
-window.editBerita=async(id)=>{
-  if(!can.berita()) return;
-  const v=(await getDoc(doc(db,'berita',id))).data();
-  $('#bJudul').value=v.judul||''; $('#bIsi').value=v.isi||''; editBeritaId=id; $('#bBatal').style.display='inline-block'; window.scrollTo({top:0,behavior:'smooth'});
-};
-window.hapusBerita=async(id)=>{
-  if(!can.berita()) return;
-  if(!confirm('Hapus berita ini?'))return;
-  await deleteDoc(doc(db,'berita',id)); loadBerita();
-};
-
-/* ================== UMKM (CRUD) ================== */
-let editUmkmId=null;
-$('#uSimpan').onclick = async ()=>{
-  if(!can.umkm()) return alert('Akses ditolak.');
-  const produk=$('#uProduk').value.trim();
-  const penjual=$('#uPenjual').value.trim();
-  const harga=Number($('#uHarga').value||0);
-  const wa=$('#uWa').value.trim();
-  const des=$('#uDes').value.trim();
-  const file=$('#uFoto').files[0];
-  let foto="";
-  if(editUmkmId){
-    if(file) foto=await uploadToImgBB(file);
-    await updateDoc(doc(db,'umkm',editUmkmId), { produk, penjual, harga, wa, deskripsi:des, ...(foto&&{foto}) });
-    alert('Produk diperbarui.'); editUmkmId=null; $('#uBatal').style.display='none';
-  }else{
-    if(file) foto=await uploadToImgBB(file);
-    await addDoc(collection(db,'umkm'), { produk, penjual, harga, wa, deskripsi:des, foto, createdAt:serverTimestamp(), dibuatOleh:auth.currentUser.email });
-    alert('Produk disimpan.');
+  function lockForms(){
+    ['pJudul','pIsi','pTanggal','pSimpan'].forEach(id=>{ const el=$('#'+id); if(el) el.disabled=!can.pengumuman(); });
+    ['bJudul','bIsi','bFoto','bSimpan'].forEach(id=>{ const el=$('#'+id); if(el) el.disabled=!can.berita(); });
+    ['uProduk','uPenjual','uHarga','uWa','uDes','uFoto','uSimpan'].forEach(id=>{ const el=$('#'+id); if(el) el.disabled=!can.umkm(); });
+    ['kNama','kTanggal','kJumlah','kTipe','kKet','kSimpan'].forEach(id=>{ const el=$('#'+id); if(el) el.disabled=!can.kas(); });
   }
-  $('#uProduk').value=''; $('#uPenjual').value=''; $('#uHarga').value=''; $('#uWa').value=''; $('#uDes').value=''; $('#uFoto').value='';
-  loadUmkm();
-};
-$('#uBatal').onclick=()=>{editUmkmId=null; $('#uProduk').value=''; $('#uPenjual').value=''; $('#uHarga').value=''; $('#uWa').value=''; $('#uDes').value=''; $('#uFoto').value=''; $('#uBatal').style.display='none';};
-async function loadUmkm(){
-  const c=$('#umkmList');
-  const snap=await getDocs(query(collection(db,'umkm'), orderBy('createdAt','desc')));
-  c.innerHTML='';
-  snap.forEach(d=>{
-    const u=d.data();
-    const el=document.createElement('div'); el.className='card';
-    el.innerHTML=`
-      ${u.foto?`<img class="thumb" src="${u.foto}" alt="">`:''}
-      <h3>${ensure(u.produk,'(Tanpa nama produk)')}</h3>
-      <p>👤 ${ensure(u.penjual,'-')}</p>
-      <p>💰 Rp${(u.harga||0).toLocaleString()}</p>
-      <p>${ensure(u.deskripsi,'')}</p>
-      ${u.wa?`<p>📱 <a href="https://wa.me/${u.wa}" target="_blank" rel="noopener">${u.wa}</a></p>`:''}
-      <div class="row" style="margin-top:.6rem">
-        ${can.umkm()?`<button class="btn btn-primary" onclick="editUmkm('${d.id}')">✏️ Edit</button>
-        <button class="btn btn-danger" onclick="hapusUmkm('${d.id}')">🗑️ Hapus</button>`:''}
-      </div>`;
-    c.appendChild(el);
-  });
-}
-window.editUmkm=async(id)=>{
-  if(!can.umkm()) return;
-  const v=(await getDoc(doc(db,'umkm',id))).data();
-  $('#uProduk').value=v.produk||''; $('#uPenjual').value=v.penjual||''; $('#uHarga').value=v.harga||''; $('#uWa').value=v.wa||''; $('#uDes').value=v.deskripsi||'';
-  editUmkmId=id; $('#uBatal').style.display='inline-block'; window.scrollTo({top:0,behavior:'smooth'});
-};
-window.hapusUmkm=async(id)=>{
-  if(!can.umkm()) return;
-  if(!confirm('Hapus produk ini?'))return;
-  await deleteDoc(doc(db,'umkm',id)); loadUmkm();
-};
 
-/* ================== KAS (CRUD) ================== */
-$('#kSimpan').onclick = async ()=>{
-  if(!can.kas()) return alert('Akses ditolak.');
-  const nama=$('#kNama').value.trim();
-  const tanggal=$('#kTanggal').value || new Date().toISOString().split('T')[0];
-  const jumlah=Number($('#kJumlah').value||0);
-  const tipe=$('#kTipe').value;
-  const ket=$('#kKet').value.trim();
-  if(!nama) return alert('Isi nama pembayar.');
-  if(!jumlah) return alert('Isi jumlah.');
-  await addDoc(collection(db,'kas'), { nama, tanggal, jumlah, tipe, keterangan:ket, dibuatOleh: auth.currentUser?.email||'anonim', createdAt:serverTimestamp() });
-  alert('Kas disimpan.');
-  $('#kNama').value=''; $('#kJumlah').value=''; $('#kKet').value='';
-  loadKas(); loadOverview();
-};
-window.hapusKas=async(id)=>{
-  if(!can.kas()) return;
-  if(!confirm('Hapus transaksi kas ini?')) return;
-  await deleteDoc(doc(db,'kas',id)); loadKas(); loadOverview();
-};
-async function loadKas(){
-  const c=$('#kasList');
-  const snap=await getDocs(query(collection(db,'kas'), orderBy('createdAt','desc')));
-  c.innerHTML=''; let total=0;
-  snap.forEach(d=>{
-    const k=d.data();
-    total += (k.tipe==='masuk'?1:-1) * (k.jumlah||0);
-    const row=document.createElement('div'); row.className='card';
-    row.innerHTML=`
-      <b>${k.tipe==='masuk'?'🟢 Pemasukan':'🔴 Pengeluaran'} Rp${(k.jumlah||0).toLocaleString()}</b><br>
-      👤 ${ensure(k.nama,'-')} &nbsp; • &nbsp; 📅 ${ensure(k.tanggal,'-')}<br>
-      <small class="muted">${ensure(k.keterangan,'')}</small>
-      <div class="row" style="margin-top:.5rem">
-        ${can.kas()?`<button class="btn btn-danger" onclick="hapusKas('${d.id}')">🗑️ Hapus</button>`:''}
-      </div>`;
-    c.appendChild(row);
-  });
-  const sum=document.createElement('div'); sum.className='card';
-  sum.innerHTML=`<h3>Total Kas: Rp${total.toLocaleString()}</h3>`;
-  c.prepend(sum);
-}
+  function attachHandlers(){
+    // profil
+    $('#saveProfil').onclick = async ()=>{
+      const { setDoc, doc, serverTimestamp } = await import("https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js");
+      const nama = $('#namaProfil').value.trim();
+      const file = $('#fotoProfil').files[0];
+      let foto="";
+      if(file) foto = await window.uploadToImgBB(file);
+      await setDoc(doc(db,'users',UID), { ...(nama&&{nama}), ...(foto&&{foto}), updatedAt:serverTimestamp() }, { merge:true });
+      alert("Profil disimpan");
+    };
 
-/* ================== AGENDA (CRUD) ================== */
-let editAgendaId=null;
-$('#aSimpan').onclick=async()=>{
-  if(!can.agenda()) return alert('Akses ditolak.');
-  const judul=$('#aJudul').value.trim();
-  const waktuStr=$('#aTanggal').value; // datetime-local
-  const lokasi=$('#aLokasi').value.trim();
-  const pj=$('#aPJ').value.trim();
-  const des=$('#aDes').value.trim();
-  if(!judul||!waktuStr) return alert('Judul & waktu wajib.');
-  const waktu=new Date(waktuStr).toISOString();
-  if(editAgendaId){
-    await updateDoc(doc(db,'agenda',editAgendaId), { judul, waktu, lokasi, pj, deskripsi:des });
-    editAgendaId=null; $('#aBatal').style.display='none'; alert('Agenda diperbarui.');
-  }else{
-    await addDoc(collection(db,'agenda'), { judul, waktu, lokasi, pj, deskripsi:des, createdAt:serverTimestamp(), dibuatOleh:auth.currentUser.email });
-    alert('Agenda disimpan.');
+    // pengumuman
+    let editPeng=null;
+    $('#pSimpan').onclick = async ()=>{
+      if(!can.pengumuman()) return alert('Akses ditolak');
+      const { addDoc, collection, serverTimestamp, updateDoc, doc } =
+        await import("https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js");
+      const judul=$('#pJudul').value.trim();
+      const isi  =$('#pIsi').value.trim();
+      const tanggal=$('#pTanggal').value || new Date().toISOString().split('T')[0];
+      if(!judul||!isi) return alert("Lengkapi judul & isi");
+      if(editPeng){
+        await updateDoc(doc(db,'pengumuman',editPeng),{judul,isi,tanggal});
+        editPeng=null; $('#pBatal').style.display='none';
+      }else{
+        await addDoc(collection(db,'pengumuman'),{judul,isi,tanggal,createdAt:serverTimestamp()});
+      }
+      $('#pJudul').value=''; $('#pIsi').value=''; $('#pTanggal').value='';
+      loadPengumuman();
+    };
+    $('#pBatal').onclick=()=>{ editPeng=null; $('#pJudul').value=''; $('#pIsi').value=''; $('#pTanggal').value=''; $('#pBatal').style.display='none'; };
+
+    // berita
+    let editBerita=null;
+    $('#bSimpan').onclick = async ()=>{
+      if(!can.berita()) return alert('Akses ditolak');
+      const { addDoc, collection, serverTimestamp, updateDoc, doc } =
+        await import("https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js");
+      const judul=$('#bJudul').value.trim();
+      const isi  =$('#bIsi').value.trim();
+      const files=$('#bFoto').files;
+      let fotoArr=[];
+      if(files && files.length){
+        for(const f of files){ const url=await window.uploadToImgBB(f); fotoArr.push(url); }
+      }
+      if(editBerita){
+        await updateDoc(doc(db,'berita',editBerita),{judul,isi, ...(fotoArr.length?{foto:fotoArr}:{}) });
+        editBerita=null; $('#bBatal').style.display='none';
+      }else{
+        await addDoc(collection(db,'berita'),{judul,isi,foto:fotoArr,penulis:auth.currentUser?.email||"anonim",createdAt:serverTimestamp()});
+      }
+      $('#bJudul').value=''; $('#bIsi').value=''; $('#bFoto').value='';
+      loadBerita();
+    };
+    $('#bBatal').onclick=()=>{ editBerita=null; $('#bJudul').value=''; $('#bIsi').value=''; $('#bFoto').value=''; $('#bBatal').style.display='none'; };
+
+    // umkm
+    let editUmkm=null;
+    $('#uSimpan').onclick = async ()=>{
+      if(!can.umkm()) return alert('Akses ditolak');
+      const { addDoc, collection, serverTimestamp, updateDoc, doc } =
+        await import("https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js");
+      const produk=$('#uProduk').value.trim();
+      const penjual=$('#uPenjual').value.trim();
+      const harga=Number($('#uHarga').value||0);
+      const wa=$('#uWa').value.trim();
+      const des=$('#uDes').value.trim();
+      const files=$('#uFoto').files;
+      let fotoArr=[];
+      if(files && files.length){
+        for(const f of files){ const url=await window.uploadToImgBB(f); fotoArr.push(url); }
+      }
+      if(editUmkm){
+        await updateDoc(doc(db,'umkm',editUmkm),{produk,penjual,harga,wa,deskripsi:des, ...(fotoArr.length?{foto:fotoArr}:{}) });
+        editUmkm=null; $('#uBatal').style.display='none';
+      }else{
+        await addDoc(collection(db,'umkm'),{produk,penjual,harga,wa,deskripsi:des,foto:fotoArr,createdAt:serverTimestamp()});
+      }
+      $('#uProduk').value=''; $('#uPenjual').value=''; $('#uHarga').value=''; $('#uWa').value=''; $('#uDes').value=''; $('#uFoto').value='';
+      loadUmkm();
+    };
+    $('#uBatal').onclick=()=>{ editUmkm=null; $('#uProduk').value=''; $('#uPenjual').value=''; $('#uHarga').value=''; $('#uWa').value=''; $('#uDes').value=''; $('#uFoto').value=''; $('#uBatal').style.display='none'; };
+
+    // kas
+    $('#kSimpan').onclick = async ()=>{
+      if(!can.kas()) return alert('Akses ditolak');
+      const { addDoc, collection, serverTimestamp } =
+        await import("https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js");
+      const nama=$('#kNama').value.trim();
+      const tanggal=$('#kTanggal').value || new Date().toISOString().split('T')[0];
+      const jumlah=Number($('#kJumlah').value||0);
+      const tipe=$('#kTipe').value;
+      const ket=$('#kKet').value.trim();
+      if(!nama || !jumlah) return alert("Nama & jumlah wajib diisi");
+      await addDoc(collection(db,'kas'),{nama,tanggal,jumlah,tipe,keterangan:ket,createdAt:serverTimestamp()});
+      $('#kNama').value=''; $('#kJumlah').value=''; $('#kKet').value='';
+      loadKas();
+    };
+
+    // expose per item delete/edit
+    window.editPeng=async(id)=>{
+      if(!can.pengumuman()) return;
+      const { getDoc, doc } = await import("https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js");
+      const v=(await getDoc(doc(db,'pengumuman',id))).data();
+      $('#pJudul').value=v.judul||''; $('#pIsi').value=v.isi||''; $('#pTanggal').value=v.tanggal||'';
+      editPeng=id; $('#pBatal').style.display='inline-block'; window.scrollTo({top:0,behavior:'smooth'});
+    };
+    window.hapusPeng=async(id)=>{
+      if(!can.pengumuman()) return;
+      if(!confirm('Hapus pengumuman?')) return;
+      const { deleteDoc, doc } = await import("https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js");
+      await deleteDoc(doc(db,'pengumuman',id)); loadPengumuman();
+    };
+    window.editBerita=async(id)=>{
+      if(!can.berita()) return;
+      const { getDoc, doc } = await import("https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js");
+      const v=(await getDoc(doc(db,'berita',id))).data();
+      $('#bJudul').value=v.judul||''; $('#bIsi').value=v.isi||'';
+      editBerita=id; $('#bBatal').style.display='inline-block'; window.scrollTo({top:0,behavior:'smooth'});
+    };
+    window.hapusBerita=async(id)=>{
+      if(!can.berita()) return;
+      if(!confirm('Hapus berita?')) return;
+      const { deleteDoc, doc } = await import("https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js");
+      await deleteDoc(doc(db,'berita',id)); loadBerita();
+    };
+    window.editUmkm=async(id)=>{
+      if(!can.umkm()) return;
+      const { getDoc, doc } = await import("https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js");
+      const v=(await getDoc(doc(db,'umkm',id))).data();
+      $('#uProduk').value=v.produk||''; $('#uPenjual').value=v.penjual||''; $('#uHarga').value=v.harga||''; $('#uWa').value=v.wa||''; $('#uDes').value=v.deskripsi||'';
+      editUmkm=id; $('#uBatal').style.display='inline-block'; window.scrollTo({top:0,behavior:'smooth'});
+    };
+    window.hapusUmkm=async(id)=>{
+      if(!can.umkm()) return;
+      if(!confirm('Hapus produk?')) return;
+      const { deleteDoc, doc } = await import("https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js");
+      await deleteDoc(doc(db,'umkm',id)); loadUmkm();
+    };
+    window.hapusKas=async(id)=>{
+      if(!can.kas()) return;
+      if(!confirm('Hapus transaksi kas?')) return;
+      const { deleteDoc, doc } = await import("https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js");
+      await deleteDoc(doc(db,'kas',id)); loadKas();
+    };
+    window.updateRole=async(id)=>{
+      if(!can.superOnly()) return alert('Hanya super_admin yang boleh ubah role');
+      const sel=document.getElementById('role-'+id);
+      const val=sel.value;
+      const { setDoc, doc } = await import("https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js");
+      await setDoc(doc(db,'users',id), { role:val }, { merge:true });
+      alert('Role diperbarui');
+      loadAnggota();
+    };
   }
-  $('#aJudul').value=''; $('#aTanggal').value=''; $('#aLokasi').value=''; $('#aPJ').value=''; $('#aDes').value='';
-  loadAgenda(); loadOverview();
-};
-$('#aBatal').onclick=()=>{ editAgendaId=null; $('#aJudul').value=''; $('#aTanggal').value=''; $('#aLokasi').value=''; $('#aPJ').value=''; $('#aDes').value=''; $('#aBatal').style.display='none'; };
 
-async function loadAgenda(){
-  const tbody=$('#agendaTable tbody');
-  tbody.innerHTML='Memuat...';
-  const snap=await getDocs(query(collection(db,'agenda'), orderBy('waktu','asc')));
-  tbody.innerHTML='';
-  snap.forEach(d=>{
-    const a=d.data();
-    const t=new Date(a.waktu);
-    const tr=document.createElement('tr');
-    tr.innerHTML=`<td>${t.toLocaleString('id-ID')}</td>
-      <td>${ensure(a.judul,'-')}</td>
-      <td>${ensure(a.lokasi,'-')}</td>
-      <td>${ensure(a.pj,'-')}</td>
-      <td class="row">
-        ${can.agenda()?`<button class="btn btn-primary" onclick="editAgenda('${d.id}')">✏️</button>
-        <button class="btn btn-danger" onclick="hapusAgenda('${d.id}')">🗑️</button>`:''}
-      </td>`;
-    tbody.appendChild(tr);
-  });
-}
-window.editAgenda=async(id)=>{
-  if(!can.agenda()) return;
-  const v=(await getDoc(doc(db,'agenda',id))).data();
-  $('#aJudul').value=v.judul||'';
-  $('#aTanggal').value=v.waktu ? new Date(v.waktu).toISOString().slice(0,16) : '';
-  $('#aLokasi').value=v.lokasi||'';
-  $('#aPJ').value=v.pj||'';
-  $('#aDes').value=v.deskripsi||'';
-  editAgendaId=id; $('#aBatal').style.display='inline-block'; window.scrollTo({top:0,behavior:'smooth'});
-};
-window.hapusAgenda=async(id)=>{
-  if(!can.agenda()) return;
-  if(!confirm('Hapus agenda ini?')) return;
-  await deleteDoc(doc(db,'agenda',id)); loadAgenda(); loadOverview();
-};
+  async function preload(){
+    const { collection, getDocs, orderBy, query, doc, getDoc } =
+      await import("https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js");
 
-/* ================== LEADERBOARD ================== */
-let lbChartRef=null;
-async function buildLeaderboard(){
-  const counters={}; const add=(email,key)=>{ if(!email) return; counters[email]??={berita:0,umkm:0,pengumuman:0,kas:0}; counters[email][key]++; };
-  (await getDocs(collection(db,'berita'))).forEach(d=>add(d.data().penulis,'berita'));
-  (await getDocs(collection(db,'umkm'))).forEach(d=>add(d.data().dibuatOleh,'umkm'));
-  (await getDocs(collection(db,'pengumuman'))).forEach(d=>add(d.data().dibuatOleh,'pengumuman'));
-  (await getDocs(collection(db,'kas'))).forEach(d=>add(d.data().dibuatOleh,'kas'));
+    // anggota
+    if(can.anggota()){
+      const wrap=document.getElementById('anggotaList'); wrap.innerHTML='Memuat...';
+      const snap=await getDocs(query(collection(db,'users'),orderBy('email')));
+      wrap.innerHTML='';
+      snap.forEach(u=>{
+        const d=u.data(), id=u.id;
+        const card=document.createElement('div'); card.className='card';
+        card.innerHTML=`
+          <div class="mini">
+            <img src="${d.foto||'https://i.ibb.co/4Jf2V2R/placeholder-user.png'}">
+            <div>
+              <div><b>${d.nama||'(Tanpa nama)'}</b> <span class="badge">${d.role||'anggota'}</span></div>
+              <small class="muted">${d.email||''}</small>
+            </div>
+          </div>
+          ${can.superOnly()?`
+          <div class="row" style="margin-top:.6rem">
+            <select id="role-${id}">
+              <option value="anggota" ${d.role==='anggota'?'selected':''}>anggota</option>
+              <option value="admin" ${d.role==='admin'?'selected':''}>admin</option>
+              <option value="admin_pengumuman" ${d.role==='admin_pengumuman'?'selected':''}>admin_pengumuman</option>
+              <option value="admin_berita" ${d.role==='admin_berita'?'selected':''}>admin_berita</option>
+              <option value="admin_umkm" ${d.role==='admin_umkm'?'selected':''}>admin_umkm</option>
+              <option value="admin_keuangan" ${d.role==='admin_keuangan'?'selected':''}>admin_keuangan</option>
+              <option value="super_admin" ${d.role==='super_admin'?'selected':''}>super_admin</option>
+            </select>
+            <button class="btn btn-primary" onclick="updateRole('${id}')">Simpan</button>
+          </div>`:''}
+        `;
+        wrap.appendChild(card);
+      });
+    }
 
-  const rows=Object.entries(counters).map(([email,c])=>({email, skor:(c.berita+c.umkm+c.pengumuman+c.kas), ...c}))
-               .sort((a,b)=>b.skor-a.skor).slice(0,10);
+    // pengumuman
+    if(can.pengumuman()){
+      const c=document.getElementById('pengumumanList'); c.innerHTML='';
+      const ps=await getDocs(query(collection(db,'pengumuman'),orderBy('createdAt','desc')));
+      ps.forEach(d=>{
+        const p=d.data();
+        const el=document.createElement('div'); el.className='card';
+        el.innerHTML=`
+          <h3>${p.judul||'(Tanpa judul)'}</h3>
+          <p>${p.isi||''}</p>
+          <small class="muted">📅 ${p.tanggal||'-'}</small>
+          <div class="row" style="margin-top:.6rem">
+            <button class="btn btn-ghost" onclick="editPeng('${d.id}')">✏️ Edit</button>
+            <button class="btn btn-ghost" onclick="hapusPeng('${d.id}')">🗑️ Hapus</button>
+          </div>`;
+        c.appendChild(el);
+      });
+    }
 
-  const tb=$('#lbTable tbody'); tb.innerHTML='';
-  rows.forEach(r=>{
-    const tr=document.createElement('tr');
-    tr.innerHTML=`<td>${r.email}</td><td><b>${r.skor}</b></td><td>${r.berita}</td><td>${r.umkm}</td><td>${r.pengumuman}</td><td>${r.kas}</td>`;
-    tb.appendChild(tr);
-  });
+    // berita
+    if(can.berita()){
+      const c=document.getElementById('beritaList'); c.innerHTML='';
+      const bs=await getDocs(query(collection(db,'berita'),orderBy('createdAt','desc')));
+      bs.forEach(d=>{
+        const b=d.data();
+        const img = Array.isArray(b.foto) ? b.foto[0] : (b.foto || null);
+        const el=document.createElement('div'); el.className='card';
+        el.innerHTML=`
+          ${img?`<img class="thumb" src="${img}">`:''}
+          <h3>${b.judul||'(Tanpa judul)'}</h3>
+          <p>${b.isi||''}</p>
+          <div class="row" style="margin-top:.6rem">
+            <button class="btn btn-ghost" onclick="editBerita('${d.id}')">✏️ Edit</button>
+            <button class="btn btn-ghost" onclick="hapusBerita('${d.id}')">🗑️ Hapus</button>
+          </div>`;
+        c.appendChild(el);
+      });
+    }
 
-  const ctx=document.getElementById('lbChart').getContext('2d');
-  if(lbChartRef) lbChartRef.destroy();
-  lbChartRef=new Chart(ctx,{
-    type:'bar',
-    data:{ labels: rows.map(r=>r.email.split('@')[0]), datasets:[{label:'Skor', data: rows.map(r=>r.skor)}] },
-    options:{plugins:{legend:{display:false}}}
-  });
-}
+    // umkm
+    if(can.umkm()){
+      const c=document.getElementById('umkmList'); c.innerHTML='';
+      const us=await getDocs(query(collection(db,'umkm'),orderBy('createdAt','desc')));
+      us.forEach(d=>{
+        const u=d.data();
+        const img = Array.isArray(u.foto) ? u.foto[0] : (u.foto || null);
+        const el=document.createElement('div'); el.className='card';
+        el.innerHTML=`
+          ${img?`<img class="thumb" src="${img}">`:''}
+          <h3>${u.produk||'(Produk)'}</h3>
+          <p>👤 ${u.penjual||'-'} • 💰 Rp${(u.harga||0).toLocaleString()}</p>
+          <p>${u.deskripsi||''}</p>
+          ${u.wa?`<p>📱 <a href="https://wa.me/${u.wa}" target="_blank">${u.wa}</a></p>`:''}
+          <div class="row" style="margin-top:.6rem">
+            <button class="btn btn-ghost" onclick="editUmkm('${d.id}')">✏️ Edit</button>
+            <button class="btn btn-ghost" onclick="hapusUmkm('${d.id}')">🗑️ Hapus</button>
+          </div>`;
+        c.appendChild(el);
+      });
+    }
 
-/* ================== EXPOSE ================== */
-window.updateRole=window.updateRole;
-window.nonaktifUser=window.nonaktifUser;
-window.hapusUserDoc=window.hapusUserDoc;
-window.editPeng=window.editPeng;
-window.hapusPeng=window.hapusPeng;
-window.editBerita=window.editBerita;
-window.hapusBerita=window.hapusBerita;
-window.editUmkm=window.editUmkm;
-window.hapusUmkm=window.hapusUmkm;
-window.hapusKas=window.hapusKas;
-window.editAgenda=window.editAgenda;
-window.hapusAgenda=window.hapusAgenda;
-
+    // kas
+    if(can.kas()){
+      const c=document.getElementById('kasList'); c.innerHTML='';
+      const ks=await getDocs(query(collection(db,'kas'),orderBy('createdAt','desc')));
+      ks.forEach(d=>{
+        const k=d.data();
+        const row=document.createElement('div'); row.className='card';
+        row.innerHTML=`
+          <b>${k.tipe==='masuk'?'🟢 Pemasukan':'🔴 Pengeluaran'} Rp${(k.jumlah||0).toLocaleString()}</b><br>
+          👤 ${k.nama||'-'} • 📅 ${k.tanggal||'-'}<br>
+          <small class="muted">${k.keterangan||''}</small>
+          <div class="row" style="margin-top:.5rem">
+            <button class="btn btn-ghost" onclick="hapusKas('${d.id}')">🗑️ Hapus</button>
+          </div>`;
+        c.appendChild(row);
+      });
+    }
+  }
 </script>
 </body>
 </html>
