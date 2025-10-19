@@ -1,263 +1,249 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Portal Karang Taruna Cilosari Barat RT01/RW08</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./style.css">
+<link rel="stylesheet" href="./css/style.css">
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#0e4c92">
 <style>
-.prewrap { white-space: pre-wrap; word-wrap: break-word; line-height: 1.6; }
-#detailModal {
-  display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);
-  z-index:999;justify-content:center;align-items:center;
-}
-.detail-box {
-  background:var(--card);color:var(--text);border-radius:12px;
-  max-width:700px;width:90%;padding:1.5rem;box-shadow:0 0 20px rgba(0,0,0,0.5);
-  position:relative;backdrop-filter:blur(10px);
-}
-#closeDetail {position:absolute;top:8px;right:12px;cursor:pointer;font-weight:700;color:var(--gold);}
-#closeDetail:hover {color:#fff;}
-.thumb-mini{width:100%;height:160px;object-fit:cover;border-radius:8px;margin-bottom:.5rem;}
+  /* ringkas styling utama agar cepat */
+  :root{--biru:#0e4c92;--emas:#f6c445;--bg:#f5f7fa;--card:#fff;--text:#1e293b}
+  body{margin:0;font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text)}
+  header{position:sticky;top:0;z-index:50;background:linear-gradient(90deg,var(--biru),#1a6ac2);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:.8rem 1rem}
+  .brand{font-weight:800;letter-spacing:.3px}
+  .nav{display:flex;gap:.8rem;align-items:center}
+  .nav a,.nav button{color:#fff;text-decoration:none;background:none;border:none;cursor:pointer;font-weight:700}
+  .nav a:hover{color:var(--emas)}
+  .hamb{display:none;flex-direction:column;gap:4px;cursor:pointer}
+  .hamb span{width:24px;height:3px;background:#fff;border-radius:2px}
+  @media(max-width:760px){.nav.links{display:none}.hamb{display:flex}}
+  .mobile{display:none;flex-direction:column;background:var(--biru);color:#fff}
+  .mobile a{padding:12px;border-top:1px solid rgba(255,255,255,.15);text-decoration:none;color:#fff}
+  .show{display:flex!important}
+  .container{max-width:1100px;margin:auto;padding:1rem}
+  .hero{background:linear-gradient(180deg,var(--biru),#1a6ac2);color:#fff;text-align:center;padding:2.8rem 1rem;border-bottom:4px solid var(--emas)}
+  .hero h1{margin:0 0 .4rem}
+  .section-title{font-size:1.2rem;border-left:6px solid var(--emas);padding-left:.6rem;color:var(--biru);margin:1rem 0}
+  .grid{display:grid;gap:1rem}
+  @media(min-width:640px){.grid-2{grid-template-columns:repeat(2,1fr)}}
+  @media(min-width:900px){.grid-3{grid-template-columns:repeat(3,1fr)}}
+  .card{background:var(--card);border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.08);padding:1rem;overflow:hidden}
+  .thumb{width:100%;height:180px;object-fit:cover;border-radius:8px;margin-bottom:.4rem}
+  .btn{display:inline-block;padding:.5rem .8rem;border:none;border-radius:8px;font-weight:700;background:var(--biru);color:#fff;text-decoration:none}
+  .btn:hover{background:var(--emas);color:var(--biru)}
+  .badge{display:inline-block;background:#eef2ff;color:#3730a3;padding:.2rem .55rem;border-radius:999px;font-size:.8rem;font-weight:800}
+  .note{color:#64748b;font-size:.9rem}
+  /* modal */
+  #authModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);justify-content:center;align-items:center;z-index:100}
+  .auth-box{background:#fff;color:#111;padding:1.2rem;border-radius:12px;max-width:360px;width:92%}
+  .auth-box input{width:100%;margin-bottom:.6rem;padding:.55rem;border:1px solid #cbd5e1;border-radius:8px}
+  footer{background:var(--biru);color:#fff;text-align:center;padding:1rem;margin-top:2rem}
 </style>
 </head>
-
 <body>
 <header>
-  <h1>🌌 Karang Taruna Cilosari Barat</h1>
-  <button id="themeToggle">🌙</button>
+  <div class="brand">KARTEJI • Portal Karang Taruna</div>
+  <div class="nav">
+    <div class="nav links">
+      <a href="#pengumuman">Pengumuman</a>
+      <a href="#berita">Berita</a>
+      <a href="#umkm">UMKM</a>
+      <a href="#kas">Ringkasan Kas</a>
+    </div>
+    <div id="navAuth"></div>
+    <div class="hamb" id="hamb"><span></span><span></span><span></span></div>
+  </div>
 </header>
 
-<section class="hero" style="text-align:center;padding:3rem 1rem 2rem;">
-  <h2 id="heroText" style="font-size:2rem;font-weight:800;color:var(--gold);"></h2>
-  <p style="max-width:600px;margin:auto;color:var(--muted)">
-    Portal digital <b>Karang Taruna RT01/RW08 Kel. Kemijen</b> – pusat informasi kegiatan, kolaborasi, dan semangat warga muda Semarang Timur.
-  </p>
-  <div style="margin-top:2rem;">
-    <a href="#agenda" class="btn btn-primary">Agenda Bulan Ini</a>
-    <a href="#berita" class="btn btn-ghost">Berita</a>
-  </div>
+<nav class="mobile" id="mnav">
+  <a href="#pengumuman">Pengumuman</a>
+  <a href="#berita">Berita</a>
+  <a href="#umkm">UMKM</a>
+  <a href="#kas">Ringkasan Kas</a>
+  <a href="#" id="openLogin">Masuk / Daftar</a>
+</nav>
+
+<section class="hero">
+  <h1>Selamat Datang</h1>
+  <p>RT01/RW08 • Cilosari Barat, Kelurahan Kemijen, Semarang Timur</p>
 </section>
 
-<section id="pengumuman" style="padding:1rem 0;background:rgba(255,255,255,0.05);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
-  <marquee id="marqueeText" behavior="scroll" direction="left" scrollamount="5" style="color:var(--gold);font-weight:600;">
-    📢 Memuat pengumuman terbaru...
-  </marquee>
-</section>
+<main class="container">
+  <!-- PENGUMUMAN -->
+  <section id="pengumuman">
+    <h2 class="section-title">📢 Pengumuman</h2>
+    <div id="pengList" class="grid grid-2"></div>
+  </section>
 
-<section class="container" style="text-align:center;margin-top:2rem;">
-  <div class="grid grid-3">
+  <!-- BERITA -->
+  <section id="berita">
+    <h2 class="section-title">📰 Berita</h2>
+    <div id="beritaList" class="grid grid-3"></div>
+  </section>
+
+  <!-- UMKM -->
+  <section id="umkm">
+    <h2 class="section-title">🏪 Produk</h2>
+    <div id="umkmList" class="grid grid-3"></div>
+  </section>
+
+  <!-- KAS -->
+  <section id="kas">
+    <h2 class="section-title">💰 Ringkasan Kas</h2>
     <div class="card">
-      <h3>💰 Ringkasan Kas</h3>
-      <p>Total Kas Saat Ini:</p>
-      <h1 id="kasTotal">Rp 0</h1>
+      <div class="badge">Total</div>
+      <div id="kasTotal" style="font-size:1.6rem;margin-top:6px">Rp 0</div>
+      <p class="note">Detail transaksi kas hanya terlihat oleh anggota saat login.</p>
     </div>
-    <div class="card">
-      <h3>🌤️ Cuaca Hari Ini</h3>
-      <p id="weather" class="muted">Memuat...</p>
-    </div>
-    <div class="card">
-      <h3>🕌 Waktu Sholat</h3>
-      <div id="prayTimes" class="muted"></div>
-    </div>
-  </div>
-</section>
+  </section>
+</main>
 
-<!-- PENGUMUMAN -->
-<section id="pengumumanListSection" class="container" style="margin-top:3rem;">
-  <h2>📢 Pengumuman Terbaru</h2>
-  <div id="pengumumanList" class="grid grid-2"></div>
-</section>
+<footer>© 2025 Karang Taruna Cilosari Barat RT01/RW08</footer>
 
-<!-- AGENDA -->
-<section id="agenda" class="container" style="margin-top:3rem;">
-  <h2>📅 Agenda / Kegiatan Bulan Ini</h2>
-  <div id="agendaList" class="grid grid-2"></div>
-</section>
-
-<!-- BERITA -->
-<section id="berita" class="container" style="margin-top:3rem;">
-  <h2>📰 Berita Terkini</h2>
-  <div id="beritaList" class="grid grid-2"></div>
-</section>
-
-<!-- UMKM -->
-<section id="umkm" class="container" style="margin-top:3rem;">
-  <h2>🏪 Produk UMKM</h2>
-  <input type="text" id="searchUmkm" placeholder="Cari produk..." style="max-width:300px;margin-bottom:1rem;">
-  <div id="umkmList" class="grid grid-3"></div>
-</section>
-
-<!-- CTA LOGIN -->
-<section id="ctaLogin" style="text-align:center;margin:3rem 0;">
-  <h2>🔑 Masuk ke Portal</h2>
-  <p>Gabung sebagai anggota Karang Taruna untuk mengakses fitur internal seperti kas, agenda, dan pengelolaan konten.</p>
-  <button class="btn btn-primary" id="openLogin">Masuk / Daftar</button>
-</section>
-
-<footer style="text-align:center;padding:1.2rem;background:var(--violet-dark);color:#fff;">
-  <p>&copy; 2025 Karang Taruna Cilosari Barat RT01/RW08 – Semarang Timur</p>
-</footer>
-
-<!-- MODAL DETAIL -->
-<div id="detailModal">
-  <div class="detail-box">
-    <span id="closeDetail">✕</span>
-    <h2 id="detailTitle"></h2>
-    <p id="detailBody" class="prewrap"></p>
-  </div>
-</div>
-
-<!-- MODAL LOGIN -->
-<div id="authModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:999;justify-content:center;align-items:center;">
-  <div class="card" style="max-width:400px;width:90%;text-align:center;position:relative;">
-    <span id="closeModal" style="position:absolute;top:8px;right:12px;cursor:pointer;font-weight:700;">✕</span>
-    <h3>Masuk / Daftar</h3>
+<!-- MODAL AUTH -->
+<div id="authModal">
+  <div class="auth-box">
+    <h3 style="margin-top:0">Masuk / Daftar</h3>
     <input type="email" id="email" placeholder="Email">
-    <input type="password" id="password" placeholder="Kata Sandi">
-    <button id="loginBtn" class="btn btn-primary">Masuk</button>
-    <button id="registerBtn" class="btn btn-ghost" style="margin-top:.5rem;">Daftar</button>
-    <small><a href="#" id="forgotPassword" style="color:var(--gold);text-decoration:none;">Lupa kata sandi?</a></small>
+    <input type="password" id="pass" placeholder="Kata sandi">
+    <button class="btn" id="btnLogin" style="width:100%;margin-top:.4rem">Masuk</button>
+    <button class="btn" id="btnReg" style="width:100%;margin-top:.4rem;background:#f6c445;color:#0e4c92">Daftar</button>
+    <button class="btn" id="btnReset" style="width:100%;margin-top:.6rem;background:#0f172a">Lupa Password?</button>
   </div>
 </div>
 
-<script type="module">
-import { db, auth } from "./js/firebase.js";
-import {
-  signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail
-} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-import { collection, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+<!-- SCRIPTS -->
+<script src="./env.js"></script>
+<script src="./js/imgbb.js"></script>
+<script src="./js/firebase.js" type="module"></script>
+<script src="./js/auth.js" type="module"></script>
 
-/* HERO typing */
-const heroText=document.getElementById("heroText");
-const textSeq=["Portal Karang Taruna","Wadah Kolaborasi","Semangat Pemuda!"];
-let idx=0;
-function typing(){let i=0,t=textSeq[idx];heroText.textContent="";
-const s=setInterval(()=>{heroText.textContent+=t[i];i++;if(i===t.length){clearInterval(s);setTimeout(()=>{idx=(idx+1)%textSeq.length;typing();},1800);}},100);}
-typing();
+<script>
+/* ======= NAV ======= */
+const hamb=document.getElementById('hamb'), mnav=document.getElementById('mnav');
+hamb.onclick=()=>mnav.classList.toggle('show');
 
-/* Modal detail */
-const modal=document.getElementById("detailModal"),closeDetail=document.getElementById("closeDetail");
-closeDetail.onclick=()=>modal.style.display="none";
-window.onclick=(e)=>{if(e.target===modal)modal.style.display="none";}
-function showDetail(title,body){document.getElementById("detailTitle").textContent=title;document.getElementById("detailBody").textContent=body;modal.style.display="flex";}
+/* ======= AUTH MODAL & NAV ======= */
+const navAuth=document.getElementById('navAuth');
+const modal=document.getElementById('authModal');
+const openLogin=document.getElementById('openLogin');
+if(openLogin) openLogin.onclick=(e)=>{ e.preventDefault(); modal.style.display='flex'; };
+window.addEventListener('click',(e)=>{ if(e.target===modal) modal.style.display='none'; });
 
-/* Modal login */
-const authModal=document.getElementById("authModal");
-document.getElementById("openLogin").onclick=()=>authModal.style.display="flex";
-document.getElementById("closeModal").onclick=()=>authModal.style.display="none";
-window.addEventListener("click",(e)=>{if(e.target===authModal)authModal.style.display="none";});
+function renderAuth(user, role){
+  if(user){
+    navAuth.innerHTML = `
+      <a href="./profil/profil.html">Profil</a>
+      ${['admin','super_admin','admin_berita','admin_umkm','admin_keuangan','admin_pengumuman'].includes(role)?'<a href="./profil/profil.html#panel-dashboard">Dashboard</a>':''}
+      <button id="btnLogout">Keluar</button>
+    `;
+    document.getElementById('btnLogout').onclick = ()=> window.AuthAPI.logout();
+  }else{
+    navAuth.innerHTML = `<a href="#" id="openLoginTop">Masuk / Daftar</a>`;
+    const o = document.getElementById('openLoginTop');
+    if(o) o.onclick = (e)=>{ e.preventDefault(); modal.style.display='flex'; };
+  }
+}
 
-/* Auth */
-document.getElementById("loginBtn").onclick=async()=>{
-  const email=document.getElementById("email").value,pass=document.getElementById("password").value;
-  try{await signInWithEmailAndPassword(auth,email,pass);location.href="./dashboard.html";}
-  catch(e){alert("Login gagal: "+e.message);}
+/* ======= AUTH ACTIONS ======= */
+const emailEl=document.getElementById('email');
+const passEl=document.getElementById('pass');
+document.getElementById('btnLogin').onclick = async()=>{
+  try{ await window.AuthAPI.login(emailEl.value, passEl.value); modal.style.display='none'; }catch(e){ alert(e.message); }
 };
-document.getElementById("registerBtn").onclick=async()=>{
-  const email=document.getElementById("email").value,pass=document.getElementById("password").value;
-  try{await createUserWithEmailAndPassword(auth,email,pass);alert("Pendaftaran berhasil!");authModal.style.display="none";}
-  catch(e){alert("Gagal daftar: "+e.message);}
+document.getElementById('btnReg').onclick = async()=>{
+  try{ await window.AuthAPI.register(emailEl.value, passEl.value); modal.style.display='none'; }catch(e){ alert(e.message); }
 };
-document.getElementById("forgotPassword").onclick=async(e)=>{
-  e.preventDefault();const email=document.getElementById("email").value;
-  if(!email)return alert("Masukkan email untuk reset.");
-  try{await sendPasswordResetEmail(auth,email);alert("Link reset dikirim.");}
-  catch(e){alert("Gagal: "+e.message);}
+document.getElementById('btnReset').onclick = async()=>{
+  try{ await window.AuthAPI.reset(emailEl.value); alert('Link reset dikirim ke email.'); }catch(e){ alert(e.message); }
 };
 
-/* FIRESTORE LOAD */
-async function loadPengumuman(){
-  const c=document.getElementById("pengumumanList"),snap=await getDocs(query(collection(db,"pengumuman"),orderBy("createdAt","desc")));
-  c.innerHTML="";let txt="";
-  snap.forEach(d=>{const p=d.data();const el=document.createElement("div");
-    el.className="card";
-    el.innerHTML=`<h3>${p.judul||"Tanpa Judul"}</h3><p class='prewrap'>${(p.isi||"").slice(0,120)}...</p>
-    <button class='btn btn-primary' onclick='showDetail(${JSON.stringify(p.judul)},${JSON.stringify(p.isi)})'>Selengkapnya</button>`;
-    c.appendChild(el);txt+=`📢 ${p.judul} &nbsp;&nbsp;`;
-  });
-  document.getElementById("marqueeText").innerHTML=txt||"Belum ada pengumuman.";
-}
-loadPengumuman();
+/* ======= STATE & FIRESTORE LOAD ======= */
+const { db, auth } = window.__FB;
+const pengList=document.getElementById('pengList');
+const beritaList=document.getElementById('beritaList');
+const umkmList=document.getElementById('umkmList');
+const kasTotalEl=document.getElementById('kasTotal');
 
-async function loadAgenda(){
-  const c=document.getElementById("agendaList"),snap=await getDocs(query(collection(db,"agenda"),orderBy("tanggal","asc")));
-  c.innerHTML="";
-  const now=new Date(),month=now.getMonth()+1,year=now.getFullYear();
-  snap.forEach(d=>{
-    const a=d.data(),tgl=new Date(a.tanggal);
-    if(tgl.getMonth()+1===month && tgl.getFullYear()===year){
-      const el=document.createElement("div");el.className="card";
-      el.innerHTML=`
-        ${a.poster?`<img src='${a.poster}' class='thumb-mini'>`:""}
-        <h3>${a.nama||"Kegiatan"}</h3>
-        <p>📅 ${a.tanggal||"-"}<br>📍 ${a.lokasi||"-"}</p>
-        <button class='btn btn-primary' onclick='showDetail(${JSON.stringify(a.nama)},${JSON.stringify(a.deskripsi||"")})'>Selengkapnya</button>`;
-      c.appendChild(el);
-    }
-  });
-}
-loadAgenda();
+window.AuthAPI.onAuth(async (user)=>{
+  let role='anggota';
+  if(user){
+    // fetch role
+    const { getDoc, doc } = await import("https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js");
+    const s = await getDoc(doc(db,'users',user.uid));
+    if(s.exists()) role = s.data().role || 'anggota';
+  }
+  renderAuth(user, role);
+});
 
-async function loadBerita(){
-  const c=document.getElementById("beritaList"),snap=await getDocs(query(collection(db,"berita"),orderBy("createdAt","desc")));
-  c.innerHTML="";
-  snap.forEach(d=>{const b=d.data(),el=document.createElement("div");el.className="card";
-    el.innerHTML=`${b.foto?`<img class='thumb-mini' src='${b.foto}'>`:""}<h3>${b.judul||"Tanpa Judul"}</h3>
-    <p class='prewrap'>${(b.isi||"").slice(0,150)}...</p>
-    <button class='btn btn-primary' onclick='showDetail(${JSON.stringify(b.judul)},${JSON.stringify(b.isi)})'>Selengkapnya</button>`;
-    c.appendChild(el);
-  });
-}
-loadBerita();
+/* Load Pengumuman, Berita, UMKM, Kas Ringkas */
+(async function loadPublic(){
+  const { collection, getDocs, query, orderBy } =
+    await import("https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js");
 
-async function loadUmkm(){
-  const c=document.getElementById("umkmList"),snap=await getDocs(query(collection(db,"umkm"),orderBy("createdAt","desc")));
-  c.innerHTML="";
-  snap.forEach(d=>{const u=d.data(),el=document.createElement("div");el.className="card";
-    el.innerHTML=`${u.foto?`<img class='thumb-mini' src='${u.foto}'>`:""}<h3>${u.produk||"Produk"}</h3>
-    <p>👤 ${u.penjual||"-"}<br>💰 Rp${(u.harga||0).toLocaleString()}</p>
-    ${u.wa?`<a href='https://wa.me/${u.wa}' target='_blank' class='btn btn-ghost'>Hubungi</a>`:""}`;
-    c.appendChild(el);
-  });
-}
-loadUmkm();
-
-async function loadWeather(){
+  // pengumuman
   try{
-    const r=await fetch("https://api.open-meteo.com/v1/forecast?latitude=-6.97&longitude=110.42&current_weather=true");
-    const w=(await r.json()).current_weather;
-    document.getElementById("weather").textContent=`${w.temperature}°C, Angin ${w.windspeed} km/j`;
-  }catch{document.getElementById("weather").textContent="Gagal memuat cuaca";}
-}
-loadWeather();
+    const ps=await getDocs(query(collection(db,'pengumuman'),orderBy('createdAt','desc')));
+    if(ps.empty){ pengList.innerHTML='<p class="note">Belum ada pengumuman</p>'; }
+    ps.forEach(d=>{
+      const p=d.data();
+      const el=document.createElement('div'); el.className='card';
+      el.innerHTML = `
+        <h3>${p.judul||'(Tanpa judul)'}</h3>
+        <p style="white-space:pre-line">${(p.isi||'').length>220? (p.isi.slice(0,220)+'...'): (p.isi||'')}</p>
+        <a class="btn" href="./berita.html?mode=pengumuman&id=${d.id}">Lihat Selengkapnya</a>`;
+      pengList.appendChild(el);
+    });
+  }catch(e){ pengList.innerHTML='<p class="note">Gagal memuat pengumuman.</p>'; }
 
-async function loadPrayer(){
+  // berita
   try{
-    const r=await fetch("https://api.aladhan.com/v1/timingsByCity?city=Semarang&country=Indonesia&method=2");
-    const t=(await r.json()).data.timings;
-    document.getElementById("prayTimes").innerHTML=`Fajr: ${t.Fajr}<br>Dhuhr: ${t.Dhuhr}<br>Asr: ${t.Asr}<br>Maghrib: ${t.Maghrib}<br>Isha: ${t.Isha}`;
-  }catch{document.getElementById("prayTimes").textContent="Gagal memuat waktu sholat";}
-}
-loadPrayer();
+    const bs=await getDocs(query(collection(db,'berita'),orderBy('createdAt','desc')));
+    if(bs.empty){ beritaList.innerHTML='<p class="note">Belum ada berita</p>'; }
+    bs.forEach(d=>{
+      const b=d.data();
+      const img = Array.isArray(b.foto) ? b.foto[0] : (b.foto || null);
+      const el=document.createElement('div'); el.className='card';
+      el.innerHTML = `
+        ${img?`<img class="thumb" src="${img}" alt="">`:''}
+        <h3>${b.judul||'(Tanpa judul)'}</h3>
+        <p>${(b.isi||'').length>180? (b.isi.slice(0,180)+'...'): (b.isi||'')}</p>
+        <a class="btn" href="./berita.html?id=${d.id}">Selengkapnya</a>`;
+      beritaList.appendChild(el);
+    });
+  }catch(e){ beritaList.innerHTML='<p class="note">Gagal memuat berita.</p>'; }
 
-async function loadKas(){
+  // umkm
   try{
-    const snap=await getDocs(collection(db,"kas"));
-    let total=0;snap.forEach(d=>{const k=d.data();total+=k.tipe==="masuk"?k.jumlah:-k.jumlah;});
-    document.getElementById("kasTotal").textContent="Rp "+total.toLocaleString();
-  }catch{document.getElementById("kasTotal").textContent="Rp 0";}
-}
-loadKas();
+    const us=await getDocs(query(collection(db,'umkm'),orderBy('createdAt','desc')));
+    if(us.empty){ umkmList.innerHTML='<p class="note">Belum ada produk</p>'; }
+    us.forEach(d=>{
+      const u=d.data();
+      const img = Array.isArray(u.foto) ? u.foto[0] : (u.foto || null);
+      const el=document.createElement('div'); el.className='card';
+      el.innerHTML = `
+        ${img?`<img class="thumb" src="${img}" alt="">`:''}
+        <h3>${u.produk||'(Produk)'}</h3>
+        <p>👤 ${u.penjual||'-'} • 💰 Rp${(u.harga||0).toLocaleString()}</p>
+        ${u.wa?`<a class="btn" href="https://wa.me/${u.wa}" target="_blank">Hubungi</a>`:''}`;
+      umkmList.appendChild(el);
+    });
+  }catch(e){ umkmList.innerHTML='<p class="note">Gagal memuat UMKM.</p>'; }
 
-/* THEME */
-const tbtn=document.getElementById("themeToggle"),root=document.documentElement;
-if(localStorage.getItem("theme")==="dark"){root.setAttribute("data-theme","dark");tbtn.textContent="☀️";}
-tbtn.onclick=()=>{const d=root.getAttribute("data-theme")==="dark";
-  if(d){root.removeAttribute("data-theme");localStorage.setItem("theme","light");tbtn.textContent="🌙";}
-  else{root.setAttribute("data-theme","dark");localStorage.setItem("theme","dark");tbtn.textContent="☀️";}
-};
+  // kas ringkas
+  try{
+    const ks=await getDocs(collection(db,'kas'));
+    let total=0; ks.forEach(k=>{
+      const v=k.data();
+      total += (v.tipe==='masuk'?1:-1) * (v.jumlah||0);
+    });
+    kasTotalEl.textContent = 'Rp '+ total.toLocaleString();
+  }catch(e){
+    kasTotalEl.textContent = 'Rp 0';
+  }
+})();
 </script>
 </body>
 </html>
