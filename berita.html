@@ -1,129 +1,50 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Berita Lengkap | Karang Taruna Cilosari Barat</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Detail</title>
+<link rel="stylesheet" href="./css/style.css">
 <style>
-body{margin:0;font-family:'Poppins',sans-serif;background:#f5f7fa;color:#1e293b;}
-header{background:linear-gradient(90deg,#0e4c92,#1a6ac2);color:#fff;padding:1rem;text-align:center;}
-.container{max-width:900px;margin:auto;padding:1.5rem;}
-img{width:100%;border-radius:10px;margin:1rem 0;}
-h1{color:#0e4c92;}
-p{line-height:1.7;font-size:1rem;color:#333;}
-small{color:gray;}
-.btn{display:inline-block;background:#0e4c92;color:#fff;padding:.5rem .8rem;border-radius:6px;text-decoration:none;}
-.btn:hover{background:#f6c445;color:#0e4c92;}
-.comment-box{background:#fff;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,0.1);padding:1rem;margin-top:2rem;}
-.comment-item{border-bottom:1px solid #eee;padding:.6rem 0;}
-.comment-item:last-child{border-bottom:none;}
-.comment-item small{color:#666;font-size:.85rem;}
-.comment-form input,.comment-form textarea{width:100%;padding:.6rem;margin-bottom:.7rem;border:1px solid #ccc;border-radius:6px;font-family:'Poppins',sans-serif;}
-.comment-form button{background:#0e4c92;color:#fff;border:none;padding:.6rem 1rem;border-radius:6px;font-weight:600;cursor:pointer;}
-.comment-form button:hover{background:#f6c445;color:#0e4c92;}
+  .container{max-width:900px;margin:auto;padding:1rem}
+  .title{font-size:1.6rem;color:#0e4c92;margin:.2rem 0 .8rem}
+  .thumb{width:100%;max-height:420px;object-fit:cover;border-radius:12px}
+  .note{color:#64748b}
 </style>
 </head>
 <body>
-<header>
-  <h1>📰 Berita Karang Taruna</h1>
-</header>
-
 <main class="container">
-  <a href="index.html" class="btn">← Kembali</a>
-  <article id="beritaContainer">
-    <h2>Memuat...</h2>
-  </article>
-
-  <section id="komentarSection" class="comment-box">
-    <h3>Komentar Warga</h3>
-    <div id="commentList">Belum ada komentar.</div>
-    <form id="commentForm" class="comment-form" style="margin-top:1rem;">
-      <input type="text" id="namaKomentar" placeholder="Nama Anda">
-      <textarea id="isiKomentar" rows="3" placeholder="Tulis komentar..."></textarea>
-      <button type="submit">Kirim Komentar</button>
-    </form>
-  </section>
+  <a href="./index.html" style="text-decoration:none">← Kembali</a>
+  <h1 id="title" class="title">Memuat...</h1>
+  <img id="img" class="thumb" style="display:none">
+  <p id="content" style="white-space:pre-line"></p>
+  <p id="meta" class="note"></p>
 </main>
 
+<script src="./env.js"></script>
 <script type="module">
-import { db } from "./js/firebase.js";
-import { auth } from "./js/firebase.js";
-import { doc, getDoc, collection, getDocs, addDoc, serverTimestamp, query, orderBy } 
-  from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+  import "./js/firebase.js";
+  const { db } = window.__FB;
 
-/* ===== AMBIL ID BERITA DARI URL ===== */
-const params = new URLSearchParams(window.location.search);
-const id = params.get("id");
-const container = document.getElementById("beritaContainer");
-const commentList = document.getElementById("commentList");
-const commentForm = document.getElementById("commentForm");
-const namaKomentar = document.getElementById("namaKomentar");
-const isiKomentar = document.getElementById("isiKomentar");
+  const params = new URLSearchParams(location.search);
+  const id   = params.get('id');
+  const mode = params.get('mode'); // "pengumuman" | undefined (berita default)
 
-/* ===== TAMPILKAN BERITA ===== */
-async function loadBerita(){
-  if(!id){ container.innerHTML = "<p>Berita tidak ditemukan.</p>"; return; }
-  try{
-    const snap = await getDoc(doc(db, "berita", id));
-    if(!snap.exists()){ container.innerHTML = "<p>Berita tidak ditemukan.</p>"; return; }
-    const b = snap.data();
-    const tanggal = b.createdAt?.toDate ? b.createdAt.toDate().toLocaleDateString("id-ID") : "";
-    container.innerHTML = `
-      ${b.foto ? `<img src="${b.foto}" alt="${b.judul}">` : ""}
-      <h1>${b.judul}</h1>
-      <small>✍️ ${b.penulis || "Anonim"} | ${tanggal}</small>
-      <p>${(b.isi||"").replace(/\n/g,"<br>")}</p>
-      <div style="margin-top:1rem">
-        <a class="btn" href="whatsapp://send?text=${encodeURIComponent(b.judul+' '+location.href)}">Bagikan ke WhatsApp</a>
-      </div>
-    `;
-  }catch(e){
-    console.error(e);
-    container.innerHTML = "<p style='color:red'>Gagal memuat berita.</p>";
-  }
-}
+  (async()=>{
+    const { doc, getDoc } = await import("https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js");
+    const col = mode === 'pengumuman' ? 'pengumuman' : 'berita';
+    const s = await getDoc(doc(db, col, id));
+    if(!s.exists()){ document.getElementById('title').textContent="Data tidak ditemukan"; return; }
+    const d = s.data();
+    document.getElementById('title').textContent = d.judul || '(Tanpa judul)';
+    document.getElementById('content').textContent = d.isi || '';
+    const meta = (d.tanggal?('📅 '+d.tanggal):'') + (d.penulis?(' • ✍️ '+d.penulis):'');
+    document.getElementById('meta').textContent = meta;
 
-/* ===== MUAT KOMENTAR ===== */
-async function loadKomentar(){
-  try{
-    const q = query(collection(db, "berita", id, "komentar"), orderBy("createdAt", "desc"));
-    const snap = await getDocs(q);
-    if(snap.empty){ commentList.innerHTML = "<p>Belum ada komentar.</p>"; return; }
-    commentList.innerHTML = "";
-    snap.forEach(d=>{
-      const k = d.data();
-      const waktu = k.createdAt?.toDate ? k.createdAt.toDate().toLocaleString("id-ID") : "";
-      const div = document.createElement("div");
-      div.className="comment-item";
-      div.innerHTML = `<b>${k.nama||"Anonim"}</b><br><small>${waktu}</small><p>${k.isi||""}</p>`;
-      commentList.appendChild(div);
-    });
-  }catch(e){
-    commentList.innerHTML = "<p style='color:red'>Gagal memuat komentar.</p>";
-  }
-}
-
-/* ===== TAMBAH KOMENTAR ===== */
-commentForm.addEventListener("submit", async(e)=>{
-  e.preventDefault();
-  const nama = namaKomentar.value.trim();
-  const isi = isiKomentar.value.trim();
-  if(!isi) return alert("Tulis isi komentar.");
-  try{
-    await addDoc(collection(db, "berita", id, "komentar"), {
-      nama: nama || "Anonim",
-      isi,
-      createdAt: serverTimestamp()
-    });
-    namaKomentar.value=""; isiKomentar.value="";
-    loadKomentar();
-  }catch(e){ alert("Gagal kirim komentar: "+e.message); }
-});
-
-/* ===== LOAD SAAT AWAL ===== */
-loadBerita();
-loadKomentar();
+    const imgEl = document.getElementById('img');
+    const first = Array.isArray(d.foto)? d.foto[0] : d.foto;
+    if(first){ imgEl.src = first; imgEl.style.display='block'; }
+  })();
 </script>
 </body>
 </html>
