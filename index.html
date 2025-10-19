@@ -1,331 +1,263 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Portal Karang Taruna Cilosari Barat</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Portal Karang Taruna Cilosari Barat RT01/RW08</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./style.css">
 <style>
-:root{--biru:#0e4c92;--emas:#f6c445;--bg:#f5f7fa;--text:#1e293b;--card:#fff;}
-*{box-sizing:border-box}
-body{margin:0;font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);}
-a{color:inherit;text-decoration:none}
-header{
-  background:linear-gradient(90deg,var(--biru),#1a6ac2);
-  color:#fff;padding:.9rem 1rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;
+.prewrap { white-space: pre-wrap; word-wrap: break-word; line-height: 1.6; }
+#detailModal {
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);
+  z-index:999;justify-content:center;align-items:center;
 }
-.logo{display:flex;align-items:center;gap:.6rem;font-weight:700}
-.logo span{font-size:1rem}
-nav{display:flex;align-items:center;gap:.8rem}
-nav button{background:none;border:none;color:#fff;font-weight:600;cursor:pointer}
-nav button:hover{color:var(--emas)}
-.btn{background:var(--biru);color:#fff;border:none;border-radius:8px;padding:.55rem .9rem;font-weight:700;cursor:pointer}
-.btn:hover{background:var(--emas);color:var(--biru)}
-/* Hamburger */
-.hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer}
-.hamburger span{width:26px;height:3px;background:#fff;border-radius:2px}
-.mobile{display:none;flex-direction:column;background:var(--biru);padding:.6rem}
-.mobile a,.mobile button{color:#fff;padding:.6rem;border-bottom:1px solid rgba(255,255,255,.15);text-align:left}
-.mobile .last{border-bottom:none}
-/* Hero */
-.hero{
-  background:linear-gradient(180deg,var(--biru),#155fa3);
-  color:#fff;text-align:center;padding:2.4rem 1rem;border-bottom:4px solid var(--emas)
+.detail-box {
+  background:var(--card);color:var(--text);border-radius:12px;
+  max-width:700px;width:90%;padding:1.5rem;box-shadow:0 0 20px rgba(0,0,0,0.5);
+  position:relative;backdrop-filter:blur(10px);
 }
-.hero h1{margin:0 0 .5rem;font-size:1.6rem}
-.hero p{margin:0 auto;max-width:760px;line-height:1.6}
-/* Grid sections */
-.container{max-width:1140px;margin:auto;padding:1rem}
-.section-head{display:flex;align-items:center;justify-content:space-between;margin:.4rem 0 1rem}
-.section-head h2{margin:0;color:var(--biru);font-size:1.2rem}
-.grid{display:grid;gap:1rem}
-.grid-2{grid-template-columns:repeat(2,1fr)}
-.grid-3{grid-template-columns:repeat(3,1fr)}
-@media(max-width:900px){.grid-3{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:640px){.grid-2,.grid-3{grid-template-columns:1fr}}
-.card{background:var(--card);border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.08);overflow:hidden}
-.card .content{padding:1rem}
-.card img{width:100%;height:170px;object-fit:cover;display:block}
-.badge{display:inline-block;background:#eef2ff;color:#3730a3;padding:.15rem .5rem;border-radius:999px;font-size:.8rem;font-weight:800}
-/* Kas ringkas */
-.kas-box{text-align:center}
-.kas-total{font-size:2rem;margin:.2rem 0}
-.kas-list{max-height:260px;overflow:auto;text-align:left}
-.kas-item{border-top:1px dashed #e5e7eb;padding:.5rem 0;font-size:.93rem}
-.kas-item:first-child{border-top:none}
-/* Footer */
-footer{background:var(--biru);color:#fff;text-align:center;padding:1rem;margin-top:2rem;font-size:.9rem}
-/* Modal Auth */
-#authModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;justify-content:center;align-items:center}
-.auth-box{background:#fff;color:#000;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.2);max-width:420px;width:92%;padding:1.2rem;position:relative}
-.auth-tabs{display:flex;gap:.4rem;margin-bottom:.8rem}
-.tab-btn{flex:1;border:1px solid #cbd5e1;background:#f8fafc;padding:.5rem;border-radius:8px;font-weight:700;cursor:pointer}
-.tab-btn.active{background:var(--biru);color:#fff;border-color:var(--biru)}
-.auth-box input{width:100%;padding:.6rem;margin:.5rem 0;border:1px solid #cbd5e1;border-radius:8px}
-.auth-box .primary{background:var(--biru);color:#fff;border:none;border-radius:8px;padding:.6rem;font-weight:700;cursor:pointer;width:100%}
-.auth-box .secondary{background:var(--emas);color:var(--biru);border:none;border-radius:8px;padding:.6rem;font-weight:700;cursor:pointer;width:100%;margin-top:.4rem}
-#closeModal{position:absolute;top:8px;right:12px;font-size:1.3rem;color:#555;cursor:pointer}
-@media(max-width:760px){
-  nav .desktop-only{display:none}
-  .hamburger{display:flex}
-}
+#closeDetail {position:absolute;top:8px;right:12px;cursor:pointer;font-weight:700;color:var(--gold);}
+#closeDetail:hover {color:#fff;}
+.thumb-mini{width:100%;height:160px;object-fit:cover;border-radius:8px;margin-bottom:.5rem;}
 </style>
 </head>
+
 <body>
 <header>
-  <div class="logo"><span>Karang Taruna Cilosari Barat RT01/RW08</span></div>
-  <nav id="navDesktop">
-    <a class="desktop-only" href="#pengumuman">Pengumuman</a>
-    <a class="desktop-only" href="#berita">Berita</a>
-    <a class="desktop-only" href="#umkm">UMKM</a>
-    <a class="desktop-only" href="#kas">Ringkasan Kas</a>
-    <button id="btnOpenAuth">Masuk / Daftar</button>
-    <button id="btnProfile" class="btn" style="display:none">Profil Saya</button>
-    <button id="btnLogout" style="display:none">Keluar</button>
-  </nav>
-  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+  <h1>🌌 Karang Taruna Cilosari Barat</h1>
+  <button id="themeToggle">🌙</button>
 </header>
 
-<!-- NAV MOBILE (tanpa Masuk/Daftar sesuai permintaan) -->
-<nav class="mobile" id="navMobile">
-  <a href="#pengumuman">Pengumuman</a>
-  <a href="#berita">Berita</a>
-  <a href="#umkm">UMKM</a>
-  <a href="#kas" class="last">Ringkasan Kas</a>
-  <button id="mProfile" class="last" style="display:none">Profil Saya</button>
-  <button id="mLogout" class="last" style="display:none">Keluar</button>
-</nav>
-
-<section class="hero">
-  <h1>Portal Karang Taruna Cilosari Barat</h1>
-  <p>Informasi resmi kegiatan, pengumuman, berita, kas, dan UMKM di RT01/RW08 Kelurahan Kemijen, Semarang Timur.</p>
+<section class="hero" style="text-align:center;padding:3rem 1rem 2rem;">
+  <h2 id="heroText" style="font-size:2rem;font-weight:800;color:var(--gold);"></h2>
+  <p style="max-width:600px;margin:auto;color:var(--muted)">
+    Portal digital <b>Karang Taruna RT01/RW08 Kel. Kemijen</b> – pusat informasi kegiatan, kolaborasi, dan semangat warga muda Semarang Timur.
+  </p>
+  <div style="margin-top:2rem;">
+    <a href="#agenda" class="btn btn-primary">Agenda Bulan Ini</a>
+    <a href="#berita" class="btn btn-ghost">Berita</a>
+  </div>
 </section>
 
-<main class="container">
-  <!-- PENGUMUMAN -->
-  <div class="section-head" id="pengumuman">
-    <h2>📢 Pengumuman</h2>
-  </div>
-  <div id="pengumumanList" class="grid grid-3"></div>
+<section id="pengumuman" style="padding:1rem 0;background:rgba(255,255,255,0.05);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <marquee id="marqueeText" behavior="scroll" direction="left" scrollamount="5" style="color:var(--gold);font-weight:600;">
+    📢 Memuat pengumuman terbaru...
+  </marquee>
+</section>
 
-  <!-- BERITA -->
-  <div class="section-head" id="berita">
-    <h2>📰 Berita Terbaru</h2>
-  </div>
-  <div id="beritaList" class="grid grid-3"></div>
-
-  <!-- UMKM -->
-  <div class="section-head" id="umkm">
-    <h2>🏪 UMKM</h2>
-  </div>
-  <div id="umkmList" class="grid grid-3"></div>
-
-  <!-- KAS -->
-  <div class="section-head" id="kas">
-    <h2>💰 Ringkasan Kas</h2>
-  </div>
+<section class="container" style="text-align:center;margin-top:2rem;">
   <div class="grid grid-3">
-    <div class="card kas-box" style="grid-column:1/-1">
-      <div class="content">
-        <div>Saldo Saat Ini</div>
-        <div class="kas-total" id="kasTotal">Rp 0</div>
-        <div class="kas-list" id="kasShortList"></div>
-      </div>
+    <div class="card">
+      <h3>💰 Ringkasan Kas</h3>
+      <p>Total Kas Saat Ini:</p>
+      <h1 id="kasTotal">Rp 0</h1>
+    </div>
+    <div class="card">
+      <h3>🌤️ Cuaca Hari Ini</h3>
+      <p id="weather" class="muted">Memuat...</p>
+    </div>
+    <div class="card">
+      <h3>🕌 Waktu Sholat</h3>
+      <div id="prayTimes" class="muted"></div>
     </div>
   </div>
-</main>
+</section>
 
-<footer>
-  <p>&copy; 2025 Karang Taruna Cilosari Barat RT01/RW08 - Semarang Timur</p>
+<!-- PENGUMUMAN -->
+<section id="pengumumanListSection" class="container" style="margin-top:3rem;">
+  <h2>📢 Pengumuman Terbaru</h2>
+  <div id="pengumumanList" class="grid grid-2"></div>
+</section>
+
+<!-- AGENDA -->
+<section id="agenda" class="container" style="margin-top:3rem;">
+  <h2>📅 Agenda / Kegiatan Bulan Ini</h2>
+  <div id="agendaList" class="grid grid-2"></div>
+</section>
+
+<!-- BERITA -->
+<section id="berita" class="container" style="margin-top:3rem;">
+  <h2>📰 Berita Terkini</h2>
+  <div id="beritaList" class="grid grid-2"></div>
+</section>
+
+<!-- UMKM -->
+<section id="umkm" class="container" style="margin-top:3rem;">
+  <h2>🏪 Produk UMKM</h2>
+  <input type="text" id="searchUmkm" placeholder="Cari produk..." style="max-width:300px;margin-bottom:1rem;">
+  <div id="umkmList" class="grid grid-3"></div>
+</section>
+
+<!-- CTA LOGIN -->
+<section id="ctaLogin" style="text-align:center;margin:3rem 0;">
+  <h2>🔑 Masuk ke Portal</h2>
+  <p>Gabung sebagai anggota Karang Taruna untuk mengakses fitur internal seperti kas, agenda, dan pengelolaan konten.</p>
+  <button class="btn btn-primary" id="openLogin">Masuk / Daftar</button>
+</section>
+
+<footer style="text-align:center;padding:1.2rem;background:var(--violet-dark);color:#fff;">
+  <p>&copy; 2025 Karang Taruna Cilosari Barat RT01/RW08 – Semarang Timur</p>
 </footer>
 
-<!-- MODAL AUTH -->
-<div id="authModal">
-  <div class="auth-box">
-    <span id="closeModal">✕</span>
-    <div class="auth-tabs">
-      <button class="tab-btn active" data-tab="login">Masuk</button>
-      <button class="tab-btn" data-tab="register">Daftar</button>
-      <button class="tab-btn" data-tab="forgot">Lupa Password</button>
-    </div>
+<!-- MODAL DETAIL -->
+<div id="detailModal">
+  <div class="detail-box">
+    <span id="closeDetail">✕</span>
+    <h2 id="detailTitle"></h2>
+    <p id="detailBody" class="prewrap"></p>
+  </div>
+</div>
 
-    <!-- LOGIN -->
-    <div class="tab-panel" id="tab-login">
-      <input type="email" id="logEmail" placeholder="Email">
-      <input type="password" id="logPass" placeholder="Kata Sandi">
-      <button class="primary" id="loginBtn">Masuk</button>
-    </div>
-
-    <!-- REGISTER -->
-    <div class="tab-panel" id="tab-register" style="display:none">
-      <input type="email" id="regEmail" placeholder="Email">
-      <input type="password" id="regPass" placeholder="Kata Sandi (min. 6)">
-      <button class="secondary" id="registerBtn">Daftar</button>
-    </div>
-
-    <!-- FORGOT -->
-    <div class="tab-panel" id="tab-forgot" style="display:none">
-      <input type="email" id="fogEmail" placeholder="Email untuk reset password">
-      <button class="primary" id="forgotBtn">Kirim Link Reset</button>
-    </div>
+<!-- MODAL LOGIN -->
+<div id="authModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:999;justify-content:center;align-items:center;">
+  <div class="card" style="max-width:400px;width:90%;text-align:center;position:relative;">
+    <span id="closeModal" style="position:absolute;top:8px;right:12px;cursor:pointer;font-weight:700;">✕</span>
+    <h3>Masuk / Daftar</h3>
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Kata Sandi">
+    <button id="loginBtn" class="btn btn-primary">Masuk</button>
+    <button id="registerBtn" class="btn btn-ghost" style="margin-top:.5rem;">Daftar</button>
+    <small><a href="#" id="forgotPassword" style="color:var(--gold);text-decoration:none;">Lupa kata sandi?</a></small>
   </div>
 </div>
 
 <script type="module">
-import { auth, db } from "./js/firebase.js";
+import { db, auth } from "./js/firebase.js";
 import {
-  onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword,
-  sendPasswordResetEmail, signOut
+  signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-import { collection, getDocs, orderBy, query, limit, doc, setDoc, getDoc } 
-from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+import { collection, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-/* ===== HAMBURGER ===== */
-const hamburger=document.getElementById("hamburger");
-const navMobile=document.getElementById("navMobile");
-hamburger.onclick=()=>{navMobile.style.display=navMobile.style.display==='flex'?'none':'flex';};
+/* HERO typing */
+const heroText=document.getElementById("heroText");
+const textSeq=["Portal Karang Taruna","Wadah Kolaborasi","Semangat Pemuda!"];
+let idx=0;
+function typing(){let i=0,t=textSeq[idx];heroText.textContent="";
+const s=setInterval(()=>{heroText.textContent+=t[i];i++;if(i===t.length){clearInterval(s);setTimeout(()=>{idx=(idx+1)%textSeq.length;typing();},1800);}},100);}
+typing();
 
-/* ===== AUTH MODAL ===== */
-const modal=document.getElementById("authModal");
-const btnOpenAuth=document.getElementById("btnOpenAuth");
-const closeModal=document.getElementById("closeModal");
-const tabs=[...document.querySelectorAll(".tab-btn")];
-const panels={
-  login:document.getElementById("tab-login"),
-  register:document.getElementById("tab-register"),
-  forgot:document.getElementById("tab-forgot"),
-};
-function openModal(tab="login"){
-  modal.style.display="flex";
-  tabs.forEach(t=>t.classList.remove("active"));
-  tabs.find(t=>t.dataset.tab===tab).classList.add("active");
-  Object.keys(panels).forEach(k=>panels[k].style.display=(k===tab?'block':'none'));
-}
-btnOpenAuth.onclick=()=>openModal("login");
-closeModal.onclick=()=>modal.style.display="none";
-window.addEventListener("click",(e)=>{if(e.target===modal)modal.style.display="none";});
-tabs.forEach(t=>t.onclick=()=>openModal(t.dataset.tab));
+/* Modal detail */
+const modal=document.getElementById("detailModal"),closeDetail=document.getElementById("closeDetail");
+closeDetail.onclick=()=>modal.style.display="none";
+window.onclick=(e)=>{if(e.target===modal)modal.style.display="none";}
+function showDetail(title,body){document.getElementById("detailTitle").textContent=title;document.getElementById("detailBody").textContent=body;modal.style.display="flex";}
 
-/* ===== AUTH STATE ===== */
-const btnProfile=document.getElementById("btnProfile");
-const btnLogout=document.getElementById("btnLogout");
-const mProfile=document.getElementById("mProfile");
-const mLogout=document.getElementById("mLogout");
+/* Modal login */
+const authModal=document.getElementById("authModal");
+document.getElementById("openLogin").onclick=()=>authModal.style.display="flex";
+document.getElementById("closeModal").onclick=()=>authModal.style.display="none";
+window.addEventListener("click",(e)=>{if(e.target===authModal)authModal.style.display="none";});
 
-onAuthStateChanged(auth,async(user)=>{
-  if(user){
-    const uref=doc(db,"users",user.uid);
-    const usnap=await getDoc(uref);
-    if(!usnap.exists()){
-      await setDoc(uref,{email:user.email,role:"anggota",createdAt:new Date().toISOString()});
-    }
-    // Desktop toggle
-    btnOpenAuth.style.display="none";
-    btnProfile.style.display="inline-block";
-    btnLogout.style.display="inline-block";
-    // Mobile toggle (hamburger)
-    mProfile.style.display="block";
-    mLogout.style.display="block";
-    // Actions
-    btnProfile.onclick=()=>location.href="./profil/dashboard.html";
-    mProfile.onclick=()=>location.href="./profil/dashboard.html";
-    btnLogout.onclick=async()=>{await signOut(auth);location.reload();};
-    mLogout.onclick=async()=>{await signOut(auth);location.reload();};
-    // (Optional) auto-redirect lembut:
-    // setTimeout(()=>location.href="./profil/dashboard.html",800);
-  }else{
-    btnOpenAuth.style.display="inline-block";
-    btnProfile.style.display="none";
-    btnLogout.style.display="none";
-    mProfile.style.display="none";
-    mLogout.style.display="none";
-  }
-});
-
-/* ===== LOGIN / REGISTER / FORGOT ===== */
+/* Auth */
 document.getElementById("loginBtn").onclick=async()=>{
-  const email=document.getElementById("logEmail").value.trim();
-  const pass=document.getElementById("logPass").value;
-  try{await signInWithEmailAndPassword(auth,email,pass);modal.style.display="none";}
+  const email=document.getElementById("email").value,pass=document.getElementById("password").value;
+  try{await signInWithEmailAndPassword(auth,email,pass);location.href="./dashboard.html";}
   catch(e){alert("Login gagal: "+e.message);}
 };
 document.getElementById("registerBtn").onclick=async()=>{
-  const email=document.getElementById("regEmail").value.trim();
-  const pass=document.getElementById("regPass").value;
-  if(pass.length<6)return alert("Kata sandi minimal 6 karakter.");
-  try{
-    const cred=await createUserWithEmailAndPassword(auth,email,pass);
-    await setDoc(doc(db,"users",cred.user.uid),{email,role:"anggota",createdAt:new Date().toISOString()});
-    alert("Registrasi berhasil.");
-    modal.style.display="none";
-  }catch(e){alert("Gagal daftar: "+e.message);}
+  const email=document.getElementById("email").value,pass=document.getElementById("password").value;
+  try{await createUserWithEmailAndPassword(auth,email,pass);alert("Pendaftaran berhasil!");authModal.style.display="none";}
+  catch(e){alert("Gagal daftar: "+e.message);}
 };
-document.getElementById("forgotBtn").onclick=async()=>{
-  const email=document.getElementById("fogEmail").value.trim();
-  if(!email)return alert("Masukkan email terlebih dahulu.");
-  try{
-    await sendPasswordResetEmail(auth,email);
-    alert("Link reset password dikirim ke: "+email);
-    modal.style.display="none";
-  }catch(e){alert("Gagal mengirim email reset: "+e.message);}
+document.getElementById("forgotPassword").onclick=async(e)=>{
+  e.preventDefault();const email=document.getElementById("email").value;
+  if(!email)return alert("Masukkan email untuk reset.");
+  try{await sendPasswordResetEmail(auth,email);alert("Link reset dikirim.");}
+  catch(e){alert("Gagal: "+e.message);}
 };
 
-/* ===== LOAD DATA HELPERS ===== */
-async function loadList(coll,container){
-  const box=document.getElementById(container);
-  try{
-    const snap=await getDocs(query(collection(db,coll),orderBy("createdAt","desc"),limit(6)));
-    box.innerHTML="";
-    if(snap.empty){box.innerHTML=`<div class='card'><div class='content'>Belum ada ${coll}.</div></div>`;return;}
-    snap.forEach(d=>{
-      const x=d.data();
-      const el=document.createElement("div");
-      el.className="card";
-      let inner="";
-      if(coll==="berita"){
-        inner=`${x.foto?`<img src="${x.foto}" alt="">`:""}
-        <div class="content"><h3>${x.judul||"Tanpa Judul"}</h3><p>${(x.isi||"").length>150?(x.isi||"").slice(0,150)+"…":(x.isi||"")}</p></div>`;
-      }else if(coll==="pengumuman"){
-        inner=`<div class="content"><div class="badge">Pengumuman</div><h3>${x.judul||"Tanpa Judul"}</h3><p>${x.isi||""}</p><small>${x.tanggal||""}</small></div>`;
-      }else if(coll==="umkm"){
-        inner=`${x.foto?`<img src="${x.foto}" alt="">`:""}
-        <div class="content"><div class="badge">UMKM</div><h3>${x.produk||"Produk"}</h3>
-        ${x.penjual?`<p>👤 ${x.penjual}</p>`:""}<p>💰 Rp${(x.harga||0).toLocaleString()}</p>
-        ${x.wa?`<a href="https://wa.me/${x.wa}" class="btn" target="_blank">Hubungi</a>`:""}</div>`;
-      }
-      el.innerHTML=inner; box.appendChild(el);
-    });
-  }catch(e){console.error(e);}
+/* FIRESTORE LOAD */
+async function loadPengumuman(){
+  const c=document.getElementById("pengumumanList"),snap=await getDocs(query(collection(db,"pengumuman"),orderBy("createdAt","desc")));
+  c.innerHTML="";let txt="";
+  snap.forEach(d=>{const p=d.data();const el=document.createElement("div");
+    el.className="card";
+    el.innerHTML=`<h3>${p.judul||"Tanpa Judul"}</h3><p class='prewrap'>${(p.isi||"").slice(0,120)}...</p>
+    <button class='btn btn-primary' onclick='showDetail(${JSON.stringify(p.judul)},${JSON.stringify(p.isi)})'>Selengkapnya</button>`;
+    c.appendChild(el);txt+=`📢 ${p.judul} &nbsp;&nbsp;`;
+  });
+  document.getElementById("marqueeText").innerHTML=txt||"Belum ada pengumuman.";
 }
+loadPengumuman();
 
-/* ===== LOAD KAS RINGKAS ===== */
+async function loadAgenda(){
+  const c=document.getElementById("agendaList"),snap=await getDocs(query(collection(db,"agenda"),orderBy("tanggal","asc")));
+  c.innerHTML="";
+  const now=new Date(),month=now.getMonth()+1,year=now.getFullYear();
+  snap.forEach(d=>{
+    const a=d.data(),tgl=new Date(a.tanggal);
+    if(tgl.getMonth()+1===month && tgl.getFullYear()===year){
+      const el=document.createElement("div");el.className="card";
+      el.innerHTML=`
+        ${a.poster?`<img src='${a.poster}' class='thumb-mini'>`:""}
+        <h3>${a.nama||"Kegiatan"}</h3>
+        <p>📅 ${a.tanggal||"-"}<br>📍 ${a.lokasi||"-"}</p>
+        <button class='btn btn-primary' onclick='showDetail(${JSON.stringify(a.nama)},${JSON.stringify(a.deskripsi||"")})'>Selengkapnya</button>`;
+      c.appendChild(el);
+    }
+  });
+}
+loadAgenda();
+
+async function loadBerita(){
+  const c=document.getElementById("beritaList"),snap=await getDocs(query(collection(db,"berita"),orderBy("createdAt","desc")));
+  c.innerHTML="";
+  snap.forEach(d=>{const b=d.data(),el=document.createElement("div");el.className="card";
+    el.innerHTML=`${b.foto?`<img class='thumb-mini' src='${b.foto}'>`:""}<h3>${b.judul||"Tanpa Judul"}</h3>
+    <p class='prewrap'>${(b.isi||"").slice(0,150)}...</p>
+    <button class='btn btn-primary' onclick='showDetail(${JSON.stringify(b.judul)},${JSON.stringify(b.isi)})'>Selengkapnya</button>`;
+    c.appendChild(el);
+  });
+}
+loadBerita();
+
+async function loadUmkm(){
+  const c=document.getElementById("umkmList"),snap=await getDocs(query(collection(db,"umkm"),orderBy("createdAt","desc")));
+  c.innerHTML="";
+  snap.forEach(d=>{const u=d.data(),el=document.createElement("div");el.className="card";
+    el.innerHTML=`${u.foto?`<img class='thumb-mini' src='${u.foto}'>`:""}<h3>${u.produk||"Produk"}</h3>
+    <p>👤 ${u.penjual||"-"}<br>💰 Rp${(u.harga||0).toLocaleString()}</p>
+    ${u.wa?`<a href='https://wa.me/${u.wa}' target='_blank' class='btn btn-ghost'>Hubungi</a>`:""}`;
+    c.appendChild(el);
+  });
+}
+loadUmkm();
+
+async function loadWeather(){
+  try{
+    const r=await fetch("https://api.open-meteo.com/v1/forecast?latitude=-6.97&longitude=110.42&current_weather=true");
+    const w=(await r.json()).current_weather;
+    document.getElementById("weather").textContent=`${w.temperature}°C, Angin ${w.windspeed} km/j`;
+  }catch{document.getElementById("weather").textContent="Gagal memuat cuaca";}
+}
+loadWeather();
+
+async function loadPrayer(){
+  try{
+    const r=await fetch("https://api.aladhan.com/v1/timingsByCity?city=Semarang&country=Indonesia&method=2");
+    const t=(await r.json()).data.timings;
+    document.getElementById("prayTimes").innerHTML=`Fajr: ${t.Fajr}<br>Dhuhr: ${t.Dhuhr}<br>Asr: ${t.Asr}<br>Maghrib: ${t.Maghrib}<br>Isha: ${t.Isha}`;
+  }catch{document.getElementById("prayTimes").textContent="Gagal memuat waktu sholat";}
+}
+loadPrayer();
+
 async function loadKas(){
-  const totalEl=document.getElementById("kasTotal");
-  const list=document.getElementById("kasShortList");
   try{
-    const snap=await getDocs(query(collection(db,"kas"),orderBy("createdAt","desc"),limit(50)));
-    let total=0; snap.forEach(d=>{const k=d.data(); total+=(k.tipe==="masuk"?1:-1)*(k.jumlah||0);});
-    totalEl.textContent="Rp "+total.toLocaleString();
-
-    const recent=await getDocs(query(collection(db,"kas"),orderBy("createdAt","desc"),limit(5)));
-    if(recent.empty){ list.innerHTML="<p>Belum ada transaksi kas.</p>"; return; }
-    let html=""; recent.forEach(d=>{
-      const k=d.data();
-      html+=`<div class="kas-item">
-        <b style="color:${k.tipe==='masuk'?'green':'#b91c1c'}">${k.tipe==='masuk'?'+':'-'} Rp${(k.jumlah||0).toLocaleString()}</b>
-        <div>${k.keterangan||''}</div>
-        <small style="color:#64748b">${k.tanggal||''}${k.nama?(' • '+k.nama):''}</small>
-      </div>`;
-    });
-    list.innerHTML=html;
-  }catch(e){ console.error(e); }
+    const snap=await getDocs(collection(db,"kas"));
+    let total=0;snap.forEach(d=>{const k=d.data();total+=k.tipe==="masuk"?k.jumlah:-k.jumlah;});
+    document.getElementById("kasTotal").textContent="Rp "+total.toLocaleString();
+  }catch{document.getElementById("kasTotal").textContent="Rp 0";}
 }
-
-/* ===== INIT LOAD ===== */
-loadList("pengumuman","pengumumanList");
-loadList("berita","beritaList");
-loadList("umkm","umkmList");
 loadKas();
+
+/* THEME */
+const tbtn=document.getElementById("themeToggle"),root=document.documentElement;
+if(localStorage.getItem("theme")==="dark"){root.setAttribute("data-theme","dark");tbtn.textContent="☀️";}
+tbtn.onclick=()=>{const d=root.getAttribute("data-theme")==="dark";
+  if(d){root.removeAttribute("data-theme");localStorage.setItem("theme","light");tbtn.textContent="🌙";}
+  else{root.setAttribute("data-theme","dark");localStorage.setItem("theme","dark");tbtn.textContent="☀️";}
+};
 </script>
 </body>
 </html>
