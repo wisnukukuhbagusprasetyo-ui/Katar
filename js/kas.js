@@ -1,38 +1,4 @@
-
-import { tambahData, ambilData } from "../js/data.js";
-import { qs, toast } from "../js/ui.js";
-
-const area = document.getElementById("contentArea");
-area.innerHTML = `
-  <div class="card-glass span-6">
-    <p class="card-title">Tambah Transaksi</p>
-    <div class="input-wrap"><label>Nominal</label><input id="nominal" type="number"></div>
-    <div class="input-wrap"><label>Keterangan</label><input id="ket" type="text"></div>
-    <div style="margin-top:10px"><button id="add" class="btn-glass">Simpan</button></div>
-  </div>
-  <div class="card-glass span-6">
-    <p class="card-title">Transaksi Terakhir</p>
-    <div id="list"></div>
-  </div>
-`;
-
-async function render(){
-  const data = await ambilData("kas");
-  const html = data.slice(-10).reverse().map(t=>`
-    <div class="info-chip" style="justify-content:space-between; width:100%">
-      <span>Rp ${Number(t.nominal).toLocaleString('id-ID')} • ${t.ket||''}</span>
-      <small>${new Date(t.tanggal||Date.now()).toLocaleDateString('id-ID')}</small>
-    </div>
-  `).join("");
-  qs("#list").innerHTML = html || '<div class="info-chip">Belum ada transaksi.</div>';
-}
-render();
-
-qs("#add").addEventListener("click", async ()=>{
-  const nominal = Number(qs("#nominal").value||0);
-  const ket = qs("#ket").value||"";
-  if(!nominal) return toast("Nominal tidak boleh kosong");
-  await tambahData("kas", { nominal, ket, tanggal: Date.now() });
-  toast("Transaksi disimpan");
-  render();
-});
+import { db } from './firebase.js'; import { collection, addDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js'; import { qs, toast } from './ui.js'; import { isAdmin } from './roles.js';
+const list=qs('#list'), saldoEl=qs('#saldo'); const money=n=>Number(n||0).toLocaleString('id-ID');
+onSnapshot(collection(db,'kas'), (snap)=>{ let masuk=0,keluar=0; list.innerHTML=''; snap.docs.sort((a,b)=>(b.data().tanggal||0)-(a.data().tanggal||0)).forEach(d=>{ const t=d.data(); if(t.tipe==='keluar') keluar+=Number(t.jumlah||0); else masuk+=Number(t.jumlah||0); const row=document.createElement('div'); row.className='info-chip'; row.style.cssText='width:100%;justify-content:space-between'; row.innerHTML=`<span>${t.tipe==='keluar'?'🔻':'🔺'} Rp ${money(t.jumlah)} • ${t.ket||''}</span><small>${new Date(t.tanggal||Date.now()).toLocaleDateString('id-ID')}</small>`; list.append(row); }); saldoEl.textContent='Rp '+money(masuk-keluar); });
+qs('#add').onclick=async()=>{ if(!isAdmin()) return alert('Hanya Ketua/Wakil yang dapat menambah transaksi'); const tipe=[...document.querySelectorAll('input[name="tipe"]')].find(x=>x.checked)?.value||'masuk'; const jumlah=Number(qs('#jumlah').value); const ket=qs('#ket').value.trim(); if(!jumlah) return toast('Jumlah wajib diisi'); await addDoc(collection(db,'kas'),{tipe,jumlah,ket,tanggal:Date.now()}); qs('#jumlah').value=''; qs('#ket').value=''; toast('Transaksi disimpan'); };

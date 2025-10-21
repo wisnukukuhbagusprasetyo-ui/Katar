@@ -1,46 +1,12 @@
-
-import { db } from "../js/firebase.js";
-import { doc, getDoc, updateDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
-import { qs, toast } from "../js/ui.js";
-import { uploadToCloudinary } from "../js/cloudinary.js";
-
-const area = document.getElementById("contentArea");
-area.innerHTML = `
-  <div class="card-glass span-6">
-    <p class="card-title">Identitas Portal</p>
-    <div class="input-wrap"><label>Nama Portal</label><input id="namaPortal" type="text"></div>
-    <div class="input-wrap"><label>Logo</label><input id="logoUpload" type="file" accept="image/*"></div>
-    <div style="margin-top:10px"><button id="save" class="btn-glass">Simpan</button></div>
-  </div>
-  <div class="card-glass span-6">
-    <p class="card-title">Pratinjau</p>
-    <img id="previewLogo" class="logo-glow" src="../assets/icons/kt.svg" alt="logo" style="width:72px;height:72px">
-    <div class="info-chip" id="previewName">Karang Taruna Cilosari Barat</div>
-  </div>
-`;
-
-async function loadBranding(){
-  const ref = doc(db, "sistem", "branding");
-  const snap = await getDoc(ref);
-  if(snap.exists()){
-    const d = snap.data();
-    qs("#namaPortal").value = d.nama_portal||"";
-    qs("#previewName").textContent = d.nama_portal||"Karang Taruna Cilosari Barat";
-    if(d.logo) qs("#previewLogo").src = d.logo;
-  }else{
-    await setDoc(ref, { nama_portal:"Karang Taruna Cilosari Barat" });
-  }
-}
-loadBranding();
-
-qs("#save").addEventListener("click", async ()=>{
-  const ref = doc(db, "sistem", "branding");
-  const nama = qs("#namaPortal").value.trim();
-  let logoUrl = null; const file = qs("#logoUpload").files[0];
-  if(file) logoUrl = await uploadToCloudinary(file, "logo");
-  const payload = { nama_portal:nama };
-  if(logoUrl) payload.logo = logoUrl;
-  await updateDoc(ref, payload);
-  toast("Pengaturan disimpan");
-  loadBranding();
-});
+import { db } from './firebase.js'; import { doc, getDoc, setDoc, updateDoc, collection, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js'; import { uploadToCloudinary } from './cloudinary.js'; import { qs, toast } from './ui.js'; import { isKetua } from './roles.js';
+qs('#saveBrand').onclick=async()=>{ const nama=qs('#namaPortal').value.trim(); const file=qs('#logoUpload').files[0]; const ref=doc(db,'sistem','branding'); let payload={nama_portal:nama}; if(file){ const url=await uploadToCloudinary(file,'logo'); payload.logo=url;} const snap=await getDoc(ref); if(snap.exists()) await updateDoc(ref,payload); else await setDoc(ref,payload); toast('Branding diperbarui'); };
+qs('#savePengumuman').onclick=async()=>{ const text=qs('#textPengumuman').value.trim(); await setDoc(doc(db,'pengumuman','utama'),{text}); toast('Pengumuman disimpan'); };
+const panel=qs('#panelRole'); if(isKetua()) panel.style.display=''; if(isKetua()){ onSnapshot(collection(db,'users'), (snap)=>{ const list=qs('#listUser'); list.innerHTML=''; snap.forEach(d=>{ const u=d.data(); const row=document.createElement('div'); row.className='info-chip'; row.style.cssText='display:flex;justify-content:space-between;width:100%'; row.innerHTML=`<span>${u.nama||u.email||d.id}</span>
+<select data-id="${d.id}" class="roleSel">
+<option value="anggota"${u.role==='anggota'?' selected':''}>anggota</option>
+<option value="kontributor"${u.role==='kontributor'?' selected':''}>kontributor</option>
+<option value="sekretaris"${u.role==='sekretaris'?' selected':''}>sekretaris</option>
+<option value="bendahara"${u.role==='bendahara'?' selected':''}>bendahara</option>
+<option value="wakil_admin"${u.role==='wakil_admin'?' selected':''}>wakil_admin</option>
+<option value="super_admin"${u.role==='super_admin'?' selected':''}>super_admin</option>
+</select>`; list.append(row); }); list.querySelectorAll('.roleSel').forEach(sel=> sel.onchange=async(e)=>{ const uid=e.target.dataset.id; const role=e.target.value; await updateDoc(doc(db,'users',uid),{role}); toast('Role diperbarui'); }); }); }

@@ -1,12 +1,10 @@
 {
   "name": "Karang Taruna Cilosari Barat",
   "short_name": "KarTar Cilosari",
-  "description": "Portal Karang Taruna Cilosari Barat – Firebase + Cloudinary + PWA",
   "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",
-  "orientation": "portrait",
   "icons": [
     {
       "src": "assets/icons/icon-192.png",

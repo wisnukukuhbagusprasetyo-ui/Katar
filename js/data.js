@@ -1,16 +1,1 @@
-
-// js/data.js
-import { db } from "./firebase.js";
-import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
-
-export async function tambahData(coll, data){ return addDoc(collection(db, coll), data); }
-export async function ambilData(coll){
-  const snap = await getDocs(collection(db, coll));
-  return snap.docs.map(d=>({id:d.id, ...d.data()}));
-}
-export async function ubahData(coll, id, data){ return updateDoc(doc(db, coll, id), data); }
-export async function hapusData(coll, id){ return deleteDoc(doc(db, coll, id)); }
-export function listenDoc(path, cb){
-  const [coll, id] = path.split("/");
-  return onSnapshot(doc(db, coll, id), (d)=> cb({ id:d.id, ...d.data() }));
-}
+import { db } from './firebase.js'; import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js'; export const tambahData=(c,d)=>addDoc(collection(db,c),d); export const ambilData=async(c)=>{const s=await getDocs(collection(db,c)); return s.docs.map(d=>({id:d.id,...d.data()}));}; export const ubahData=(c,id,d)=>updateDoc(doc(db,c,id),d); export const hapusData=(c,id)=>deleteDoc(doc(db,c,id)); export { collection, onSnapshot, doc };
