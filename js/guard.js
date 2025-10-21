@@ -1,1 +1,0 @@
-import { auth } from './firebase.js'; import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js'; onAuthStateChanged(auth,u=>{const isAuth=location.pathname.includes('/auth/'); if(!u&&!isAuth) location.href='/auth/login.html'; if(u&&isAuth&&!location.pathname.endsWith('forgot.html')) location.href='/index.html';});

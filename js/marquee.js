@@ -1,1 +1,0 @@
-import { db } from './firebase.js'; import { doc } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js'; import { onSnapshot } from './data.js'; const ref=doc(db,'pengumuman','utama'); onSnapshot(ref,s=>{const t=s.exists()?(s.data().text||''):''; const el=document.getElementById('marqueeText'); if(el) el.textContent=t;});
