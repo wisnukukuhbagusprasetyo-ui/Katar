@@ -1,11 +1,8 @@
-<!-- /js/firebase.js -->
-<script type="module">
-// Firebase v10 ESM
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import { getAuth, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-// GANTI dengan milikmu (ini sesuai yang kamu kirim)
 const firebaseConfig = {
   apiKey: "AIzaSyCgJC8OQBG_wQt57tZHfNuVKPb2VVlAalI",
   authDomain: "karang-taruna-aadaf.firebaseapp.com",
@@ -18,7 +15,4 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db   = getFirestore(app);
-
-// untuk non-module consumer (opsional)
-window.__FB = { app, auth, db };
-</script>
+await setPersistence(auth, browserLocalPersistence);

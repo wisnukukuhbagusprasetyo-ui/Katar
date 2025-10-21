@@ -1,52 +1,17 @@
-// === js/auth.js ===
-import { auth, db } from './firebase.js';
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  sendPasswordResetEmail,
-  signOut,
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-import { doc, setDoc, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-window.AuthAPI = {
-  // REGISTER
-  async register(email, password) {
-    const userCred = await createUserWithEmailAndPassword(auth, email, password);
-    const user = userCred.user;
-    const uref = doc(db, "users", user.uid);
-    await setDoc(uref, {
-      email: user.email,
-      role: "anggota",
-      createdAt: serverTimestamp()
-    });
-    console.log("✅ User terdaftar:", user.email);
-    return user;
-  },
+import { auth, db } from "./firebase.js";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+import { UNIT_ID } from "./config.js";
 
-  // LOGIN
-  async login(email, password) {
-    const userCred = await signInWithEmailAndPassword(auth, email, password);
-    console.log("✅ Login:", userCred.user.email);
-    return userCred.user;
-  },
-
-  // RESET PASSWORD
-  async reset(email) {
-    await sendPasswordResetEmail(auth, email);
-    console.log("📧 Link reset dikirim ke", email);
-  },
-
-  // LOGOUT
-  async logout() {
-    await signOut(auth);
-    console.log("🚪 Logout sukses");
-  },
-
-  // LISTENER
-  onAuth(callback) {
-    onAuthStateChanged(auth, callback);
-  },
-
-  db
-};
+export async function login(email, password){
+  return signInWithEmailAndPassword(auth, email, password);
+}
+export async function registerAnggota({nama, email, password}){
+  const cred = await createUserWithEmailAndPassword(auth, email, password);
+  if(nama){ try{ await updateProfile(cred.user, { displayName: nama }); }catch{} }
+  await setDoc(doc(db, "users", cred.user.uid), { uid: cred.user.uid, nama, email, role:"anggota", unit: UNIT_ID, createdAt: Date.now() });
+  return cred;
+}
+export async function resetPassword(email){ return sendPasswordResetEmail(auth, email); }
+export async function logout(){ await signOut(auth); location.href="/auth/portal.html"; }

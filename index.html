@@ -1,146 +1,154 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>KARTEJI • Karang Taruna Cilosari Barat RT01/RW08</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-:root{
-  --biru:#0e4c92;--emas:#f6c445;--bg:#0b132b;--card:#111928;--text:#e5e7eb;
-}
-*{box-sizing:border-box;scroll-behavior:smooth}
-body{margin:0;font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);}
-header{background:linear-gradient(90deg,var(--biru),#1a6ac2);color:#fff;padding:1rem;display:flex;align-items:center;justify-content:space-between;box-shadow:0 4px 20px rgba(0,0,0,.3)}
-.brand{display:flex;align-items:center;gap:.5rem}
-.brand img{width:36px;height:36px;filter:drop-shadow(0 0 6px rgba(246,196,69,.6))}
-.brand span{font-weight:700;background:linear-gradient(120deg,#0e4c92,#f6c445,#0e4c92);-webkit-background-clip:text;color:transparent;background-size:200%;animation:shine 4s linear infinite}
-@keyframes shine{0%{background-position:0%}100%{background-position:200%}}
-.container{max-width:1100px;margin:auto;padding:1rem}
-.section-title{color:var(--emas);margin:1.2rem 0 .6rem;font-size:1.3rem}
-.grid{display:grid;gap:1rem}
-.grid-2{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
-.grid-3{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
-.card{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:1rem;box-shadow:0 4px 20px rgba(0,0,0,.2);transition:.3s}
-.card:hover{transform:translateY(-5px);box-shadow:0 6px 24px rgba(246,196,69,.2)}
-.btn{display:inline-block;background:var(--emas);color:#0e4c92;border:none;border-radius:8px;padding:.4rem .8rem;font-weight:700;text-decoration:none;transition:.3s}
-.btn:hover{background:#ffda5e}
-.thumb{width:100%;height:150px;object-fit:cover;border-radius:8px}
-.note{opacity:.7;font-size:.9rem}
-footer{text-align:center;opacity:.7;padding:1rem;border-top:1px solid rgba(255,255,255,.1);margin-top:2rem}
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);justify-content:center;align-items:center;z-index:20}
-.box{background:#101826;border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:1.2rem;width:min(90%,420px)}
-.box input{width:100%;padding:.6rem;margin:.3rem 0;border-radius:8px;border:1px solid #2b3a55;background:#0d1425;color:#fff}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Karang Taruna Cilosari Barat • v7.3 iOS26</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <meta name="theme-color" content="#000000">
+  <link rel="apple-touch-icon" href="./assets/icons/icon-192.png">
+  <style>
+    .list-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    @media(max-width:768px){.list-grid{grid-template-columns:1fr}}
+    .item-card{border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:10px;background:rgba(255,255,255,.04);backdrop-filter:blur(12px)}
+    .item-img{width:100%;height:140px;object-fit:cover;border-radius:10px;background:rgba(255,255,255,.06)}
+    .item-title{margin:.5rem 0 .25rem;font-weight:600}
+    .item-meta{font-size:.85rem;opacity:.75}
+    .private{display:none}.logged-in .private{display:block}
+  </style>
 </head>
 <body>
-
-<header>
-  <div class="brand">
-    <img src="logo.png" alt="logo">
-    <span>KARTEJI</span>
-  </div>
-  <nav>
-    <a href="#pengumuman">Pengumuman</a>
-    <a href="#berita">Berita</a>
-    <a href="#umkm">UMKM</a>
-    <a href="#kas">Kas</a>
-    <a id="toDashboard" href="profil.html" style="display:none">Profil</a>
-    <a id="openLogin" href="#">Masuk</a>
-  </nav>
-</header>
-
-<main class="container">
-  <section id="pengumuman">
-    <h2 class="section-title">📢 Pengumuman</h2>
-    <div id="pengList" class="grid grid-2"></div>
-  </section>
-
-  <section id="berita">
-    <h2 class="section-title">📰 Berita</h2>
-    <div id="beritaList" class="grid grid-3"></div>
-  </section>
-
-  <section id="umkm">
-    <h2 class="section-title">🏪 Produk UMKM</h2>
-    <div id="umkmList" class="grid grid-3"></div>
-  </section>
-
-  <section id="kas">
-    <h2 class="section-title">💰 Ringkasan Kas</h2>
-    <div class="card">
-      <h3>Total Kas</h3>
-      <p id="kasTotal" style="color:var(--emas);font-size:1.5rem;font-weight:700">Rp 0</p>
-      <p class="note">Detail transaksi tersedia di Dashboard anggota.</p>
+  <header class="header-glass">
+    <div class="header-title">
+      <img id="logoImg" class="logo-glow" src="./assets/icons/kt.svg" alt="KT">
+      <div>
+        <div id="portalName">Karang Taruna Cilosari Barat</div>
+        <small class="info-chip">🕒 <span id="clock">--:--</span> WIB</small>
+      </div>
     </div>
-  </section>
-</main>
+    <a class="info-chip" href="./auth/portal.html">🔐 Masuk</a>
+  </header>
 
-<footer>© 2025 KARTEJI • Karang Taruna Cilosari Barat RT01/RW08</footer>
+  <main class="container">
+    <section class="grid">
+      <div class="card-glass span-3 clickable" onclick="location.href='./pages/kas.html'"><p class="card-title">💰 Kas & Iuran</p><p class="card-value">Rp 0</p></div>
+      <div class="card-glass span-3 clickable" onclick="location.href='./pages/kegiatan.html'"><p class="card-title">📅 Kegiatan</p><p class="card-value">0</p></div>
+      <div class="card-glass span-3 clickable" onclick="location.href='./pages/anggota.html'"><p class="card-title">👥 Anggota</p><p class="card-value">0</p></div>
+      <div class="card-glass span-3 clickable private" onclick="location.href='./pages/forum.html'"><p class="card-title">💬 Forum Internal</p><p class="card-value">Masuk</p></div>
+    </section>
 
-<!-- Modal Login -->
-<div class="modal" id="authModal">
-  <div class="box">
-    <h3>Masuk / Daftar</h3>
-    <input id="email" type="email" placeholder="Email">
-    <input id="pass" type="password" placeholder="Kata sandi">
-    <button class="btn" id="btnLogin">Masuk</button>
-    <button class="btn" id="btnReg">Daftar</button>
-    <button class="btn" id="btnReset" style="background:#22314f;color:#fff">Lupa Password?</button>
-    <button class="btn" id="btnClose" style="background:#22314f;color:#fff">Tutup</button>
-  </div>
-</div>
+    <section class="grid" style="margin-top:14px">
+      <div class="card-glass span-12">
+        <p class="card-title">📢 Berita Terbaru</p>
+        <div id="beritaList" class="list-grid"><div class="info-chip">Memuat berita…</div></div>
+        <div style="margin-top:10px;text-align:right"><a class="info-chip" href="./pages/berita.html">Lihat semua berita ➜</a></div>
+      </div>
+    </section>
 
-<script type="module" src="js/firebase.js"></script>
-<script type="module" src="js/auth.js"></script>
+    <section class="grid" style="margin-top:14px">
+      <div class="card-glass span-12">
+        <p class="card-title">🏪 UMKM Unggulan</p>
+        <div id="umkmList" class="list-grid"><div class="info-chip">Memuat UMKM…</div></div>
+        <div style="margin-top:10px;text-align:right"><a class="info-chip" href="./pages/umkm.html">Lihat semua UMKM ➜</a></div>
+      </div>
+    </section>
 
-<script>
-// === WAIT UNTIL AUTH READY ===
-async function waitForAuthAPI(){
-  return new Promise(resolve=>{
-    const check=()=>{
-      if(window.AuthAPI && window.AuthAPI.login) resolve(window.AuthAPI);
-      else setTimeout(check,100);
-    };
-    check();
-  });
-}
+    <section class="grid" style="margin-top:14px">
+      <div class="card-glass span-8"><p class="card-title">Agenda Terdekat</p><div id="agendaBox" class="info-chip">Belum ada agenda publik.</div></div>
+      <div class="card-glass span-4"><p class="card-title">Notifikasi</p><div id="notifBox" class="info-chip">Tidak ada notifikasi.</div></div>
+    </section>
 
-waitForAuthAPI().then((auth)=>{
-  console.log("✅ AuthAPI siap:", auth);
+    <p class="footer-note">v7.3 • Single Unit • iOS26 Theme • PWA</p>
+  </main>
 
-  const modal=document.getElementById("authModal");
-  document.getElementById("openLogin").onclick=e=>{e.preventDefault();modal.style.display="flex";}
-  document.getElementById("btnClose").onclick=()=>modal.style.display="none";
-  const email=document.getElementById("email");
-  const pass=document.getElementById("pass");
+  <nav class="nav-float">
+    <a class="active" href="./index.html" title="Beranda">🏠</a>
+    <a href="./pages/kegiatan.html" title="Kegiatan">📅</a>
+    <a href="./pages/forum.html" title="Forum" class="private">💬</a>
+    <a href="./pages/academy.html" title="Academy">🎓</a>
+    <a href="./pages/pengaturan.html" title="Pengaturan" class="private">⚙️</a>
+  </nav>
 
-  document.getElementById("btnLogin").onclick=async()=>{
-    try{
-      await auth.login(email.value.trim(),pass.value);
-      modal.style.display="none";
-      location.href="profil.html";
-    }catch(e){alert(e.message);}
-  };
-  document.getElementById("btnReg").onclick=async()=>{
-    try{
-      await auth.register(email.value.trim(),pass.value);
-      modal.style.display="none";
-      location.href="profil.html";
-    }catch(e){alert(e.message);}
-  };
-  document.getElementById("btnReset").onclick=async()=>{
-    if(!email.value.trim())return alert("Isi email dulu");
-    try{
-      await auth.reset(email.value.trim());
-      alert("Link reset dikirim ke email 📧");
-    }catch(e){alert(e.message);}
-  };
-  auth.onAuth(u=>{
-    document.getElementById("toDashboard").style.display=u?"inline-block":"none";
-  });
-});
-</script>
+  <script>
+    setInterval(()=>{ const el=document.getElementById('clock');
+      if(el) el.textContent=new Date().toLocaleTimeString('id-ID',{hour12:false});
+    },1000);
+  </script>
 
+  <script type="module">
+    import { auth, db } from "./js/firebase.js";
+    import { UNIT_ID, UNIT_NAME } from "./js/config.js";
+    import { collection, query, where, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+    auth.onAuthStateChanged(u=>{ document.body.classList.toggle('logged-in', !!u); });
+    const nameEl = document.getElementById('portalName');
+    if(nameEl) nameEl.textContent = UNIT_NAME;
+
+    function el(html){ const d=document.createElement('div'); d.innerHTML=html.trim(); return d.firstChild; }
+
+    async function loadBerita(){
+      const wrap = document.getElementById('beritaList');
+      try{
+        const qB = query(collection(db,"berita"),
+          where("unit","==", UNIT_ID), where("published","==", true),
+          orderBy("tanggal","desc"), limit(3));
+        const s = await getDocs(qB);
+        if(s.empty){ wrap.innerHTML='<div class="info-chip">Belum ada berita.</div>'; return; }
+        const nodes=[];
+        s.forEach(d=>{
+          const x=d.data();
+          nodes.push(el(`<a class="item-card" href="./pages/berita.html?id=${d.id}">
+            <img class="item-img" src="${x.cover||'./assets/icons/kt.svg'}" alt="">
+            <div class="item-title">${x.judul||'Tanpa Judul'}</div>
+            <div class="item-meta">${new Date(x.tanggal||Date.now()).toLocaleDateString('id-ID')} • ${x.kategori||'Umum'}</div>
+          </a>`));
+        });
+        wrap.replaceChildren(...nodes);
+      }catch(e){ console.error(e); wrap.innerHTML='<div class="info-chip">Gagal memuat berita.</div>'; }
+    }
+
+    async function loadUMKM(){
+      const wrap = document.getElementById('umkmList');
+      try{
+        const qU = query(collection(db,"umkm"),
+          where("unit","==", UNIT_ID), where("publik","==", true),
+          orderBy("createdAt","desc"), limit(3));
+        const s = await getDocs(qU);
+        if(s.empty){ wrap.innerHTML='<div class="info-chip">Belum ada UMKM.</div>'; return; }
+        const nodes=[];
+        s.forEach(d=>{
+          const x=d.data();
+          nodes.push(el(`<div class="item-card">
+            <img class="item-img" src="${x.foto||'./assets/icons/kt.svg'}" alt="">
+            <div class="item-title">${x.nama||'UMKM Tanpa Nama'}</div>
+            <div class="item-meta">${x.kategori||'-'} ${x.harga?('• Rp '+Number(x.harga).toLocaleString('id-ID')):''}</div>
+            ${x.wa?`<a class="info-chip" style="margin-top:8px;display:inline-block" target="_blank" href="https://wa.me/${x.wa}">WhatsApp</a>`:''}
+          </div>`));
+        });
+        wrap.replaceChildren(...nodes);
+      }catch(e){ console.error(e); wrap.innerHTML='<div class="info-chip">Gagal memuat UMKM.</div>'; }
+    }
+
+    async function loadAgenda(){
+      try{
+        const qK = query(collection(db,"kegiatan"),
+          where("unit","==", UNIT_ID), where("publik","==", true),
+          orderBy("tanggal","asc"), limit(1));
+        const s = await getDocs(qK);
+        const box = document.getElementById('agendaBox');
+        if(s.empty){ box.textContent="Belum ada agenda publik."; return; }
+        const d = s.docs[0].data();
+        box.textContent = `${new Date(d.tanggal).toLocaleDateString('id-ID')} • ${d.judul||'Kegiatan'}`;
+      }catch(e){}
+    }
+
+    await Promise.all([loadBerita(), loadUMKM(), loadAgenda()]);
+  </script>
+
+  <script type="module" src="./js/firebase.js"></script>
+  <script type="module" src="./js/motion.js"></script>
+  <script type="module" src="./js/ui.js"></script>
+  <script type="module" src="./js/app.js"></script>
 </body>
 </html>
