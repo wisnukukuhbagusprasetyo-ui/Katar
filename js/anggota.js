@@ -1,8 +1,7 @@
 
-// pages/anggota.js
-import { tambahData, ambilData } from "./data.js";
-import { uploadToCloudinary } from "./cloudinary.js";
-import { qs, toast } from "./ui.js";
+import { tambahData, ambilData } from "../js/data.js";
+import { uploadToCloudinary } from "../js/cloudinary.js";
+import { qs, toast } from "../js/ui.js";
 
 const area = document.getElementById("contentArea");
 area.innerHTML = `
@@ -37,8 +36,7 @@ qs("#add").addEventListener("click", async ()=>{
   if(!nama) return toast("Nama wajib");
   let fotoURL = "";
   if(file){ fotoURL = await uploadToCloudinary(file, "profil"); }
-      await tambahData("anggota", { nama, email, foto: fotoURL, dibuat: Date.now(), id_katar: "cilosari_barat" });"anggota", { nama, email, foto: fotoURL, dibuat: Date.now() });
+  await tambahData("anggota", { nama, email, foto: fotoURL, dibuat: Date.now() });
   toast("Anggota ditambahkan");
   render();
 });
-

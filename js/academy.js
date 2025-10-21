@@ -1,7 +1,6 @@
 
-// pages/academy.js
-import { tambahData, ambilData } from "./data.js";
-import { qs } from "./ui.js";
+import { tambahData, ambilData } from "../js/data.js";
+import { qs } from "../js/ui.js";
 
 const area = document.getElementById("contentArea");
 area.innerHTML = `
@@ -32,7 +31,6 @@ qs("#add").addEventListener("click", async ()=>{
   const judul = qs("#judul").value.trim();
   const link = qs("#link").value.trim();
   if(!judul || !link) return alert("Lengkapi judul & link");
-      await tambahData("academy", { judul, link, dibuat: Date.now(), id_katar: "cilosari_barat" });"academy", { judul, link, dibuat: Date.now() });
+  await tambahData("academy", { judul, link, dibuat: Date.now() });
   render();
 });
-

@@ -1,8 +1,7 @@
 
-// pages/umkm.js
-import { tambahData, ambilData } from "./data.js";
-import { uploadToCloudinary } from "./cloudinary.js";
-import { qs, toast } from "./ui.js";
+import { tambahData, ambilData } from "../js/data.js";
+import { uploadToCloudinary } from "../js/cloudinary.js";
+import { qs, toast } from "../js/ui.js";
 
 const area = document.getElementById("contentArea");
 area.innerHTML = `
@@ -43,8 +42,7 @@ qs("#add").addEventListener("click", async ()=>{
   if(!nama) return toast("Nama UMKM wajib");
   let url = "";
   if(file) url = await uploadToCloudinary(file, "umkm");
-      await tambahData("umkm", { nama, deskripsi, foto:url, dibuat: Date.now(), id_katar: "cilosari_barat" });"umkm", { nama, deskripsi, foto:url, dibuat: Date.now() });
+  await tambahData("umkm", { nama, deskripsi, foto:url, dibuat: Date.now() });
   toast("UMKM ditambahkan");
   render();
 });
-

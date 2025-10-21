@@ -1,57 +1,26 @@
 
-# Karang Taruna Portal v6.8 (Transparent + Firebase + Cloudinary)
+# Karang Taruna Portal v7.1 (Single • Firebase + Cloudinary + PWA)
 
 ## Cara Pakai
 1) Deploy folder ini ke Netlify / Vercel / Firebase Hosting.
-2) Buka `/js/cloudinary.js` dan isi:
-   - `YOUR_CLOUD_NAME`
-   - `YOUR_UPLOAD_PRESET`
-3) Pastikan Firestore punya dokumen `sistem/branding` seperti:
-```
+2) Edit `js/cloudinary.js`: isi `YOUR_CLOUD_NAME` & `YOUR_UPLOAD_PRESET`.
+3) Buat dokumen Firestore `sistem/branding`:
 {
-  "nama_portal": "Portal Karang Taruna Cilosari Barat",
+  "nama_portal": "Karang Taruna Cilosari Barat",
   "logo": "https://.../logo.png"
 }
-```
-4) Buka `/auth/login.html` untuk login, lalu `/index.html` akan memuat branding real-time.
+4) Buka `/auth/register.html` untuk membuat akun pertama, lalu login.
 
-## Struktur
-- `index.html` : dashboard transparan iOS-style
-- `auth/login.html` : halaman login
-- `js/firebase.js` : konfigurasi Firebase (sudah modular, persistence aktif)
-- `js/cloudinary.js` : helper upload media
-- `js/app.js` : inisialisasi branding & demo upload logo
-- `css/style.css` : tema pure transparan + glass + motion
+## PWA
+- `manifest.webmanifest`, `service-worker.js` sudah aktif.
+- Install di HP: Add to Home Screen → tampil splash & offline.
+
+## Halaman
+- `/index.html` (dashboard)
+- `/auth/login.html`, `/auth/register.html`, `/auth/forgot.html`
+- `/pages/` (kas, kegiatan, forum, academy, sertifikat, anggota, pengaturan, umkm, laporan)
 
 ## Catatan
-- Ini skeleton siap deploy. Tambahkan modul lain (kas, kegiatan, forum) mengikuti pola Firestore.
-- Untuk write Firestore dari upload, buat fungsi admin (Callable Cloud Functions) atau halaman admin khusus.
-
-
-## Modul v6.9 (lengkap)
-Halaman tersedia di `/pages/`:
-- `kas.html` (kas & iuran)
-- `kegiatan.html` (agenda)
-- `forum.html`
-- `academy.html`
-- `sertifikat.html`
-- `anggota.html`
-- `pengaturan.html`
-- `umkm.html`
-- `laporan.html` (ringkasan)
-
-Masing-masing sudah terhubung ke Firestore (CRUD dasar) dan Cloudinary (untuk foto).
-
-
-# v7.1 FINAL
-- PWA aktif (manifest + service worker + splash)
-- Role Guard (per-unit) dengan `js/guard.js` + `js/config.js`
-- Firestore Security Rules (`firestore.rules`) untuk isolasi per Karang Taruna
-- Auto Report PDF (`js/autoReport.js`) + tombol di `/pages/laporan.html`
-- Semua modul tetap: kas, kegiatan, forum, academy, sertifikat, anggota, pengaturan, umkm, laporan
-
-## Deploy
-- Netlify/Vercel: drag-drop folder ini
-- Firebase Hosting: `firebase deploy` (salin `firestore.rules` ke project Firestore rules)
-- Edit `js/cloudinary.js`: isi `YOUR_CLOUD_NAME` & `YOUR_UPLOAD_PRESET`
-
+- Semua halaman non-auth terlindungi guard (wajib login).
+- Cloudinary untuk upload media (logo, foto profil, UMKM, galeri).
+- Tambahkan Firestore Rules untuk produksi (role-based access).

@@ -1,5 +1,5 @@
 
-const CACHE_NAME = "karangtaruna-v7";
+const CACHE_NAME = "karangtaruna-v7.1";
 const urlsToCache = [
   "/",
   "/index.html",
@@ -7,12 +7,14 @@ const urlsToCache = [
   "/css/style.css",
   "/js/app.js",
   "/js/firebase.js",
+  "/js/guard.js",
   "/js/data.js",
   "/js/ui.js",
   "/js/motion.js",
   "/js/cloudinary.js",
   "/auth/login.html",
-  // pages
+  "/auth/register.html",
+  "/auth/forgot.html",
   "/pages/kas.html",
   "/pages/kegiatan.html",
   "/pages/forum.html",
@@ -22,7 +24,6 @@ const urlsToCache = [
   "/pages/pengaturan.html",
   "/pages/umkm.html",
   "/pages/laporan.html",
-  // icons
   "/assets/icons/icon-192.png",
   "/assets/icons/icon-512.png",
   "/assets/icons/kt.svg"
@@ -33,9 +34,7 @@ self.addEventListener("install", e => {
 });
 
 self.addEventListener("fetch", e => {
-  e.respondWith(
-    caches.match(e.request).then(resp => resp || fetch(e.request))
-  );
+  e.respondWith(caches.match(e.request).then(resp => resp || fetch(e.request)));
 });
 
 self.addEventListener("activate", e => {

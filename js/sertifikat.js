@@ -1,15 +1,9 @@
 
-// pages/sertifikat.js
-import { tambahData, ambilData } from "./data.js";
-import { qs } from "./ui.js";
+import { ambilData } from "../js/data.js";
+import { qs } from "../js/ui.js";
 
 const area = document.getElementById("contentArea");
-area.innerHTML = `
-  <div class="card-glass span-12">
-    <p class="card-title">Sertifikat (daftar penerima)</p>
-    <div id="list"></div>
-  </div>
-`;
+area.innerHTML = `<div class="card-glass span-12"><p class="card-title">Sertifikat (daftar penerima)</p><div id="list"></div></div>`;
 
 async function render(){
   const items = await ambilData("sertifikat");

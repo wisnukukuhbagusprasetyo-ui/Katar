@@ -1,7 +1,6 @@
 
-// pages/kas.js
-import { tambahData, ambilData, ubahData, hapusData } from "./data.js";
-import { qs, toast } from "./ui.js";
+import { tambahData, ambilData } from "../js/data.js";
+import { qs, toast } from "../js/ui.js";
 
 const area = document.getElementById("contentArea");
 area.innerHTML = `
@@ -33,8 +32,7 @@ qs("#add").addEventListener("click", async ()=>{
   const nominal = Number(qs("#nominal").value||0);
   const ket = qs("#ket").value||"";
   if(!nominal) return toast("Nominal tidak boleh kosong");
-      await tambahData("kas", { nominal, ket, tanggal: Date.now(), id_katar: "cilosari_barat" });"kas", { nominal, ket, tanggal: Date.now() });
+  await tambahData("kas", { nominal, ket, tanggal: Date.now() });
   toast("Transaksi disimpan");
   render();
 });
-

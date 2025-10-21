@@ -1,7 +1,6 @@
 
-// pages/forum.js
-import { tambahData, ambilData } from "./data.js";
-import { qs, toast } from "./ui.js";
+import { tambahData, ambilData } from "../js/data.js";
+import { qs, toast } from "../js/ui.js";
 
 const area = document.getElementById("contentArea");
 area.innerHTML = `
@@ -33,8 +32,7 @@ qs("#post").addEventListener("click", async ()=>{
   const judul = qs("#judul").value.trim();
   const pesan = qs("#pesan").value.trim();
   if(!judul || !pesan) return toast("Lengkapi judul & pesan");
-      await tambahData("forum", { judul, pesan, waktu: Date.now(), id_katar: "cilosari_barat" });"forum", { judul, pesan, waktu: Date.now() });
+  await tambahData("forum", { judul, pesan, waktu: Date.now() });
   toast("Thread dibuat");
   render();
 });
-
