@@ -1,0 +1,1 @@
+export const qs=(s,e=document)=>e.querySelector(s); export function toast(m){const t=document.createElement('div'); t.className='info-chip'; t.style='position:fixed;right:16px;bottom:84px;z-index:50'; t.textContent=m; document.body.appendChild(t); setTimeout(()=>t.remove(),2200);}

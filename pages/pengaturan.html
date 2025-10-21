@@ -1,0 +1,18 @@
+<!doctype html><html lang="id"><head>
+<script>
+// ======== AUTO CLEAR CACHE / SERVICE WORKER (v7.6.1) ========
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then(regs => regs.forEach(r => r.unregister()));
+  caches.keys().then(keys => keys.forEach(k => caches.delete(k)));
+}
+</script>
+<meta name="version" content="7.6.1">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pengaturan • Karang Taruna</title><link rel="stylesheet" href="../css/style.css"><link rel="manifest" href="../manifest.webmanifest"></head><body>
+<header class="header-glass"><div class="header-title"><img class="logo-glow" src="../assets/icons/kt.svg"><div>Pengaturan Portal</div></div><a class="info-chip" href="../index.html">⬅️ Dashboard</a></header>
+<main class="container"><div class="grid">
+<div class="card-glass span-6"><p class="card-title">Branding</p><div class="input-wrap"><label>Nama Portal</label><input id="namaPortal" type="text" placeholder="Karang Taruna Cilosari Barat"></div><div class="input-wrap"><label>Logo (Cloudinary)</label><input id="logoUpload" type="file" accept="image/*"></div><button id="saveBrand" class="btn-glass" style="margin-top:10px">Simpan</button></div>
+<div class="card-glass span-6"><p class="card-title">Pengumuman (Realtime)</p><div class="input-wrap"><label>Teks Pengumuman</label><input id="textPengumuman" type="text" placeholder="Tulis pengumuman berjalan"></div><button id="savePengumuman" class="btn-glass" style="margin-top:10px">Simpan</button></div>
+<div class="card-glass span-12" id="panelRole" style="display:none"><p class="card-title">Kelola Role Anggota (Khusus Ketua)</p><div id="listUser"></div></div>
+</div></main>
+<script type="module" src="../js/firebase.js"></script><script type="module" src="../js/guard.js"></script><script type="module" src="../js/ui.js"></script><script type="module" src="../js/cloudinary.js"></script><script type="module" src="../js/roles.js"></script><script type="module" src="../js/pengaturan.js"></script></body></html>
