@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tambah Produk • Karang Taruna</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<header class="header-glass">
+  <div class="header-title">
+    <img class="logo-glow" src="../assets/icons/kt.svg" width="36" height="36" alt="KT">
+    <div>Tambah Produk Pasar</div>
+  </div>
+  <a class="info-chip" href="../index.html">⬅️ Kembali</a>
+</header>
+
+<main class="container" style="max-width:520px">
+  <div class="card-glass">
+    <div class="input-wrap"><label>Nama Produk</label><input id="namaProduk" type="text"></div>
+    <div class="input-wrap"><label>Harga (angka)</label><input id="hargaProduk" type="number"></div>
+    <div class="input-wrap"><label>Deskripsi</label><textarea id="deskripsiProduk"></textarea></div>
+    <div class="input-wrap"><label>Nomor WhatsApp (62...)</label><input id="waProduk" type="text" placeholder="628xxxxxxxxxx"></div>
+    <div class="input-wrap"><label>Foto Produk</label><input id="fotoProduk" type="file" accept="image/*"></div>
+    <div style="margin-top:12px"><button id="simpanProduk" class="btn-glass">Simpan</button></div>
+  </div>
+</main>
+
+<script type="module">
+import { auth, db } from "../js/firebase.js";
+import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+import { uploadToCloudinary } from "../js/cloudinary.js";
+import { qs, toast } from "../js/ui.js";
+
+qs("#simpanProduk").onclick = async () => {
+  const nama = qs("#namaProduk").value.trim();
+  const harga = Number(qs("#hargaProduk").value);
+  const deskripsi = qs("#deskripsiProduk").value.trim();
+  const wa = qs("#waProduk").value.trim();
+  const file = qs("#fotoProduk").files[0];
+
+  if (!auth.currentUser) return toast("⚠️ Harus login dulu!");
+  if (!nama || !harga || !file || !wa) return toast("Lengkapi semua data!");
+
+  try {
+    const foto = await uploadToCloudinary(file, "pasar");
+    await addDoc(collection(db, "pasar"), {
+      nama, harga, deskripsi, wa, foto,
+      owner: auth.currentUser.uid,
+      timestamp: Date.now()
+    });
+    toast("✅ Produk berhasil ditambahkan!");
+    location.href = "../index.html";
+  } catch (err) {
+    toast("❌ Gagal menambah produk: " + err.message);
+  }
+};
+</script>
+</body>
+</html>
