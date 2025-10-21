@@ -1,5 +1,0 @@
-
-.switcher{display:flex;gap:8px;justify-content:center;margin-top:12px}
-.switcher .tab{padding:.45rem .8rem;border:1px solid rgba(255,255,255,.18);border-radius:999px;background:rgba(255,255,255,.06);backdrop-filter:blur(22px);cursor:pointer}
-.switcher .tab.active{border-color:rgba(255,255,255,.38);box-shadow:0 0 18px rgba(255,255,255,.08)}
-.loading{opacity:.7;pointer-events:none;filter:grayscale(25%)}
